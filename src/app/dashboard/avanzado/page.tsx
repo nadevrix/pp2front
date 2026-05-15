@@ -8,6 +8,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { backendFetch, type Project } from '@/lib/backend-api';
+import WebhooksSection from '@/components/WebhooksSection';
 
 export default function AvanzadoPage() {
   const [branches, setBranches] = useState<Project[] | null>(null);
@@ -41,6 +42,9 @@ export default function AvanzadoPage() {
           Integrá Pollar Pay con tu sitio, POS o cualquier sistema usando el SDK <code className="text-slate-200 text-sm bg-black/40 px-1.5 py-0.5 rounded">@pollar/pay</code> o la API REST.
         </p>
       </header>
+
+      {/* Webhooks */}
+      {branches && <WebhooksSection branches={branches} />}
 
       {/* API keys por sucursal */}
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
