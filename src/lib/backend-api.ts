@@ -136,4 +136,7 @@ export interface PayStatus {
   forward_status: string;
   forward_tx_hash?: string | null;
   crypto_tx_hash?: string | null;
+  fee_amount?: string;
+  payout_amount?: string;
+  is_free_tx?: boolean;
 }

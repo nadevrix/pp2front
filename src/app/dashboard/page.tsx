@@ -8,11 +8,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { backendFetch } from '@/lib/backend-api';
 import { stellarExpertTxUrl, normalizeNetwork } from '@/lib/stellar';
+import type { TierState } from '@/lib/tiers';
 
 interface Overview {
   branches: number;
   totals: {
     received_usdc: string;
+    payout_usdc: string;
+    fees_usdc: string;
     transactions: number;
     pending: number;
     last_24h: number;
@@ -23,6 +26,8 @@ interface Overview {
     reason: string;
     amount_expected: string;
     amount_paid: string;
+    payout_amount?: string;
+    fee_amount?: string;
     asset_code: string;
     created_at: string;
     project_id: string;
@@ -58,14 +63,22 @@ const BACKEND_NETWORK = normalizeNetwork(process.env.NEXT_PUBLIC_STELLAR_NETWORK
 
 export default function DashboardPage() {
   const [data, setData] = useState<Overview | null>(null);
+  const [tier, setTier] = useState<TierState | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const load = () =>
-      backendFetch<{ data: Overview }>('/api/merchant/overview?recent=8')
-        .then(d => setData(d.data))
-        .catch(e => setError(e.message));
-
+    const load = async () => {
+      try {
+        const [ov, tr] = await Promise.all([
+          backendFetch<{ data: Overview }>('/api/merchant/overview?recent=8'),
+          backendFetch<{ data: TierState }>('/api/merchant/tier').catch(() => null),
+        ]);
+        setData(ov.data);
+        if (tr) setTier(tr.data);
+      } catch (e: any) {
+        setError(e.message);
+      }
+    };
     load();
     const t = setInterval(load, 10000);
     return () => clearInterval(t);
@@ -119,9 +132,51 @@ export default function DashboardPage() {
         </Link>
       </header>
 
+      {tier && (
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 bg-slate-900 border border-slate-800 rounded-2xl px-5 py-4">
+          <div className="flex items-center gap-4">
+            <div>
+              <div className="text-xs text-slate-500">Plan vigente</div>
+              <div className="font-semibold">{tier.tier_label}</div>
+            </div>
+            <div className="hidden sm:block h-8 w-px bg-slate-800" />
+            <div>
+              <div className="text-xs text-slate-500">Fee por cobro</div>
+              <div className="font-semibold tabular-nums">
+                {(tier.percent * 100).toFixed(1).replace(/\.0$/, '')} %
+                {tier.minimum > 0 && <span className="text-xs text-slate-500"> · mín ${tier.minimum.toFixed(2)}</span>}
+              </div>
+            </div>
+            {tier.tier === 'free' && (
+              <>
+                <div className="hidden sm:block h-8 w-px bg-slate-800" />
+                <div>
+                  <div className="text-xs text-slate-500">Free restantes</div>
+                  <div className="font-semibold tabular-nums">
+                    {tier.usage.free_tx_remaining} <span className="text-xs text-slate-500">de 50</span>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+          {tier.suggested_tier ? (
+            <Link
+              href="/dashboard/plan"
+              className="text-xs px-3 py-1.5 rounded-lg bg-indigo-500/15 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-500/25"
+            >
+              Te conviene cambiar a {tier.suggested_label} →
+            </Link>
+          ) : (
+            <Link href="/dashboard/plan" className="text-xs text-slate-400 hover:text-white">
+              Ver plan →
+            </Link>
+          )}
+        </div>
+      )}
+
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Kpi label="Total cobrado" value={`$${data.totals.received_usdc}`} sub="USDC liquidados" />
-        <Kpi label="Cobros completados" value={data.totals.transactions.toLocaleString()} />
+        <Kpi label="Total cobrado" value={`$${data.totals.received_usdc}`} sub="USDC bruto recibido" />
+        <Kpi label="Recibido neto" value={`$${data.totals.payout_usdc}`} sub={`fees pagados $${data.totals.fees_usdc}`} />
         <Kpi label="Últimas 24 h" value={data.totals.last_24h.toLocaleString()} sub="transacciones" />
         <Kpi label="En curso" value={data.totals.pending.toLocaleString()} sub="esperando pago" />
       </div>

@@ -15,6 +15,10 @@ interface Row {
   reason: string;
   amount_expected: string;
   amount_paid: string;
+  fee_amount?: string;
+  payout_amount?: string;
+  tier_at_time?: string | null;
+  is_free_tx?: boolean;
   asset_code: string;
   wallet_pubkey: string | null;
   expires_at: string;
@@ -170,8 +174,9 @@ export default function MovimientosPage() {
                   <th className="px-6 py-3 font-medium">Estado</th>
                   <th className="px-6 py-3 font-medium">Motivo</th>
                   <th className="px-6 py-3 font-medium">Sucursal</th>
-                  <th className="px-6 py-3 font-medium text-right">Esperado</th>
                   <th className="px-6 py-3 font-medium text-right">Recibido</th>
+                  <th className="px-6 py-3 font-medium text-right">Fee</th>
+                  <th className="px-6 py-3 font-medium text-right">Neto</th>
                   <th className="px-6 py-3 font-medium">Comprobante</th>
                   <th className="px-6 py-3 font-medium">Fecha</th>
                 </tr>
@@ -179,6 +184,10 @@ export default function MovimientosPage() {
               <tbody>
                 {rows.map(t => {
                   const hash = t.forward_tx_hash || t.crypto_tx_hash || null;
+                  const fee = parseFloat(t.fee_amount || '0');
+                  const paid = parseFloat(t.amount_paid || '0');
+                  const net = parseFloat(t.payout_amount || (paid - fee).toString());
+                  const settled = t.status === 'completed' || t.status === 'overpaid';
                   return (
                     <tr key={t.id} className="border-b border-slate-800 last:border-0">
                       <td className="px-6 py-3">
@@ -186,10 +195,21 @@ export default function MovimientosPage() {
                           {STATUS_LABEL[t.status] ?? t.status}
                         </span>
                       </td>
-                      <td className="px-6 py-3 text-slate-300 max-w-[220px] truncate">{t.reason}</td>
+                      <td className="px-6 py-3 text-slate-300 max-w-[200px] truncate">{t.reason}</td>
                       <td className="px-6 py-3 text-slate-400 text-xs">{t.branch_name}</td>
-                      <td className="px-6 py-3 text-right font-mono text-slate-300">{parseFloat(t.amount_expected).toFixed(2)}</td>
-                      <td className="px-6 py-3 text-right font-mono text-slate-200">{parseFloat(t.amount_paid || '0').toFixed(2)}</td>
+                      <td className="px-6 py-3 text-right font-mono text-slate-200">{paid.toFixed(2)}</td>
+                      <td className="px-6 py-3 text-right font-mono text-slate-400">
+                        {!settled ? (
+                          <span className="text-slate-600">—</span>
+                        ) : t.is_free_tx ? (
+                          <span className="text-emerald-400 text-xs">GRATIS</span>
+                        ) : (
+                          <>{fee.toFixed(2)}</>
+                        )}
+                      </td>
+                      <td className="px-6 py-3 text-right font-mono text-slate-200">
+                        {settled ? net.toFixed(2) : <span className="text-slate-600">—</span>}
+                      </td>
                       <td className="px-6 py-3 text-xs">
                         {hash ? (
                           <a

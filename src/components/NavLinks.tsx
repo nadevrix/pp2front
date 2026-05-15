@@ -10,6 +10,7 @@ const LINKS = [
   { href: '/dashboard/cobrar', label: 'Cobrar', match: (p: string) => p.startsWith('/dashboard/cobrar') },
   { href: '/dashboard/movimientos', label: 'Movimientos', match: (p: string) => p.startsWith('/dashboard/movimientos') },
   { href: '/dashboard/sucursales', label: 'Sucursales', match: (p: string) => p.startsWith('/dashboard/sucursales') },
+  { href: '/dashboard/plan', label: 'Plan', match: (p: string) => p.startsWith('/dashboard/plan') },
   { href: '/dashboard/avanzado', label: 'Avanzado', match: (p: string) => p.startsWith('/dashboard/avanzado') },
 ];
 

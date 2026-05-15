@@ -372,6 +372,10 @@ export default function CobrarPage() {
   // ── ESTADO: completado / overpago ────────────────────────────────────────
   if (stage === 'completed' || stage === 'overpaid') {
     const isOver = stage === 'overpaid';
+    const paid = parseFloat(status!.amount_paid);
+    const fee = parseFloat(status!.fee_amount || '0');
+    const net = parseFloat(status!.payout_amount || (paid - fee).toString());
+    const showSplit = fee > 0 || status!.is_free_tx;
     return (
       <div className="max-w-2xl mx-auto px-6 py-10">
         <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl p-8 text-center">
@@ -384,8 +388,27 @@ export default function CobrarPage() {
             {isOver ? 'Pagado con excedente' : 'Pago recibido'}
           </h1>
           <p className="text-slate-400 mb-6">
-            {parseFloat(status!.amount_paid).toFixed(2)} USDC liquidados sobre Stellar.
+            {paid.toFixed(2)} USDC liquidados sobre Stellar.
           </p>
+
+          {showSplit && (
+            <div className="grid grid-cols-2 gap-3 bg-black/30 border border-slate-800 rounded-xl p-4 mb-6 max-w-md mx-auto text-left">
+              <div>
+                <div className="text-xs text-slate-500">Fee Pollar</div>
+                <div className="font-mono text-sm">
+                  {status!.is_free_tx ? (
+                    <span className="text-emerald-400">GRATIS</span>
+                  ) : (
+                    <>${fee.toFixed(2)}</>
+                  )}
+                </div>
+              </div>
+              <div>
+                <div className="text-xs text-slate-500">Llegó a tu wallet</div>
+                <div className="font-mono text-sm text-slate-100">${net.toFixed(2)}</div>
+              </div>
+            </div>
+          )}
 
           {status?.forward_tx_hash && (
             <a
