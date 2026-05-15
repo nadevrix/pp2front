@@ -42,6 +42,33 @@ export async function backendFetch<T = unknown>(
   return data as T;
 }
 
+// Llama a un endpoint del SDK (/api/sdk/*) con la api_key del proyecto.
+// El terminal de cobro del dashboard reutiliza /api/sdk/pay y /api/sdk/status
+// usando la api_key de la sucursal seleccionada — no hace falta endpoint nuevo.
+export async function sdkFetch<T = unknown>(
+  apiKey: string,
+  path: string,
+  init: RequestInit = {},
+): Promise<T> {
+  const headers = new Headers(init.headers);
+  headers.set('x-pollar-api-key', apiKey);
+  if (init.body && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json');
+  }
+
+  const res = await fetch(`${BACKEND_URL}${path}`, { ...init, headers });
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    const err: BackendError = {
+      status: res.status,
+      message: (data as { error?: string }).error || `HTTP ${res.status}`,
+    };
+    throw err;
+  }
+  return data as T;
+}
+
 // ─── Tipos compartidos con el backend ──────────────────────────────────────
 
 export interface Project {
@@ -83,4 +110,30 @@ export interface PayIntent {
   asset: string;
   expires_at: string;
   network: string;
+}
+
+export interface PayStatus {
+  transaction_id: string;
+  status:
+    | 'pending'
+    | 'completed'
+    | 'overpaid'
+    | 'underpaid'
+    | 'expired'
+    | 'refunded'
+    | 'anomaly'
+    | 'late_anomaly';
+  reason: string;
+  amount_expected: string;
+  amount_paid: string;
+  remaining: string;
+  asset: string;
+  wallet_address: string;
+  expires_at: string;
+  time_remaining_seconds: number;
+  is_expired: boolean;
+  created_at: string;
+  forward_status: string;
+  forward_tx_hash?: string | null;
+  crypto_tx_hash?: string | null;
 }
