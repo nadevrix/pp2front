@@ -1,17 +1,19 @@
 // ─── Auth middleware ────────────────────────────────────────────────────────
 // Refresca el access_token en cada request y protege rutas privadas.
 //
-// Rutas públicas: /login, /signup, /auth/*
+// Rutas públicas (no requieren sesión): landing, precios, FAQ, login/signup, auth callbacks.
 // Cualquier otra ruta requiere sesión válida — sino redirige a /login.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const PUBLIC_PATHS = ['/login', '/signup', '/auth'];
+const EXACT_PUBLIC = new Set(['/', '/precios', '/faq', '/login', '/signup']);
+const PREFIX_PUBLIC = ['/auth'];
 
 function isPublic(pathname: string): boolean {
-  return PUBLIC_PATHS.some(p => pathname === p || pathname.startsWith(`${p}/`));
+  if (EXACT_PUBLIC.has(pathname)) return true;
+  return PREFIX_PUBLIC.some(p => pathname === p || pathname.startsWith(`${p}/`));
 }
 
 export async function middleware(request: NextRequest) {

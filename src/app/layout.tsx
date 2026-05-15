@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pollar Pay — Dashboard",
-  description: "Aceptá pagos en USDC sobre Stellar.",
+  title: "Pollar Pay — Cobrá en USDC sobre Stellar",
+  description: "Pasarela de pagos en USDC sobre Stellar. Compatible con Binance, Meru, Lobstr y cualquier wallet Stellar. Liquidación en segundos, sin bancos, 24/7.",
 };
 
 export default function RootLayout({
