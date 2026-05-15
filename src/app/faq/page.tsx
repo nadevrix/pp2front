@@ -37,10 +37,7 @@ export default function FAQPage() {
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-10 text-center">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Preguntas frecuentes</h1>
         <p className="text-slate-300">
-          Si quedó alguna duda sin responder,{' '}
-          <a href="mailto:hola@pollar.xyz" className="text-indigo-400 hover:text-indigo-300">
-            escribinos a hola@pollar.xyz
-          </a>.
+          Si quedó alguna duda sin responder, escribinos desde el dashboard una vez creada tu cuenta.
         </p>
       </section>
 

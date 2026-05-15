@@ -56,38 +56,20 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 2. QUÉ ES POLLAR ─────────────────────────────────────────────── */}
+      {/* ── 2. UN SERVICIO, NO UN DESARROLLO ─────────────────────────────── */}
       <section className="border-y border-white/5 bg-slate-900/40">
-        <div className="max-w-5xl mx-auto px-6 py-16">
-          <div className="grid md:grid-cols-2 gap-10 items-start">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight mb-4">Qué es Pollar</h2>
-              <p className="text-slate-300 mb-4">
-                Pollar es la infraestructura de onboarding financiero para aplicaciones sobre
-                Stellar. Permite integrar wallets, autenticación social y pagos en USDC sin
-                construir la capa blockchain desde cero.
-              </p>
-              <p className="text-slate-400 text-sm">
-                Pollar Pay es el servicio de cobros QR para el mercado boliviano —{' '}
-                <strong className="text-slate-200">un servicio, no un desarrollo a medida</strong>.
-                Te registrás en el dashboard como con Stripe o Mercado Pago. No comprás software
-                ni infraestructura: accedés al servicio.
-              </p>
-            </div>
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-              <div className="text-xs uppercase tracking-wider text-slate-500 mb-4">
-                Infraestructura en producción
-              </div>
-              <div className="grid grid-cols-3 gap-4">
-                <Stat value="~400" sub="wallets conectadas" />
-                <Stat value="~600" sub="transacciones procesadas" />
-                <Stat value="~170" sub="descargas SDK/sem" />
-              </div>
-              <p className="text-xs text-slate-500 mt-5">
-                8 integraciones de terceros en curso, incluyendo Trustless Work, KindFi y Mercato.
-              </p>
-            </div>
-          </div>
+        <div className="max-w-3xl mx-auto px-6 py-16 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
+            Un servicio, no un desarrollo a medida
+          </h2>
+          <p className="text-slate-300 mb-3">
+            Te registrás en el dashboard como con Stripe o Mercado Pago. No comprás software ni
+            infraestructura propia: accedés al servicio.
+          </p>
+          <p className="text-slate-400 text-sm">
+            Pollar Pay construye, opera y actualiza la plataforma. Lo que el comercio obtiene
+            es acceso — listo para cobrar el mismo día.
+          </p>
         </div>
       </section>
 
@@ -188,7 +170,7 @@ export default function LandingPage() {
             { t: 'Pagos parciales y grupales', d: 'Un mismo cobro puede completarse entre varios pagadores. El sistema acumula hasta cerrar el monto.' },
             { t: 'Trazabilidad pública', d: 'Cada transacción tiene un hash verificable en Stellar Expert. Ningún servicio centralizado boliviano lo ofrece.' },
             { t: 'Registro en menos de 10 min', d: 'Alta inmediata, sin períodos de espera. Empezás a cobrar el mismo día.' },
-            { t: 'Infraestructura probada', d: 'Pollar opera en mainnet con ~400 wallets y 8 integraciones en curso. No es un producto experimental.' },
+            { t: 'On-chain de punta a punta', d: 'Construido directamente sobre Stellar. Tu wallet es real, los hashes son verificables, los fondos no pasan por intermediarios.' },
           ].map(v => (
             <div key={v.t} className="bg-slate-900 border border-slate-800 rounded-xl p-5">
               <div className="flex items-start gap-3">
@@ -321,11 +303,3 @@ export default function LandingPage() {
   );
 }
 
-function Stat({ value, sub }: { value: string; sub: string }) {
-  return (
-    <div>
-      <div className="text-2xl font-bold tabular-nums">{value}</div>
-      <div className="text-xs text-slate-500 mt-1 leading-tight">{sub}</div>
-    </div>
-  );
-}
