@@ -176,7 +176,7 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
         <button
           onClick={() => setShowCreate(s => !s)}
           disabled={!canCreate}
-          className="shrink-0 px-3.5 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+          className="shrink-0 px-3.5 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
           title={canCreate ? '' : 'Disponible a partir del tier Growth'}
         >
           + Nuevo webhook
@@ -184,9 +184,9 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
       </div>
 
       {!canCreate && tier && (
-        <div className="mt-4 rounded-xl bg-indigo-500/10 border border-indigo-500/30 px-4 py-3 text-sm">
+        <div className="mt-4 rounded-xl bg-sky-500/10 border border-sky-500/30 px-4 py-3 text-sm">
           Los webhooks son una feature del tier <strong>Growth</strong>.{' '}
-          <Link href="/dashboard/plan" className="text-indigo-300 hover:text-indigo-200 underline">
+          <Link href="/dashboard/plan" className="text-sky-300 hover:text-sky-200 underline">
             Cambiar de plan →
           </Link>
         </div>
@@ -200,7 +200,7 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
               value={createBranch}
               onChange={e => setCreateBranch(e.target.value)}
               required
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
+              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
             >
               <option value="">— Elegir sucursal —</option>
               {branches.map(b => (
@@ -216,7 +216,7 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
               onChange={e => setCreateUrl(e.target.value)}
               required
               placeholder="https://tu-servidor.com/webhooks/pollar"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm font-mono focus:outline-none focus:border-indigo-500"
+              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm font-mono focus:outline-none focus:border-sky-500"
             />
             <p className="text-xs text-slate-500 mt-1.5">
               Tu servidor debe responder 2xx en menos de 3 s. Si falla, reintentamos con backoff (1m → 5m → 15m → 1h → 6h → 1d → 2d → 4d).
@@ -226,7 +226,7 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
             <button
               type="submit"
               disabled={creating}
-              className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium disabled:opacity-50"
+              className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium disabled:opacity-50"
             >
               {creating ? 'Creando…' : 'Crear webhook'}
             </button>
@@ -321,7 +321,7 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
 
                 <button
                   onClick={() => openDeliveriesFor(ep.id)}
-                  className="mt-3 text-xs text-indigo-400 hover:text-indigo-300"
+                  className="mt-3 text-xs text-sky-400 hover:text-sky-300"
                 >
                   {openDeliveries === ep.id ? 'Ocultar entregas' : 'Ver entregas recientes'}
                 </button>
@@ -368,7 +368,7 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
                                   {d.status !== 'delivered' && (
                                     <button
                                       onClick={() => retryDelivery(d.id)}
-                                      className="text-indigo-400 hover:text-indigo-300"
+                                      className="text-sky-400 hover:text-sky-300"
                                     >
                                       Reintentar
                                     </button>

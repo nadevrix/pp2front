@@ -1,6 +1,7 @@
 // Footer público — minimal, solo links internos al proyecto.
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function PublicFooter() {
   return (
@@ -8,7 +9,7 @@ export default function PublicFooter() {
       <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-lg">P</div>
+            <Image src="/logo.jpg" alt="Pollar Pay" width={36} height={36} className="rounded-lg" />
             <span className="font-semibold text-lg tracking-tight">Pollar Pay</span>
           </div>
           <p className="text-sm text-slate-400 max-w-xs">

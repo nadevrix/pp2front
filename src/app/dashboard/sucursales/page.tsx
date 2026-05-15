@@ -57,7 +57,7 @@ export default function SucursalesPage() {
             </span>
             <div className="text-[11px] text-slate-500 mt-1">
               Tu plan Free permite 1 sucursal.{' '}
-              <Link href="/dashboard/plan" className="text-indigo-400 hover:text-indigo-300">
+              <Link href="/dashboard/plan" className="text-sky-400 hover:text-sky-300">
                 Cambiar a Starter →
               </Link>
             </div>
@@ -65,7 +65,7 @@ export default function SucursalesPage() {
         ) : (
           <Link
             href="/dashboard/sucursales/nueva"
-            className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm"
+            className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm"
           >
             + Nueva sucursal
           </Link>
@@ -84,7 +84,7 @@ export default function SucursalesPage() {
           </p>
           <Link
             href="/dashboard/sucursales/nueva"
-            className="inline-block px-5 py-2.5 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium"
+            className="inline-block px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium"
           >
             Registrar la primera
           </Link>
@@ -95,7 +95,7 @@ export default function SucursalesPage() {
             <Link
               key={b.id}
               href={`/dashboard/sucursales/${b.id}`}
-              className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-indigo-500/50 transition-colors block"
+              className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-sky-500/50 transition-colors block"
             >
               <h3 className="font-semibold text-lg mb-1 truncate">{b.name}</h3>
               <p className="text-sm text-slate-400 mb-4 truncate">{b.reason}</p>

@@ -97,7 +97,7 @@ export default function NuevaSucursalPage() {
               onChange={e => setName(e.target.value)}
               placeholder="Ej: Café La Paz centro"
               required
-              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
             />
           </div>
 
@@ -111,7 +111,7 @@ export default function NuevaSucursalPage() {
               onChange={e => setReason(e.target.value)}
               placeholder="Ej: Cafetería · ventas mostrador"
               required
-              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
             />
           </div>
 
@@ -130,7 +130,7 @@ export default function NuevaSucursalPage() {
                   ? walletValid
                     ? 'border-emerald-500 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500'
                     : 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500'
-                  : 'border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                  : 'border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500'
               }`}
             />
             {walletTouched && !walletValid && (
@@ -143,9 +143,9 @@ export default function NuevaSucursalPage() {
             )}
             <p className="mt-2 text-xs text-slate-500">
               ¿No tenés una? Podés crearla gratis en{' '}
-              <a href="https://lobstr.co" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300">Lobstr</a>{' '}
+              <a href="https://lobstr.co" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:text-sky-300">Lobstr</a>{' '}
               o{' '}
-              <a href="https://meru.io" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300">Meru</a>{' '}
+              <a href="https://meru.io" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:text-sky-300">Meru</a>{' '}
               en 3 minutos desde tu teléfono.
             </p>
           </div>
@@ -159,7 +159,7 @@ export default function NuevaSucursalPage() {
           <button
             type="submit"
             disabled={loading || limitReached || !name.trim() || !reason.trim() || !walletValid}
-            className="w-full py-2.5 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Registrando…' : limitReached ? 'Límite del plan Free alcanzado' : 'Registrar sucursal'}
           </button>

@@ -66,7 +66,7 @@ export const TIERS_UI: Record<Tier, TierUi> = {
             'Notificaciones webhook',
             'Soporte por chat <4 h',
         ],
-        accent: 'border-indigo-500/60 ring-1 ring-indigo-500/40',
+        accent: 'border-sky-500/60 ring-1 ring-sky-500/40',
         recommended: true,
     },
     scale: {

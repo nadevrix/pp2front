@@ -57,7 +57,7 @@ export default function AvanzadoPage() {
           <div className="text-slate-500 text-sm">Cargando…</div>
         ) : branches.length === 0 ? (
           <div className="text-slate-500 text-sm">
-            Aún no tenés sucursales. <Link href="/dashboard/sucursales/nueva" className="text-indigo-400 hover:text-indigo-300">Registrar la primera →</Link>
+            Aún no tenés sucursales. <Link href="/dashboard/sucursales/nueva" className="text-sky-400 hover:text-sky-300">Registrar la primera →</Link>
           </div>
         ) : (
           <div className="space-y-4">
@@ -183,7 +183,7 @@ function Endpoint({
   const color =
     method === 'GET'
       ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
-      : 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20';
+      : 'text-sky-400 bg-sky-500/10 border-sky-500/20';
   return (
     <div className="border border-slate-800 rounded-lg p-3">
       <div className="flex items-center gap-2 mb-1.5">

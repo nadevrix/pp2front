@@ -36,7 +36,7 @@ export default function PreciosPage() {
                 className={`relative bg-slate-900 border ${ui.accent} rounded-2xl p-6 flex flex-col`}
               >
                 {ui.recommended && (
-                  <span className="absolute -top-2.5 left-4 text-[10px] uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 rounded px-2 py-0.5">
+                  <span className="absolute -top-2.5 left-4 text-[10px] uppercase tracking-wider bg-sky-500/20 text-sky-300 border border-sky-500/40 rounded px-2 py-0.5">
                     Recomendado
                   </span>
                 )}
@@ -59,7 +59,7 @@ export default function PreciosPage() {
                 </ul>
                 <Link
                   href="/signup"
-                  className="mt-5 py-2 rounded-lg text-sm font-medium text-center bg-indigo-500 hover:bg-indigo-600 text-white"
+                  className="mt-5 py-2 rounded-lg text-sm font-medium text-center bg-sky-500 hover:bg-sky-600 text-white"
                 >
                   Empezar gratis
                 </Link>
@@ -69,7 +69,7 @@ export default function PreciosPage() {
         </div>
 
         {/* Por qué Scale tiene cuota */}
-        <div className="mt-10 bg-slate-900 border border-indigo-500/30 rounded-2xl p-6">
+        <div className="mt-10 bg-slate-900 border border-sky-500/30 rounded-2xl p-6">
           <h3 className="font-semibold mb-2">¿Por qué Scale tiene cuota mensual?</h3>
           <p className="text-sm text-slate-300">
             A 1.000 transacciones mensuales con ticket promedio de $30, un comercio en Growth
@@ -126,7 +126,7 @@ export default function PreciosPage() {
           </p>
           <Link
             href="/signup"
-            className="inline-block px-6 py-3 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-semibold"
+            className="inline-block px-6 py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold"
           >
             Empezar gratis
           </Link>

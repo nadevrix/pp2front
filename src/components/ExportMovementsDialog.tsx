@@ -162,7 +162,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
                 onChange={e => setFrom(e.target.value)}
                 min={minFrom}
                 max={to}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
               />
             </div>
             <div>
@@ -173,7 +173,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
                 onChange={e => setTo(e.target.value)}
                 min={from}
                 max={isoDate(today)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
               />
             </div>
           </div>
@@ -183,7 +183,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
             <select
               value={status}
               onChange={e => setStatus(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
+              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
             >
               <option value="">Todos</option>
               <option value="completed">Cobrados</option>
@@ -201,7 +201,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
               <select
                 value={branchId}
                 onChange={e => setBranchId(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
+                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
               >
                 <option value="">Todas</option>
                 {branches.map(b => (
@@ -233,7 +233,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
           <button
             onClick={onDownload}
             disabled={downloading}
-            className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium disabled:opacity-50"
+            className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium disabled:opacity-50"
           >
             {downloading ? 'Generando…' : 'Descargar CSV'}
           </button>

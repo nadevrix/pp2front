@@ -21,7 +21,8 @@ export default function LandingPage() {
           className="absolute inset-0 -z-10 opacity-30"
           style={{
             background:
-              'radial-gradient(800px 400px at 50% 0%, rgba(99,102,241,0.25), transparent 70%)',
+              // Azul polar: rgba(56,189,248,…) = sky-400, combina con el oso del logo
+              'radial-gradient(800px 400px at 50% 0%, rgba(56,189,248,0.22), transparent 70%)',
           }}
         />
         <div className="max-w-5xl mx-auto px-6 pt-24 pb-20 text-center">
@@ -33,7 +34,7 @@ export default function LandingPage() {
             Disponible ahora
           </div>
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-5">
-            Cobrá en <span className="text-indigo-400">dólares digitales</span>.<br />
+            Cobrá en <span className="text-sky-400">dólares digitales</span>.<br />
             Recibí en segundos.
           </h1>
           <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-8">
@@ -43,7 +44,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/signup"
-              className="px-6 py-3 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-semibold"
+              className="px-6 py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold"
             >
               Empezar gratis
             </Link>
@@ -97,7 +98,7 @@ export default function LandingPage() {
               ))}
             </ul>
           </div>
-          <div className="bg-slate-900 border border-indigo-500/30 rounded-2xl p-7">
+          <div className="bg-slate-900 border border-sky-500/30 rounded-2xl p-7">
             <h2 className="text-2xl font-bold tracking-tight mb-4 text-white">La solución</h2>
             <p className="text-slate-300 mb-4">
               Pollar Pay funciona con las apps que tus clientes ya tienen — Binance, Meru, Lobstr
@@ -131,7 +132,7 @@ export default function LandingPage() {
               { n: '05', t: 'Fondos en tu wallet', d: 'El monto cobrado — menos el fee de Pollar Pay — llega automáticamente a tu wallet Stellar.' },
             ].map(s => (
               <li key={s.n} className="bg-slate-900 border border-slate-800 rounded-xl p-5">
-                <div className="text-indigo-400 font-mono font-bold text-lg mb-2">{s.n}</div>
+                <div className="text-sky-400 font-mono font-bold text-lg mb-2">{s.n}</div>
                 <div className="font-semibold mb-1">{s.t}</div>
                 <div className="text-xs text-slate-400">{s.d}</div>
               </li>
@@ -178,7 +179,7 @@ export default function LandingPage() {
           ].map(v => (
             <div key={v.t} className="bg-slate-900 border border-slate-800 rounded-xl p-5">
               <div className="flex items-start gap-3">
-                <span className="text-indigo-400 mt-0.5">✓</span>
+                <span className="text-sky-400 mt-0.5">✓</span>
                 <div>
                   <div className="font-semibold mb-1">{v.t}</div>
                   <div className="text-sm text-slate-400">{v.d}</div>
@@ -205,7 +206,7 @@ export default function LandingPage() {
                   <th className="px-5 py-3 font-medium">Criterio</th>
                   <th className="px-5 py-3 font-medium">Transferencia bancaria</th>
                   <th className="px-5 py-3 font-medium">QR bancario</th>
-                  <th className="px-5 py-3 font-medium text-indigo-300">Pollar Pay</th>
+                  <th className="px-5 py-3 font-medium text-sky-300">Pollar Pay</th>
                 </tr>
               </thead>
               <tbody className="text-slate-300">
@@ -249,7 +250,7 @@ export default function LandingPage() {
             { n: '05', t: 'Activación', d: 'Un click. A partir de ahí cualquier cliente te paga en USDC.' },
           ].map(s => (
             <li key={s.n} className="bg-slate-900 border border-slate-800 rounded-xl p-5">
-              <div className="text-indigo-400 font-mono font-bold text-lg mb-2">{s.n}</div>
+              <div className="text-sky-400 font-mono font-bold text-lg mb-2">{s.n}</div>
               <div className="font-semibold mb-1">{s.t}</div>
               <div className="text-xs text-slate-400">{s.d}</div>
             </li>
@@ -290,7 +291,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/signup"
-              className="px-6 py-3 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-semibold"
+              className="px-6 py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold"
             >
               Crear cuenta
             </Link>

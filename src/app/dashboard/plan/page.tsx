@@ -73,8 +73,8 @@ export default function PlanPage() {
             </div>
           </div>
           {suggested && (
-            <div className="rounded-xl bg-indigo-500/10 border border-indigo-500/30 px-4 py-3 max-w-md">
-              <div className="text-xs text-indigo-300 uppercase tracking-wider mb-1">Sugerencia</div>
+            <div className="rounded-xl bg-sky-500/10 border border-sky-500/30 px-4 py-3 max-w-md">
+              <div className="text-xs text-sky-300 uppercase tracking-wider mb-1">Sugerencia</div>
               <div className="text-sm text-slate-200">
                 Con tu volumen mensual, podrías cambiar a <strong>{state.suggested_label}</strong> para reducir el fee.
               </div>
@@ -115,7 +115,7 @@ export default function PlanPage() {
                 </span>
               )}
               {!isCurrent && isSuggested && (
-                <span className="absolute -top-2.5 left-4 text-[10px] uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 rounded px-2 py-0.5">
+                <span className="absolute -top-2.5 left-4 text-[10px] uppercase tracking-wider bg-sky-500/20 text-sky-300 border border-sky-500/40 rounded px-2 py-0.5">
                   Sugerido
                 </span>
               )}
@@ -146,7 +146,7 @@ export default function PlanPage() {
                 className={`mt-5 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isCurrent
                     ? 'bg-slate-800 text-slate-500 cursor-default'
-                    : 'bg-indigo-500 hover:bg-indigo-600 text-white disabled:opacity-50'
+                    : 'bg-sky-500 hover:bg-sky-600 text-white disabled:opacity-50'
                 }`}
               >
                 {isCurrent ? 'Plan actual' : changing === tier ? 'Cambiando…' : tier === 'scale' ? 'Cambiar (cuota se factura aparte)' : 'Cambiar a este plan'}

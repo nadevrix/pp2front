@@ -136,7 +136,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
         </div>
         <Link
           href="/dashboard/cobrar"
-          className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm"
+          className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm"
         >
           Cobrar en esta sucursal
         </Link>
@@ -158,7 +158,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
                 href={stellarExpertAccountUrl(branch.payout_wallet, network)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-400 hover:text-indigo-300"
+                className="text-sky-400 hover:text-sky-300"
               >
                 Ver en Stellar Expert ↗
               </a>
@@ -176,7 +176,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
               type="text"
               value={walletDraft}
               onChange={e => setWalletDraft(e.target.value)}
-              className="w-full px-3 py-2 bg-black/40 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono text-xs"
+              className="w-full px-3 py-2 bg-black/40 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 font-mono text-xs"
               placeholder="GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
             />
             {walletError && <p className="text-xs text-rose-400">{walletError}</p>}
@@ -184,7 +184,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
               <button
                 onClick={saveWallet}
                 disabled={walletSaving}
-                className="px-3 py-1.5 bg-indigo-500 hover:bg-indigo-600 rounded-lg text-xs font-medium disabled:opacity-50"
+                className="px-3 py-1.5 bg-sky-500 hover:bg-sky-600 rounded-lg text-xs font-medium disabled:opacity-50"
               >
                 {walletSaving ? 'Guardando…' : 'Guardar'}
               </button>
@@ -245,7 +245,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
                             href={stellarExpertTxUrl(hash, network)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-indigo-400 hover:text-indigo-300 font-mono"
+                            className="text-sky-400 hover:text-sky-300 font-mono"
                           >
                             {hash.slice(0, 8)}…↗
                           </a>

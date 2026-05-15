@@ -106,7 +106,7 @@ export default function DashboardPage() {
         </p>
         <Link
           href="/dashboard/sucursales/nueva"
-          className="inline-block px-5 py-3 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-semibold"
+          className="inline-block px-5 py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold"
         >
           Registrar sucursal
         </Link>
@@ -123,7 +123,7 @@ export default function DashboardPage() {
         </div>
         <Link
           href="/dashboard/cobrar"
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-semibold"
+          className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -162,7 +162,7 @@ export default function DashboardPage() {
           {tier.suggested_tier ? (
             <Link
               href="/dashboard/plan"
-              className="text-xs px-3 py-1.5 rounded-lg bg-indigo-500/15 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-500/25"
+              className="text-xs px-3 py-1.5 rounded-lg bg-sky-500/15 border border-sky-500/40 text-sky-300 hover:bg-sky-500/25"
             >
               Te conviene cambiar a {tier.suggested_label} →
             </Link>
@@ -189,7 +189,7 @@ export default function DashboardPage() {
               Actualizado cada 10 s · {data.branches} {data.branches === 1 ? 'sucursal' : 'sucursales'}
             </p>
           </div>
-          <Link href="/dashboard/movimientos" className="text-sm text-indigo-400 hover:text-indigo-300">
+          <Link href="/dashboard/movimientos" className="text-sm text-sky-400 hover:text-sky-300">
             Ver todos →
           </Link>
         </div>
@@ -232,7 +232,7 @@ export default function DashboardPage() {
                             href={stellarExpertTxUrl(hash, BACKEND_NETWORK)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-indigo-400 hover:text-indigo-300 font-mono"
+                            className="text-sky-400 hover:text-sky-300 font-mono"
                           >
                             {hash.slice(0, 6)}…↗
                           </a>

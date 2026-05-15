@@ -46,7 +46,7 @@ export default function FAQPage() {
           {FAQS.map(f => (
             <details
               key={f.q}
-              className="group bg-slate-900 border border-slate-800 rounded-2xl px-6 py-5 open:border-indigo-500/40"
+              className="group bg-slate-900 border border-slate-800 rounded-2xl px-6 py-5 open:border-sky-500/40"
             >
               <summary className="flex items-center justify-between cursor-pointer list-none">
                 <span className="font-semibold text-base pr-4">{f.q}</span>
@@ -67,7 +67,7 @@ export default function FAQPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/signup"
-              className="px-6 py-3 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-semibold"
+              className="px-6 py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold"
             >
               Crear cuenta
             </Link>

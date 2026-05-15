@@ -193,7 +193,7 @@ export default function CobrarPage() {
         </p>
         <Link
           href="/dashboard/sucursales/nueva"
-          className="inline-block px-4 py-2.5 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium"
+          className="inline-block px-4 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium"
         >
           Registrar sucursal
         </Link>
@@ -218,7 +218,7 @@ export default function CobrarPage() {
                 value={projectId}
                 onChange={e => setProjectId(e.target.value)}
                 required
-                className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
               >
                 <option value="">— Elegir sucursal —</option>
                 {projects.map(p => (
@@ -241,7 +241,7 @@ export default function CobrarPage() {
               onChange={e => setAmount(e.target.value)}
               placeholder="25.00"
               required
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white text-2xl font-semibold placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white text-2xl font-semibold placeholder-slate-600 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
             />
             <p className="text-xs text-slate-500 mt-1.5">El gas de Stellar está incluido en el fee de Pollar Pay.</p>
           </div>
@@ -255,7 +255,7 @@ export default function CobrarPage() {
               value={reason}
               onChange={e => setReason(e.target.value)}
               placeholder="Ej: Venta mostrador"
-              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
             />
           </div>
 
@@ -268,7 +268,7 @@ export default function CobrarPage() {
           <button
             type="submit"
             disabled={submitting || !projectId || !amount}
-            className="w-full py-3 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? 'Generando…' : 'Generar QR de cobro'}
           </button>
@@ -339,7 +339,7 @@ export default function CobrarPage() {
                 href={stellarExpertAccountUrl(intent!.wallet_address, network)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-2 text-xs text-indigo-400 hover:text-indigo-300"
+                className="inline-block mt-2 text-xs text-sky-400 hover:text-sky-300"
               >
                 Ver en Stellar Expert ↗
               </a>
@@ -433,7 +433,7 @@ export default function CobrarPage() {
               href={stellarExpertTxUrl(status.forward_tx_hash, network)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block text-sm text-indigo-400 hover:text-indigo-300 mb-6 font-mono"
+              className="inline-block text-sm text-sky-400 hover:text-sky-300 mb-6 font-mono"
             >
               Verificar en Stellar Expert ↗
             </a>
@@ -442,7 +442,7 @@ export default function CobrarPage() {
           <div className="flex justify-center gap-3">
             <button
               onClick={resetAll}
-              className="px-5 py-2.5 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium"
+              className="px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium"
             >
               Cobrar otro
             </button>
@@ -472,7 +472,7 @@ export default function CobrarPage() {
         </p>
         <button
           onClick={resetAll}
-          className="px-5 py-2.5 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium"
+          className="px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium"
         >
           Generar otro cobro
         </button>

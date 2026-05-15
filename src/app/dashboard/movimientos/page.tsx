@@ -131,7 +131,7 @@ export default function MovimientosPage() {
           </button>
           <Link
             href="/dashboard/cobrar"
-            className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm"
+            className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm"
           >
             + Nuevo cobro
           </Link>
@@ -155,7 +155,7 @@ export default function MovimientosPage() {
         <select
           value={status}
           onChange={e => setStatus(e.target.value)}
-          className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-indigo-500"
+          className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-sky-500"
         >
           {STATUS_OPTIONS.map(o => (
             <option key={o.value} value={o.value}>{o.label}</option>
@@ -165,7 +165,7 @@ export default function MovimientosPage() {
           <select
             value={branchId}
             onChange={e => setBranchId(e.target.value)}
-            className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-indigo-500"
+            className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-sky-500"
           >
             <option value="">Todas las sucursales</option>
             {branches.map(b => (
@@ -233,7 +233,7 @@ export default function MovimientosPage() {
                             href={stellarExpertTxUrl(hash, NETWORK)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-indigo-400 hover:text-indigo-300 font-mono"
+                            className="text-sky-400 hover:text-sky-300 font-mono"
                           >
                             {hash.slice(0, 8)}…↗
                           </a>
