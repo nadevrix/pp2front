@@ -8,6 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { backendFetch } from '@/lib/backend-api';
 import { stellarExpertTxUrl, normalizeNetwork } from '@/lib/stellar';
+import ExportMovementsDialog from '@/components/ExportMovementsDialog';
 
 interface Row {
   id: string;
@@ -79,6 +80,7 @@ export default function MovimientosPage() {
   const [status, setStatus] = useState('');
   const [branchId, setBranchId] = useState('');
   const [page, setPage] = useState(0);
+  const [exportOpen, setExportOpen] = useState(false);
 
   const load = useCallback(async () => {
     const params = new URLSearchParams({
@@ -120,13 +122,28 @@ export default function MovimientosPage() {
           <h1 className="text-3xl font-bold tracking-tight">Movimientos</h1>
           <p className="text-slate-400 mt-1">Todos los cobros de tu comercio.</p>
         </div>
-        <Link
-          href="/dashboard/cobrar"
-          className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm"
-        >
-          + Nuevo cobro
-        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setExportOpen(true)}
+            className="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium"
+          >
+            Exportar
+          </button>
+          <Link
+            href="/dashboard/cobrar"
+            className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm"
+          >
+            + Nuevo cobro
+          </Link>
+        </div>
       </header>
+
+      <ExportMovementsDialog
+        open={exportOpen}
+        onClose={() => setExportOpen(false)}
+        branches={branches}
+        initialBranchId={branchId || undefined}
+      />
 
       {error && (
         <div className="p-3 mb-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm">
