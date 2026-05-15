@@ -3,10 +3,11 @@
 // Alta de sucursal — copy alineado al paso 02 del PDF ("Configura tu wallet de
 // destino. Si no tienes una, te guiamos para crearla en Lobstr o Meru").
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { backendFetch, type Project } from '@/lib/backend-api';
+import type { TierState } from '@/lib/tiers';
 
 function isValidStellarKey(key: string): boolean {
   return /^G[A-Z2-7]{55}$/.test(key.trim());
@@ -20,6 +21,22 @@ export default function NuevaSucursalPage() {
   const [payoutWallet, setPayoutWallet] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Avisamos en UI si el plan Free ya tiene una sucursal (el backend de todos
+  // modos lo rechaza con 403 + code='TIER_BRANCH_LIMIT' — esto solo es para
+  // que el merchant no se confunda).
+  const [limitReached, setLimitReached] = useState(false);
+  useEffect(() => {
+    Promise.all([
+      backendFetch<{ data: TierState }>('/api/merchant/tier').catch(() => null),
+      backendFetch<{ projects: Project[] }>('/api/projects/list').catch(() => null),
+    ]).then(([tr, pr]) => {
+      if (!tr || !pr) return;
+      if (tr.data.tier === 'free' && pr.projects.length >= 1) {
+        setLimitReached(true);
+      }
+    });
+  }, []);
 
   const walletValid = isValidStellarKey(payoutWallet);
   const walletTouched = payoutWallet.length > 0;
@@ -57,6 +74,16 @@ export default function NuevaSucursalPage() {
       <p className="text-slate-400 mb-8">
         Pollar Pay envía los pagos cobrados directo a tu wallet — Pollar no custodia tus fondos.
       </p>
+
+      {limitReached && (
+        <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-sm">
+          Tu plan <strong>Free</strong> permite 1 sucursal. Para registrar más{' '}
+          <Link href="/dashboard/plan" className="text-amber-200 underline hover:text-white">
+            pasá a Starter
+          </Link>{' '}
+          (sin cuota mensual, 0.9 % por cobro).
+        </div>
+      )}
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
         <form onSubmit={onSubmit} className="space-y-5">
@@ -131,10 +158,10 @@ export default function NuevaSucursalPage() {
 
           <button
             type="submit"
-            disabled={loading || !name.trim() || !reason.trim() || !walletValid}
+            disabled={loading || limitReached || !name.trim() || !reason.trim() || !walletValid}
             className="w-full py-2.5 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Registrando…' : 'Registrar sucursal'}
+            {loading ? 'Registrando…' : limitReached ? 'Límite del plan Free alcanzado' : 'Registrar sucursal'}
           </button>
         </form>
       </div>

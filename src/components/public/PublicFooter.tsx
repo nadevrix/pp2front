@@ -1,5 +1,4 @@
-// Footer público — minimal, solo links internos.
-// Cuando integremos con pollar.xyz (sitio padre) agregamos contacto / link externo acá.
+// Footer público — minimal, solo links internos al proyecto.
 
 import Link from 'next/link';
 

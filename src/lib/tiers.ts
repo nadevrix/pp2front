@@ -31,7 +31,7 @@ export const TIERS_UI: Record<Tier, TierUi> = {
             '50 primeras transacciones gratuitas',
             'QR de cobro ilimitado',
             '1 sucursal',
-            'Exportación últimos 3 meses (CSV / PDF / XLSX)',
+            'Exportación CSV últimos 3 meses',
             'Soporte por email',
         ],
         accent: 'border-slate-700',

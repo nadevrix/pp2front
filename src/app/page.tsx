@@ -25,8 +25,12 @@ export default function LandingPage() {
           }}
         />
         <div className="max-w-5xl mx-auto px-6 pt-24 pb-20 text-center">
-          <div className="inline-block text-xs font-medium tracking-wider uppercase text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 rounded-full px-3 py-1 mb-6">
-            Disponible · 15 de mayo de 2026
+          <div className="inline-flex items-center gap-2 text-xs font-medium tracking-wider uppercase text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-3 py-1 mb-6">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
+            Disponible ahora
           </div>
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-5">
             Cobrá en <span className="text-indigo-400">dólares digitales</span>.<br />

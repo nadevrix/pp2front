@@ -347,7 +347,7 @@ export default function CobrarPage() {
           </div>
         </div>
 
-        <div className="mt-6 flex gap-3">
+        <div className="mt-6 flex flex-wrap gap-3 print:hidden">
           <button
             onClick={resetAll}
             className="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium"
@@ -360,9 +360,27 @@ export default function CobrarPage() {
           >
             Copiar link de pago
           </button>
+          <button
+            onClick={() => window.print()}
+            className="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium"
+          >
+            Imprimir QR
+          </button>
+          {sep7Uri && (
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent(
+                `Pagá ${parseFloat(intent!.amount).toFixed(2)} USDC con Pollar Pay:\n${sep7Uri}`,
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium"
+            >
+              Compartir por WhatsApp
+            </a>
+          )}
         </div>
 
-        <p className="text-xs text-slate-500 mt-6">
+        <p className="text-xs text-slate-500 mt-6 print:hidden">
           El cliente paga desde Binance, Meru, Lobstr o cualquier wallet Stellar. La confirmación aparece automáticamente en 3 – 5 segundos.
         </p>
       </div>

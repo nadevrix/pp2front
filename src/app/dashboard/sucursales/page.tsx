@@ -8,16 +8,26 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { backendFetch, type Project } from '@/lib/backend-api';
+import type { TierState } from '@/lib/tiers';
 
 export default function SucursalesPage() {
   const [branches, setBranches] = useState<Project[] | null>(null);
+  const [tier, setTier] = useState<TierState | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    backendFetch<{ projects: Project[] }>('/api/projects/list')
-      .then(d => setBranches(d.projects))
-      .catch(e => setError(e.message));
+    Promise.all([
+      backendFetch<{ projects: Project[] }>('/api/projects/list')
+        .then(d => setBranches(d.projects)),
+      backendFetch<{ data: TierState }>('/api/merchant/tier')
+        .then(d => setTier(d.data))
+        .catch(() => { /* tier es opcional para esta vista */ }),
+    ]).catch(e => setError(e.message));
   }, []);
+
+  // Free = 1 sucursal (PDF pág. 8). El backend lo enforce; acá deshabilitamos el
+  // botón "Nueva sucursal" si ya hay una y el plan es Free, y mostramos el porqué.
+  const freeBranchLimitReached = tier?.tier === 'free' && (branches?.length ?? 0) >= 1;
 
   if (error) {
     return (
@@ -36,12 +46,30 @@ export default function SucursalesPage() {
             Cada sucursal tiene su propia wallet de destino y reportes separados.
           </p>
         </div>
-        <Link
-          href="/dashboard/sucursales/nueva"
-          className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm"
-        >
-          + Nueva sucursal
-        </Link>
+        {freeBranchLimitReached ? (
+          <div className="text-right">
+            <span
+              aria-disabled
+              className="inline-block px-4 py-2 rounded-lg bg-slate-800 text-slate-500 cursor-not-allowed text-sm font-medium"
+              title="Tu plan Free permite 1 sucursal"
+            >
+              + Nueva sucursal
+            </span>
+            <div className="text-[11px] text-slate-500 mt-1">
+              Tu plan Free permite 1 sucursal.{' '}
+              <Link href="/dashboard/plan" className="text-indigo-400 hover:text-indigo-300">
+                Cambiar a Starter →
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <Link
+            href="/dashboard/sucursales/nueva"
+            className="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm"
+          >
+            + Nueva sucursal
+          </Link>
+        )}
       </header>
 
       {branches === null ? (
