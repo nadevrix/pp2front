@@ -36,7 +36,7 @@ export default function FAQPage() {
     <PublicShell>
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-10 text-center">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Preguntas frecuentes</h1>
-        <p className="text-slate-300">
+        <p className="text-[#6b7280]">
           Si quedó alguna duda sin responder, escribinos desde el dashboard una vez creada tu cuenta.
         </p>
       </section>
@@ -46,34 +46,34 @@ export default function FAQPage() {
           {FAQS.map(f => (
             <details
               key={f.q}
-              className="group bg-slate-900 border border-slate-800 rounded-2xl px-6 py-5 open:border-sky-500/40"
+              className="group bg-white border border-[#e5e7eb] rounded-2xl px-6 py-5 open:border-[#005DB4]"
             >
               <summary className="flex items-center justify-between cursor-pointer list-none">
                 <span className="font-semibold text-base pr-4">{f.q}</span>
-                <span className="text-slate-500 group-open:rotate-45 transition-transform shrink-0">+</span>
+                <span className="text-[#9ca3af] group-open:rotate-45 transition-transform shrink-0">+</span>
               </summary>
-              <p className="text-sm text-slate-300 mt-3 leading-relaxed">{f.a}</p>
+              <p className="text-sm text-[#6b7280] mt-3 leading-relaxed">{f.a}</p>
             </details>
           ))}
         </div>
       </section>
 
-      <section className="border-t border-white/5">
+      <section className="border-t border-[#e5e7eb]">
         <div className="max-w-3xl mx-auto px-6 py-16 text-center">
           <h2 className="text-2xl font-bold tracking-tight mb-3">Empezá hoy</h2>
-          <p className="text-slate-400 mb-6">
+          <p className="text-[#6b7280] mb-6">
             Registro gratuito, sin aprobación previa, sin cuota de entrada.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/signup"
-              className="px-6 py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold"
+              className="px-6 py-3 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-semibold"
             >
               Crear cuenta
             </Link>
             <Link
               href="/precios"
-              className="px-6 py-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium"
+              className="px-6 py-3 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] font-medium"
             >
               Ver precios
             </Link>

@@ -105,20 +105,20 @@ export default function UserAuth({
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6">
+    <div className="min-h-screen bg-white text-[#1a1a1a] flex items-center justify-center p-6">
       <div className="w-full max-w-md">
         <div className="flex items-center gap-2 mb-8 justify-center">
           <Image src="/logo.jpg" alt="Pollar Pay" width={40} height={40} priority className="rounded-lg" />
           <span className="font-semibold text-xl tracking-tight">Pollar Pay</span>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
+        <div className="bg-white border border-[#e5e7eb] rounded-2xl p-8">
           <h1 className="text-2xl font-bold mb-1">{title}</h1>
-          <p className="text-slate-400 text-sm mb-6">{subtitle}</p>
+          <p className="text-[#6b7280] text-sm mb-6">{subtitle}</p>
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Usuario</label>
+              <label className="block text-sm font-medium text-[#6b7280] mb-1.5">Usuario</label>
               <input
                 type="text"
                 value={username}
@@ -127,20 +127,20 @@ export default function UserAuth({
                 autoComplete="username"
                 placeholder="mi-comercio"
                 pattern={USERNAME_RE.source}
-                className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-mono"
+                className="w-full px-4 py-2.5 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] placeholder-[#9ca3af] focus:outline-none focus:border-[#005DB4] focus:ring-1 focus:ring-[#005DB4] font-mono"
               />
               {mode === 'signup' && (
-                <p className="mt-1.5 text-xs text-slate-500">
+                <p className="mt-1.5 text-xs text-[#9ca3af]">
                   3 a 32 caracteres. Letras, números, punto, guion y guion bajo.
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label className="block text-sm font-medium text-[#6b7280] mb-1.5">
                 Contraseña
                 {mode === 'signup' && (
-                  <span className="text-slate-500 font-normal text-xs"> — mínimo {MIN_PASS} caracteres</span>
+                  <span className="text-[#9ca3af] font-normal text-xs"> — mínimo {MIN_PASS} caracteres</span>
                 )}
               </label>
               <input
@@ -150,12 +150,12 @@ export default function UserAuth({
                 required
                 minLength={MIN_PASS}
                 autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-                className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+                className="w-full px-4 py-2.5 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] placeholder-[#9ca3af] focus:outline-none focus:border-[#005DB4] focus:ring-1 focus:ring-[#005DB4]"
               />
             </div>
 
             {error && (
-              <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm">
+              <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700 text-sm">
                 {error}
               </div>
             )}
@@ -163,22 +163,22 @@ export default function UserAuth({
             <button
               type="submit"
               disabled={loading || !formValid}
-              className="w-full py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (mode === 'signup' ? 'Creando…' : 'Entrando…') : submitLabel}
             </button>
 
             {mode === 'signup' && (
-              <p className="text-xs text-slate-500 text-center">
+              <p className="text-xs text-[#9ca3af] text-center">
                 Anotá tu usuario y contraseña — no usamos email, no hay recupero
                 automático.
               </p>
             )}
           </form>
 
-          <p className="text-sm text-slate-400 mt-6 text-center">
+          <p className="text-sm text-[#6b7280] mt-6 text-center">
             {altLink.cta}{' '}
-            <Link href={altLink.href} className="text-sky-400 hover:text-sky-300">
+            <Link href={altLink.href} className="text-[#005DB4] hover:text-[#0047a0]">
               {altLink.label}
             </Link>
           </p>

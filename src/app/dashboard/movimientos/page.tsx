@@ -47,14 +47,14 @@ const STATUS_OPTIONS = [
 ];
 
 const STATUS_COLOR: Record<string, string> = {
-  completed: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-  overpaid: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-  pending: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-  underpaid: 'text-rose-400 bg-rose-500/10 border-rose-500/20',
-  expired: 'text-slate-400 bg-slate-500/10 border-slate-500/20',
-  anomaly: 'text-rose-400 bg-rose-500/10 border-rose-500/20',
-  late_anomaly: 'text-rose-400 bg-rose-500/10 border-rose-500/20',
-  refunded: 'text-violet-400 bg-violet-500/10 border-violet-500/20',
+  completed: 'text-emerald-700 bg-emerald-500/10 border-emerald-500/20',
+  overpaid: 'text-amber-700 bg-amber-500/10 border-amber-500/20',
+  pending: 'text-amber-700 bg-amber-500/10 border-amber-500/20',
+  underpaid: 'text-rose-700 bg-rose-500/10 border-rose-500/20',
+  expired: 'text-[#6b7280] bg-[#f0f7ff] border-[#e5e7eb]',
+  anomaly: 'text-rose-700 bg-rose-500/10 border-rose-500/20',
+  late_anomaly: 'text-rose-700 bg-rose-500/10 border-rose-500/20',
+  refunded: 'text-violet-700 bg-violet-500/10 border-violet-500/20',
 };
 
 const STATUS_LABEL: Record<string, string> = {
@@ -120,18 +120,18 @@ export default function MovimientosPage() {
       <header className="flex items-end justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Movimientos</h1>
-          <p className="text-slate-400 mt-1">Todos los cobros de tu comercio.</p>
+          <p className="text-[#6b7280] mt-1">Todos los cobros de tu comercio.</p>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setExportOpen(true)}
-            className="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium"
+            className="px-3.5 py-2 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
           >
             Exportar
           </button>
           <Link
             href="/dashboard/cobrar"
-            className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm"
+            className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium text-sm"
           >
             + Nuevo cobro
           </Link>
@@ -146,7 +146,7 @@ export default function MovimientosPage() {
       />
 
       {error && (
-        <div className="p-3 mb-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm">
+        <div className="p-3 mb-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700 text-sm">
           {error}
         </div>
       )}
@@ -155,7 +155,7 @@ export default function MovimientosPage() {
         <select
           value={status}
           onChange={e => setStatus(e.target.value)}
-          className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-sky-500"
+          className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-white focus:outline-none focus:border-[#005DB4]"
         >
           {STATUS_OPTIONS.map(o => (
             <option key={o.value} value={o.value}>{o.label}</option>
@@ -165,7 +165,7 @@ export default function MovimientosPage() {
           <select
             value={branchId}
             onChange={e => setBranchId(e.target.value)}
-            className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-sky-500"
+            className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-white focus:outline-none focus:border-[#005DB4]"
           >
             <option value="">Todas las sucursales</option>
             {branches.map(b => (
@@ -173,21 +173,21 @@ export default function MovimientosPage() {
             ))}
           </select>
         )}
-        <span className="text-xs text-slate-500 self-center ml-auto">Auto-refresh cada 15 s</span>
+        <span className="text-xs text-[#9ca3af] self-center ml-auto">Auto-refresh cada 15 s</span>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+      <div className="bg-white border border-[#e5e7eb] rounded-2xl overflow-hidden">
         {rows === null ? (
-          <div className="px-6 py-12 text-center text-slate-500 text-sm">Cargando…</div>
+          <div className="px-6 py-12 text-center text-[#9ca3af] text-sm">Cargando…</div>
         ) : rows.length === 0 ? (
-          <div className="px-6 py-12 text-center text-slate-500 text-sm">
+          <div className="px-6 py-12 text-center text-[#9ca3af] text-sm">
             Sin movimientos para los filtros seleccionados.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-xs text-slate-500 border-b border-slate-800">
+                <tr className="text-left text-xs text-[#9ca3af] border-b border-[#e5e7eb]">
                   <th className="px-6 py-3 font-medium">Estado</th>
                   <th className="px-6 py-3 font-medium">Motivo</th>
                   <th className="px-6 py-3 font-medium">Sucursal</th>
@@ -206,26 +206,26 @@ export default function MovimientosPage() {
                   const net = parseFloat(t.payout_amount || (paid - fee).toString());
                   const settled = t.status === 'completed' || t.status === 'overpaid';
                   return (
-                    <tr key={t.id} className="border-b border-slate-800 last:border-0">
+                    <tr key={t.id} className="border-b border-[#e5e7eb] last:border-0">
                       <td className="px-6 py-3">
                         <span className={`inline-block text-xs px-2 py-0.5 rounded-md border ${STATUS_COLOR[t.status] || STATUS_COLOR.pending}`}>
                           {STATUS_LABEL[t.status] ?? t.status}
                         </span>
                       </td>
-                      <td className="px-6 py-3 text-slate-300 max-w-[200px] truncate">{t.reason}</td>
-                      <td className="px-6 py-3 text-slate-400 text-xs">{t.branch_name}</td>
-                      <td className="px-6 py-3 text-right font-mono text-slate-200">{paid.toFixed(2)}</td>
-                      <td className="px-6 py-3 text-right font-mono text-slate-400">
+                      <td className="px-6 py-3 text-[#6b7280] max-w-[200px] truncate">{t.reason}</td>
+                      <td className="px-6 py-3 text-[#6b7280] text-xs">{t.branch_name}</td>
+                      <td className="px-6 py-3 text-right font-mono text-[#1a1a1a]">{paid.toFixed(2)}</td>
+                      <td className="px-6 py-3 text-right font-mono text-[#6b7280]">
                         {!settled ? (
-                          <span className="text-slate-600">—</span>
+                          <span className="text-[#9ca3af]">—</span>
                         ) : t.is_free_tx ? (
-                          <span className="text-emerald-400 text-xs">GRATIS</span>
+                          <span className="text-emerald-700 text-xs">GRATIS</span>
                         ) : (
                           <>{fee.toFixed(2)}</>
                         )}
                       </td>
-                      <td className="px-6 py-3 text-right font-mono text-slate-200">
-                        {settled ? net.toFixed(2) : <span className="text-slate-600">—</span>}
+                      <td className="px-6 py-3 text-right font-mono text-[#1a1a1a]">
+                        {settled ? net.toFixed(2) : <span className="text-[#9ca3af]">—</span>}
                       </td>
                       <td className="px-6 py-3 text-xs">
                         {hash ? (
@@ -233,15 +233,15 @@ export default function MovimientosPage() {
                             href={stellarExpertTxUrl(hash, NETWORK)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sky-400 hover:text-sky-300 font-mono"
+                            className="text-[#005DB4] hover:text-[#0047a0] font-mono"
                           >
                             {hash.slice(0, 8)}…↗
                           </a>
                         ) : (
-                          <span className="text-slate-600">—</span>
+                          <span className="text-[#9ca3af]">—</span>
                         )}
                       </td>
-                      <td className="px-6 py-3 text-xs text-slate-500 whitespace-nowrap">
+                      <td className="px-6 py-3 text-xs text-[#9ca3af] whitespace-nowrap">
                         {new Date(t.created_at).toLocaleString([], {
                           day: '2-digit',
                           month: 'short',
@@ -259,7 +259,7 @@ export default function MovimientosPage() {
       </div>
 
       {total > PAGE_SIZE && (
-        <div className="flex items-center justify-between mt-4 text-sm text-slate-400">
+        <div className="flex items-center justify-between mt-4 text-sm text-[#6b7280]">
           <div>
             Mostrando {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, total)} de {total}
           </div>
@@ -267,14 +267,14 @@ export default function MovimientosPage() {
             <button
               onClick={() => setPage(p => Math.max(0, p - 1))}
               disabled={page === 0}
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] disabled:opacity-40 disabled:cursor-not-allowed"
             >
               ← Anterior
             </button>
             <button
               onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
               disabled={page >= totalPages - 1}
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Siguiente →
             </button>

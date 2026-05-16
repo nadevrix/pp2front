@@ -65,30 +65,30 @@ export default function NuevaSucursalPage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-10">
       <div className="mb-6">
-        <Link href="/dashboard/sucursales" className="text-sm text-slate-400 hover:text-white">
+        <Link href="/dashboard/sucursales" className="text-sm text-[#6b7280] hover:text-[#005DB4]">
           ← Volver a sucursales
         </Link>
       </div>
 
       <h1 className="text-3xl font-bold tracking-tight mb-2">Nueva sucursal</h1>
-      <p className="text-slate-400 mb-8">
+      <p className="text-[#6b7280] mb-8">
         Pollar Pay envía los pagos cobrados directo a tu wallet — Pollar no custodia tus fondos.
       </p>
 
       {limitReached && (
-        <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-sm">
+        <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-700 text-sm">
           Tu plan <strong>Free</strong> permite 1 sucursal. Para registrar más{' '}
-          <Link href="/dashboard/plan" className="text-amber-200 underline hover:text-white">
+          <Link href="/dashboard/plan" className="text-amber-700 underline hover:text-[#005DB4]">
             pasá a Starter
           </Link>{' '}
           (sin cuota mensual, 0.9 % por cobro).
         </div>
       )}
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
+      <div className="bg-white border border-[#e5e7eb] rounded-2xl p-8">
         <form onSubmit={onSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label className="block text-sm font-medium text-[#6b7280] mb-1.5">
               Nombre de la sucursal
             </label>
             <input
@@ -97,12 +97,12 @@ export default function NuevaSucursalPage() {
               onChange={e => setName(e.target.value)}
               placeholder="Ej: Café La Paz centro"
               required
-              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+              className="w-full px-4 py-2.5 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] placeholder-[#9ca3af] focus:outline-none focus:border-[#005DB4] focus:ring-1 focus:ring-[#005DB4]"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label className="block text-sm font-medium text-[#6b7280] mb-1.5">
               Rubro o descripción
             </label>
             <input
@@ -111,12 +111,12 @@ export default function NuevaSucursalPage() {
               onChange={e => setReason(e.target.value)}
               placeholder="Ej: Cafetería · ventas mostrador"
               required
-              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+              className="w-full px-4 py-2.5 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] placeholder-[#9ca3af] focus:outline-none focus:border-[#005DB4] focus:ring-1 focus:ring-[#005DB4]"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label className="block text-sm font-medium text-[#6b7280] mb-1.5">
               Wallet Stellar de destino
             </label>
             <input
@@ -125,33 +125,33 @@ export default function NuevaSucursalPage() {
               onChange={e => setPayoutWallet(e.target.value)}
               placeholder="GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
               required
-              className={`w-full px-4 py-2.5 bg-slate-800 border rounded-lg text-white placeholder-slate-500 focus:outline-none transition-colors font-mono text-sm ${
+              className={`w-full px-4 py-2.5 bg-[#f0f7ff] border rounded-lg text-[#1a1a1a] placeholder-[#9ca3af] focus:outline-none transition-colors font-mono text-sm ${
                 walletTouched
                   ? walletValid
                     ? 'border-emerald-500 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500'
                     : 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500'
-                  : 'border-slate-700 focus:border-sky-500 focus:ring-1 focus:ring-sky-500'
+                  : 'border-[#e5e7eb] focus:border-[#005DB4] focus:ring-1 focus:ring-[#005DB4]'
               }`}
             />
             {walletTouched && !walletValid && (
-              <p className="mt-1.5 text-xs text-rose-400">
+              <p className="mt-1.5 text-xs text-rose-700">
                 Stellar public key inválida (debe empezar con G y tener 56 caracteres)
               </p>
             )}
             {walletTouched && walletValid && (
-              <p className="mt-1.5 text-xs text-emerald-400">Public key válida ✓</p>
+              <p className="mt-1.5 text-xs text-emerald-700">Public key válida ✓</p>
             )}
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="mt-2 text-xs text-[#9ca3af]">
               ¿No tenés una? Podés crearla gratis en{' '}
-              <a href="https://lobstr.co" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:text-sky-300">Lobstr</a>{' '}
+              <a href="https://lobstr.co" target="_blank" rel="noopener noreferrer" className="text-[#005DB4] hover:text-[#0047a0]">Lobstr</a>{' '}
               o{' '}
-              <a href="https://meru.io" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:text-sky-300">Meru</a>{' '}
+              <a href="https://meru.io" target="_blank" rel="noopener noreferrer" className="text-[#005DB4] hover:text-[#0047a0]">Meru</a>{' '}
               en 3 minutos desde tu teléfono.
             </p>
           </div>
 
           {error && (
-            <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm">
+            <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700 text-sm">
               {error}
             </div>
           )}
@@ -159,7 +159,7 @@ export default function NuevaSucursalPage() {
           <button
             type="submit"
             disabled={loading || limitReached || !name.trim() || !reason.trim() || !walletValid}
-            className="w-full py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Registrando…' : limitReached ? 'Límite del plan Free alcanzado' : 'Registrar sucursal'}
           </button>

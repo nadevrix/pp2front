@@ -1,18 +1,23 @@
 @import "tailwindcss";
 
 /*
-  Pollar Pay forzamos dark mode siempre — el diseño está pensado en slate-950
-  + acentos azul polar. Antes este archivo escuchaba prefers-color-scheme y
-  cambiaba el body a blanco en sistemas en modo claro: eso "tapaba" la
-  bg-slate-950 que pone <body className=...> y todo se veía apagado.
-
-  Tampoco fijamos font-family acá: la Geist viene por className del <html>.
+  Pollar Pay — tema light, alineado con pollar.xyz.
+  Paleta principal:
+    - Primary:      #005DB4 (azul Pollar)
+    - Primary hover #0047a0
+    - Bg primary:   #ffffff
+    - Bg secondary: #f0f7ff  (azul pálido para secciones / inputs)
+    - Bg accent:    #e0f0ff
+    - Text 1:       #1a1a1a (casi negro)
+    - Text 2:       #6b7280 (gris medio)
+    - Text 3:       #9ca3af (gris claro)
+    - Border:       #e5e7eb
 */
 
 :root {
-  color-scheme: dark;
-  --background: #050a14;
-  --foreground: #e5edf7;
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
 }
 
 @theme inline {
@@ -28,12 +33,9 @@ html, body {
 }
 
 /* Modo impresión: el merchant puede imprimir un QR de cobro y pegarlo en su
-   local. Ocultamos nav/footer/botones y forzamos colores legibles. */
+   local. Ocultamos nav/footer/botones. Como ya somos light, basta con quitar
+   chrome. */
 @media print {
-  html, body {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
   nav,
   footer,
   .print\:hidden {

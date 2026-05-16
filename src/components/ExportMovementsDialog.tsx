@@ -135,13 +135,13 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md shadow-xl">
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1a1a1a]/60 backdrop-blur-sm">
+      <div className="bg-white border border-[#e5e7eb] rounded-2xl w-full max-w-md shadow-xl">
+        <div className="px-6 py-4 border-b border-[#e5e7eb] flex items-center justify-between">
           <h2 className="font-semibold">Exportar movimientos</h2>
           <button
             onClick={onClose}
-            className="text-slate-500 hover:text-white text-xl leading-none"
+            className="text-[#9ca3af] hover:text-[#005DB4] text-xl leading-none"
             aria-label="Cerrar"
           >
             ×
@@ -149,41 +149,41 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
         </div>
 
         <div className="px-6 py-5 space-y-4">
-          <div className="text-xs text-slate-400">
+          <div className="text-xs text-[#6b7280]">
             {tierWindowLabel || 'Cargando información del plan…'}
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Desde</label>
+              <label className="block text-xs text-[#9ca3af] mb-1">Desde</label>
               <input
                 type="date"
                 value={from}
                 onChange={e => setFrom(e.target.value)}
                 min={minFrom}
                 max={to}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#005DB4]"
               />
             </div>
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Hasta</label>
+              <label className="block text-xs text-[#9ca3af] mb-1">Hasta</label>
               <input
                 type="date"
                 value={to}
                 onChange={e => setTo(e.target.value)}
                 min={from}
                 max={isoDate(today)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#005DB4]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs text-slate-500 mb-1">Estado</label>
+            <label className="block text-xs text-[#9ca3af] mb-1">Estado</label>
             <select
               value={status}
               onChange={e => setStatus(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+              className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#005DB4]"
             >
               <option value="">Todos</option>
               <option value="completed">Cobrados</option>
@@ -197,11 +197,11 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
 
           {branches.length > 1 && (
             <div>
-              <label className="block text-xs text-slate-500 mb-1">Sucursal</label>
+              <label className="block text-xs text-[#9ca3af] mb-1">Sucursal</label>
               <select
                 value={branchId}
                 onChange={e => setBranchId(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#005DB4]"
               >
                 <option value="">Todas</option>
                 {branches.map(b => (
@@ -212,28 +212,28 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
           )}
 
           {error && (
-            <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs">
+            <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700 text-xs">
               {error}
             </div>
           )}
 
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[#9ca3af]">
             Formato CSV (compatible con Excel y Google Sheets). Los movimientos se exportan en orden cronológico inverso.
           </p>
         </div>
 
-        <div className="px-6 py-4 border-t border-slate-800 flex justify-end gap-2">
+        <div className="px-6 py-4 border-t border-[#e5e7eb] flex justify-end gap-2">
           <button
             onClick={onClose}
             disabled={downloading}
-            className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-medium"
+            className="px-4 py-2 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-sm font-medium"
           >
             Cancelar
           </button>
           <button
             onClick={onDownload}
             disabled={downloading}
-            className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium disabled:opacity-50"
+            className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-medium disabled:opacity-50"
           >
             {downloading ? 'Generando…' : 'Descargar CSV'}
           </button>

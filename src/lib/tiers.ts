@@ -34,7 +34,7 @@ export const TIERS_UI: Record<Tier, TierUi> = {
             'Exportación CSV últimos 3 meses',
             'Soporte por email',
         ],
-        accent: 'border-slate-700',
+        accent: 'border-[#e5e7eb]',
     },
     starter: {
         id: 'starter',
@@ -50,7 +50,7 @@ export const TIERS_UI: Record<Tier, TierUi> = {
             'Exportación últimos 6 meses',
             'Soporte por email <48 h',
         ],
-        accent: 'border-slate-700',
+        accent: 'border-[#e5e7eb]',
     },
     growth: {
         id: 'growth',
@@ -66,7 +66,7 @@ export const TIERS_UI: Record<Tier, TierUi> = {
             'Notificaciones webhook',
             'Soporte por chat <4 h',
         ],
-        accent: 'border-sky-500/60 ring-1 ring-sky-500/40',
+        accent: 'border-[#005DB4] ring-1 ring-[#005DB4]/40',
         recommended: true,
     },
     scale: {
@@ -83,7 +83,7 @@ export const TIERS_UI: Record<Tier, TierUi> = {
             'API de integración completa',
             'Soporte WhatsApp / Telegram <1 h',
         ],
-        accent: 'border-slate-700',
+        accent: 'border-[#e5e7eb]',
     },
 };
 

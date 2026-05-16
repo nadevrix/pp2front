@@ -29,7 +29,7 @@ export default function AvanzadoPage() {
   if (error) {
     return (
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400">{error}</div>
+        <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700">{error}</div>
       </div>
     );
   }
@@ -38,8 +38,8 @@ export default function AvanzadoPage() {
     <div className="max-w-4xl mx-auto px-6 py-10 space-y-10">
       <header>
         <h1 className="text-3xl font-bold tracking-tight">Avanzado</h1>
-        <p className="text-slate-400 mt-1">
-          Integrá Pollar Pay con tu sitio, POS o cualquier sistema usando el SDK <code className="text-slate-200 text-sm bg-black/40 px-1.5 py-0.5 rounded">@pollar/pay</code> o la API REST.
+        <p className="text-[#6b7280] mt-1">
+          Integrá Pollar Pay con tu sitio, POS o cualquier sistema usando el SDK <code className="text-[#1a1a1a] text-sm bg-[#f0f7ff] px-1.5 py-0.5 rounded">@pollar/pay</code> o la API REST.
         </p>
       </header>
 
@@ -47,55 +47,55 @@ export default function AvanzadoPage() {
       {branches && <WebhooksSection branches={branches} />}
 
       {/* API keys por sucursal */}
-      <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+      <section className="bg-white border border-[#e5e7eb] rounded-2xl p-6">
         <h2 className="font-semibold text-lg mb-2">API keys</h2>
-        <p className="text-sm text-slate-400 mb-5">
+        <p className="text-sm text-[#6b7280] mb-5">
           Cada sucursal tiene su propia API key. Usala como credencial para crear cobros desde tu sistema. Tratala como una contraseña.
         </p>
 
         {branches === null ? (
-          <div className="text-slate-500 text-sm">Cargando…</div>
+          <div className="text-[#9ca3af] text-sm">Cargando…</div>
         ) : branches.length === 0 ? (
-          <div className="text-slate-500 text-sm">
-            Aún no tenés sucursales. <Link href="/dashboard/sucursales/nueva" className="text-sky-400 hover:text-sky-300">Registrar la primera →</Link>
+          <div className="text-[#9ca3af] text-sm">
+            Aún no tenés sucursales. <Link href="/dashboard/sucursales/nueva" className="text-[#005DB4] hover:text-[#0047a0]">Registrar la primera →</Link>
           </div>
         ) : (
           <div className="space-y-4">
             {branches.map(b => (
-              <div key={b.id} className="border border-slate-800 rounded-lg p-4">
+              <div key={b.id} className="border border-[#e5e7eb] rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <div className="font-medium">{b.name}</div>
-                    <div className="text-xs text-slate-500">{b.reason}</div>
+                    <div className="text-xs text-[#9ca3af]">{b.reason}</div>
                   </div>
                   <span className={`text-xs px-2 py-0.5 rounded-md border ${
                     b.api_key.startsWith('pub_mainnet_')
-                      ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
-                      : 'text-amber-400 bg-amber-500/10 border-amber-500/20'
+                      ? 'text-emerald-700 bg-emerald-500/10 border-emerald-500/20'
+                      : 'text-amber-700 bg-amber-500/10 border-amber-500/20'
                   }`}>
                     {b.api_key.startsWith('pub_mainnet_') ? 'Mainnet' : 'Testnet'}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <code className="flex-1 font-mono text-xs bg-black/50 px-3 py-2 rounded-lg text-emerald-400 border border-slate-800 break-all">
+                  <code className="flex-1 font-mono text-xs bg-[#1a1a1a] px-3 py-2 rounded-lg text-emerald-700 border border-[#e5e7eb] break-all">
                     {revealed[b.id] ? b.api_key : b.api_key.replace(/^(pub_\w+_).{8}.+(.{4})$/, '$1••••••••$2')}
                   </code>
                   <button
                     onClick={() => toggle(b.id)}
-                    className="px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-medium"
+                    className="px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium"
                   >
                     {revealed[b.id] ? 'Ocultar' : 'Mostrar'}
                   </button>
                   <button
                     onClick={() => copy(b.api_key)}
-                    className="px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-medium"
+                    className="px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium"
                   >
                     Copiar
                   </button>
                 </div>
 
-                <div className="text-xs text-slate-500 mt-2">
+                <div className="text-xs text-[#9ca3af] mt-2">
                   Project ID: <code className="font-mono">{b.id}</code>
                 </div>
               </div>
@@ -105,19 +105,19 @@ export default function AvanzadoPage() {
       </section>
 
       {/* Guía de integración rápida */}
-      <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+      <section className="bg-white border border-[#e5e7eb] rounded-2xl p-6">
         <h2 className="font-semibold text-lg mb-2">Integración con el SDK</h2>
-        <p className="text-sm text-slate-400 mb-5">
-          El paquete <code className="text-slate-200 bg-black/40 px-1.5 py-0.5 rounded text-xs">@pollar/pay</code> abstrae la creación de intents, polling de estado y manejo de errores. Funciona en Node, browsers y edge runtimes.
+        <p className="text-sm text-[#6b7280] mb-5">
+          El paquete <code className="text-[#1a1a1a] bg-[#f0f7ff] px-1.5 py-0.5 rounded text-xs">@pollar/pay</code> abstrae la creación de intents, polling de estado y manejo de errores. Funciona en Node, browsers y edge runtimes.
         </p>
 
-        <div className="text-xs text-slate-500 mb-1.5">Instalación</div>
-        <pre className="bg-black/50 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-300 mb-5 overflow-x-auto">
+        <div className="text-xs text-[#9ca3af] mb-1.5">Instalación</div>
+        <pre className="bg-[#1a1a1a] border border-[#e5e7eb] rounded-lg p-3 text-xs font-mono text-[#6b7280] mb-5 overflow-x-auto">
 {`npm install @pollar/pay`}
         </pre>
 
-        <div className="text-xs text-slate-500 mb-1.5">Uso básico</div>
-        <pre className="bg-black/50 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-300 overflow-x-auto">
+        <div className="text-xs text-[#9ca3af] mb-1.5">Uso básico</div>
+        <pre className="bg-[#1a1a1a] border border-[#e5e7eb] rounded-lg p-3 text-xs font-mono text-[#6b7280] overflow-x-auto">
 {`import { PollarPayClient } from '@pollar/pay';
 
 const pay = new PollarPayClient({
@@ -136,10 +136,10 @@ pay.waitForPayment(intent.data.transaction_id, {
       </section>
 
       {/* API REST */}
-      <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+      <section className="bg-white border border-[#e5e7eb] rounded-2xl p-6">
         <h2 className="font-semibold text-lg mb-2">API REST</h2>
-        <p className="text-sm text-slate-400 mb-5">
-          Si preferís llamar la API directamente (por ejemplo desde un POS o WooCommerce), todos los endpoints aceptan la api_key en el header <code className="text-slate-200 bg-black/40 px-1.5 py-0.5 rounded text-xs">x-pollar-api-key</code>.
+        <p className="text-sm text-[#6b7280] mb-5">
+          Si preferís llamar la API directamente (por ejemplo desde un POS o WooCommerce), todos los endpoints aceptan la api_key en el header <code className="text-[#1a1a1a] bg-[#f0f7ff] px-1.5 py-0.5 rounded text-xs">x-pollar-api-key</code>.
         </p>
 
         <div className="space-y-4 text-sm">
@@ -182,17 +182,17 @@ function Endpoint({
 }) {
   const color =
     method === 'GET'
-      ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
-      : 'text-sky-400 bg-sky-500/10 border-sky-500/20';
+      ? 'text-emerald-700 bg-emerald-500/10 border-emerald-500/20'
+      : 'text-[#005DB4] bg-[#f0f7ff] border-[#005DB4]/30';
   return (
-    <div className="border border-slate-800 rounded-lg p-3">
+    <div className="border border-[#e5e7eb] rounded-lg p-3">
       <div className="flex items-center gap-2 mb-1.5">
         <span className={`text-xs font-mono px-2 py-0.5 rounded border ${color}`}>{method}</span>
-        <code className="text-xs font-mono text-slate-200">{path}</code>
+        <code className="text-xs font-mono text-[#1a1a1a]">{path}</code>
       </div>
-      <p className="text-xs text-slate-400">{description}</p>
+      <p className="text-xs text-[#6b7280]">{description}</p>
       {body && (
-        <pre className="bg-black/40 border border-slate-800 rounded mt-2 p-2 text-xs font-mono text-slate-300 overflow-x-auto">
+        <pre className="bg-[#f0f7ff] border border-[#e5e7eb] rounded mt-2 p-2 text-xs font-mono text-[#6b7280] overflow-x-auto">
           {body}
         </pre>
       )}

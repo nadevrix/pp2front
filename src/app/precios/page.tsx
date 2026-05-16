@@ -19,7 +19,7 @@ export default function PreciosPage() {
     <PublicShell>
       <section className="max-w-5xl mx-auto px-6 pt-20 pb-10 text-center">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">Precios simples</h1>
-        <p className="text-slate-300 max-w-2xl mx-auto">
+        <p className="text-[#6b7280] max-w-2xl mx-auto">
           Sin cuota mensual en los tres primeros tiers — pagás únicamente cuando cobrás. Los
           tiers se asignan por volumen real: el sistema monitorea cada comercio y sugiere el
           correcto automáticamente.
@@ -33,33 +33,33 @@ export default function PreciosPage() {
             return (
               <div
                 key={t}
-                className={`relative bg-slate-900 border ${ui.accent} rounded-2xl p-6 flex flex-col`}
+                className={`relative bg-white border ${ui.accent} rounded-2xl p-6 flex flex-col`}
               >
                 {ui.recommended && (
-                  <span className="absolute -top-2.5 left-4 text-[10px] uppercase tracking-wider bg-sky-500/20 text-sky-300 border border-sky-500/40 rounded px-2 py-0.5">
+                  <span className="absolute -top-2.5 left-4 text-[10px] uppercase tracking-wider bg-[#f0f7ff] text-[#005DB4] border border-[#005DB4] rounded px-2 py-0.5">
                     Recomendado
                   </span>
                 )}
                 <div className="mb-1">
                   <h3 className="font-semibold text-lg">{ui.label}</h3>
-                  <p className="text-xs text-slate-500">{ui.volumeLabel}</p>
+                  <p className="text-xs text-[#9ca3af]">{ui.volumeLabel}</p>
                 </div>
                 <div className="mt-3 mb-1">
                   <div className="text-3xl font-bold tabular-nums">{ui.percentLabel}</div>
-                  <div className="text-xs text-slate-500">{ui.minimumLabel}</div>
-                  <div className="text-xs text-slate-500 mt-0.5">{ui.monthlyLabel}</div>
+                  <div className="text-xs text-[#9ca3af]">{ui.minimumLabel}</div>
+                  <div className="text-xs text-[#9ca3af] mt-0.5">{ui.monthlyLabel}</div>
                 </div>
-                <ul className="mt-4 text-xs text-slate-400 space-y-1.5 flex-1">
+                <ul className="mt-4 text-xs text-[#6b7280] space-y-1.5 flex-1">
                   {ui.features.map(f => (
                     <li key={f} className="flex gap-1.5">
-                      <span className="text-emerald-400 shrink-0">✓</span>
+                      <span className="text-emerald-700 shrink-0">✓</span>
                       <span>{f}</span>
                     </li>
                   ))}
                 </ul>
                 <Link
                   href="/signup"
-                  className="mt-5 py-2 rounded-lg text-sm font-medium text-center bg-sky-500 hover:bg-sky-600 text-white"
+                  className="mt-5 py-2 rounded-lg text-sm font-medium text-center bg-[#005DB4] hover:bg-[#0047a0] text-white"
                 >
                   Empezar gratis
                 </Link>
@@ -69,9 +69,9 @@ export default function PreciosPage() {
         </div>
 
         {/* Por qué Scale tiene cuota */}
-        <div className="mt-10 bg-slate-900 border border-sky-500/30 rounded-2xl p-6">
+        <div className="mt-10 bg-white border border-[#005DB4] rounded-2xl p-6">
           <h3 className="font-semibold mb-2">¿Por qué Scale tiene cuota mensual?</h3>
-          <p className="text-sm text-slate-300">
+          <p className="text-sm text-[#6b7280]">
             A 1.000 transacciones mensuales con ticket promedio de $30, un comercio en Growth
             paga $210/mes en fees. Con Scale ($25 cuota + 0.5 %) paga $175/mes — un ahorro de $35
             que crece con el volumen. La cuota solo tiene sentido cuando ya hay flujo predecible;
@@ -82,17 +82,17 @@ export default function PreciosPage() {
         {/* Cálculo del fee */}
         <div className="mt-8">
           <h3 className="font-semibold mb-2">¿Cómo se calcula el fee?</h3>
-          <p className="text-sm text-slate-300 mb-5">
+          <p className="text-sm text-[#6b7280] mb-5">
             El fee aplicado es el <strong>mayor</strong> entre el porcentaje del tier y el mínimo
             fijo. Esto protege al comercio en tickets grandes y garantiza un costo mínimo
             previsible en tickets chicos. El gas de la red Stellar está incluido — no hay cargo
             adicional.
           </p>
 
-          <div className="overflow-x-auto bg-slate-900 border border-slate-800 rounded-2xl">
+          <div className="overflow-x-auto bg-white border border-[#e5e7eb] rounded-2xl">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-xs text-slate-500 border-b border-slate-800">
+                <tr className="text-left text-xs text-[#9ca3af] border-b border-[#e5e7eb]">
                   <th className="px-5 py-3 font-medium">Tier</th>
                   <th className="px-5 py-3 font-medium text-right">Monto cobrado</th>
                   <th className="px-5 py-3 font-medium text-right">Fee calculado</th>
@@ -102,12 +102,12 @@ export default function PreciosPage() {
               </thead>
               <tbody>
                 {EXAMPLES.map((e, i) => (
-                  <tr key={i} className="border-b border-slate-800 last:border-0">
-                    <td className="px-5 py-3 font-medium text-slate-200">{e.tier}</td>
-                    <td className="px-5 py-3 text-right font-mono text-slate-300">{e.monto}</td>
-                    <td className="px-5 py-3 text-right font-mono text-slate-400">{e.calculado}</td>
-                    <td className="px-5 py-3 text-right font-mono text-slate-100">{e.cobrado}</td>
-                    <td className="px-5 py-3 text-slate-400 text-xs">{e.nota}</td>
+                  <tr key={i} className="border-b border-[#e5e7eb] last:border-0">
+                    <td className="px-5 py-3 font-medium text-[#1a1a1a]">{e.tier}</td>
+                    <td className="px-5 py-3 text-right font-mono text-[#6b7280]">{e.monto}</td>
+                    <td className="px-5 py-3 text-right font-mono text-[#6b7280]">{e.calculado}</td>
+                    <td className="px-5 py-3 text-right font-mono text-[#1a1a1a]">{e.cobrado}</td>
+                    <td className="px-5 py-3 text-[#6b7280] text-xs">{e.nota}</td>
                   </tr>
                 ))}
               </tbody>
@@ -116,17 +116,17 @@ export default function PreciosPage() {
         </div>
       </section>
 
-      <section className="border-t border-white/5">
+      <section className="border-t border-[#e5e7eb]">
         <div className="max-w-3xl mx-auto px-6 py-16 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
             Sin cuota de entrada · sin aprobación previa
           </h2>
-          <p className="text-slate-400 mb-6">
+          <p className="text-[#6b7280] mb-6">
             Creá tu cuenta y cobrá tu primer USDC el mismo día.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-6 py-3 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold"
+            className="inline-block px-6 py-3 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-semibold"
           >
             Empezar gratis
           </Link>

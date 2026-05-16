@@ -10,7 +10,7 @@ export default async function Nav() {
   const userLabel = displayName(user?.email);
 
   return (
-    <nav className="border-b border-white/10 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
+    <nav className="border-b border-[#e5e7eb] bg-white/80 backdrop-blur-xl sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
         <Link href="/dashboard" className="flex items-center gap-2 shrink-0">
           <Image src="/logo.jpg" alt="Pollar Pay" width={36} height={36} priority className="rounded-lg" />
@@ -21,12 +21,12 @@ export default async function Nav() {
 
         <div className="flex items-center gap-3 shrink-0">
           {userLabel && (
-            <span className="text-sm text-slate-400 hidden md:inline truncate max-w-[200px] font-mono">{userLabel}</span>
+            <span className="text-sm text-[#6b7280] hidden md:inline truncate max-w-[200px] font-mono">{userLabel}</span>
           )}
           <form action="/auth/signout" method="post">
             <button
               type="submit"
-              className="text-sm px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
+              className="text-sm px-3 py-1.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] transition-colors"
             >
               Salir
             </button>

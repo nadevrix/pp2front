@@ -27,8 +27,8 @@ export default function NavLinks() {
             href={l.href}
             className={`text-sm px-3 py-1.5 rounded-lg transition-colors ${
               active
-                ? 'bg-slate-800 text-white'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                ? 'bg-[#f0f7ff] text-white'
+                : 'text-[#6b7280] hover:text-[#005DB4] hover:bg-white'
             }`}
           >
             {l.label}

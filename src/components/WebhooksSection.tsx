@@ -165,18 +165,18 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
   };
 
   return (
-    <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+    <section className="bg-white border border-[#e5e7eb] rounded-2xl p-6">
       <div className="flex items-start justify-between mb-2 gap-4">
         <div>
           <h2 className="font-semibold text-lg">Webhooks</h2>
-          <p className="text-sm text-slate-400 mt-1">
-            Recibí notificaciones HTTP en tu servidor cada vez que cambia el estado de un cobro. Firmamos cada payload con HMAC-SHA256 en el header <code className="text-xs bg-black/40 px-1.5 py-0.5 rounded">x-pollar-signature</code>.
+          <p className="text-sm text-[#6b7280] mt-1">
+            Recibí notificaciones HTTP en tu servidor cada vez que cambia el estado de un cobro. Firmamos cada payload con HMAC-SHA256 en el header <code className="text-xs bg-[#f0f7ff] px-1.5 py-0.5 rounded">x-pollar-signature</code>.
           </p>
         </div>
         <button
           onClick={() => setShowCreate(s => !s)}
           disabled={!canCreate}
-          className="shrink-0 px-3.5 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+          className="shrink-0 px-3.5 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
           title={canCreate ? '' : 'Disponible a partir del tier Growth'}
         >
           + Nuevo webhook
@@ -184,23 +184,23 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
       </div>
 
       {!canCreate && tier && (
-        <div className="mt-4 rounded-xl bg-sky-500/10 border border-sky-500/30 px-4 py-3 text-sm">
+        <div className="mt-4 rounded-xl bg-[#f0f7ff] border border-[#005DB4] px-4 py-3 text-sm">
           Los webhooks son una feature del tier <strong>Growth</strong>.{' '}
-          <Link href="/dashboard/plan" className="text-sky-300 hover:text-sky-200 underline">
+          <Link href="/dashboard/plan" className="text-[#005DB4] hover:text-[#0047a0] underline">
             Cambiar de plan →
           </Link>
         </div>
       )}
 
       {showCreate && canCreate && (
-        <form onSubmit={onCreate} className="mt-5 p-5 bg-black/30 border border-slate-800 rounded-xl space-y-4">
+        <form onSubmit={onCreate} className="mt-5 p-5 bg-[#f0f7ff] border border-[#e5e7eb] rounded-xl space-y-4">
           <div>
-            <label className="block text-xs text-slate-500 mb-1">Sucursal</label>
+            <label className="block text-xs text-[#9ca3af] mb-1">Sucursal</label>
             <select
               value={createBranch}
               onChange={e => setCreateBranch(e.target.value)}
               required
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-sky-500"
+              className="w-full px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#005DB4]"
             >
               <option value="">— Elegir sucursal —</option>
               {branches.map(b => (
@@ -209,16 +209,16 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
             </select>
           </div>
           <div>
-            <label className="block text-xs text-slate-500 mb-1">URL del endpoint</label>
+            <label className="block text-xs text-[#9ca3af] mb-1">URL del endpoint</label>
             <input
               type="url"
               value={createUrl}
               onChange={e => setCreateUrl(e.target.value)}
               required
               placeholder="https://tu-servidor.com/webhooks/pollar"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm font-mono focus:outline-none focus:border-sky-500"
+              className="w-full px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-[#1a1a1a] text-sm font-mono focus:outline-none focus:border-[#005DB4]"
             />
-            <p className="text-xs text-slate-500 mt-1.5">
+            <p className="text-xs text-[#9ca3af] mt-1.5">
               Tu servidor debe responder 2xx en menos de 3 s. Si falla, reintentamos con backoff (1m → 5m → 15m → 1h → 6h → 1d → 2d → 4d).
             </p>
           </div>
@@ -226,14 +226,14 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
             <button
               type="submit"
               disabled={creating}
-              className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-medium disabled:opacity-50"
+              className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-medium disabled:opacity-50"
             >
               {creating ? 'Creando…' : 'Crear webhook'}
             </button>
             <button
               type="button"
               onClick={() => setShowCreate(false)}
-              className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-medium"
+              className="px-4 py-2 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-sm font-medium"
             >
               Cancelar
             </button>
@@ -243,24 +243,24 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
 
       {createdSecret && (
         <div className="mt-5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-5">
-          <div className="font-medium text-emerald-300 mb-2">Webhook creado — guardá el secret ahora</div>
-          <p className="text-sm text-slate-300 mb-3">
+          <div className="font-medium text-emerald-700 mb-2">Webhook creado — guardá el secret ahora</div>
+          <p className="text-sm text-[#6b7280] mb-3">
             Este es tu <strong>secret de firma</strong>. <strong>Solo se muestra una vez.</strong> Guardalo en tu servidor para verificar el HMAC de cada payload.
           </p>
           <div className="flex items-center gap-2 mb-2">
-            <code className="flex-1 font-mono text-xs bg-black/50 px-3 py-2 rounded-lg text-emerald-400 border border-emerald-500/30 break-all">
+            <code className="flex-1 font-mono text-xs bg-[#1a1a1a] px-3 py-2 rounded-lg text-emerald-700 border border-emerald-500/30 break-all">
               {createdSecret.secret}
             </code>
             <button
               onClick={() => navigator.clipboard.writeText(createdSecret.secret)}
-              className="px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-medium"
+              className="px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium"
             >
               Copiar
             </button>
           </div>
           <button
             onClick={() => setCreatedSecret(null)}
-            className="text-xs text-slate-400 hover:text-white mt-2"
+            className="text-xs text-[#6b7280] hover:text-[#005DB4] mt-2"
           >
             Ya lo guardé, ocultar
           </button>
@@ -268,51 +268,51 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
       )}
 
       {error && (
-        <div className="mt-4 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm">
+        <div className="mt-4 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700 text-sm">
           {error}
         </div>
       )}
 
       <div className="mt-6">
         {endpoints === null ? (
-          <div className="text-slate-500 text-sm">Cargando…</div>
+          <div className="text-[#9ca3af] text-sm">Cargando…</div>
         ) : endpoints.length === 0 ? (
-          <div className="text-slate-500 text-sm">No tenés webhooks configurados.</div>
+          <div className="text-[#9ca3af] text-sm">No tenés webhooks configurados.</div>
         ) : (
           <div className="space-y-3">
             {endpoints.map(ep => (
-              <div key={ep.id} className="border border-slate-800 rounded-lg p-4">
+              <div key={ep.id} className="border border-[#e5e7eb] rounded-lg p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border ${
                         ep.active
-                          ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/40'
-                          : 'bg-slate-800 text-slate-400 border-slate-700'
+                          ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/40'
+                          : 'bg-[#f0f7ff] text-[#6b7280] border-[#e5e7eb]'
                       }`}>
                         {ep.active ? 'Activo' : 'Pausado'}
                       </span>
-                      <span className="text-xs text-slate-500">{ep.branch_name}</span>
+                      <span className="text-xs text-[#9ca3af]">{ep.branch_name}</span>
                     </div>
-                    <code className="block font-mono text-sm text-slate-200 break-all">{ep.url}</code>
+                    <code className="block font-mono text-sm text-[#1a1a1a] break-all">{ep.url}</code>
                   </div>
                   <div className="flex shrink-0 gap-1">
                     <button
                       onClick={() => onTest(ep.id)}
-                      className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs"
+                      className="px-2.5 py-1.5 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs"
                       title="Enviar evento de prueba"
                     >
                       Probar
                     </button>
                     <button
                       onClick={() => onTogglePause(ep)}
-                      className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs"
+                      className="px-2.5 py-1.5 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs"
                     >
                       {ep.active ? 'Pausar' : 'Activar'}
                     </button>
                     <button
                       onClick={() => onDelete(ep.id)}
-                      className="px-2.5 py-1.5 bg-slate-800 hover:bg-rose-500/30 rounded-lg text-xs text-rose-300"
+                      className="px-2.5 py-1.5 bg-[#f0f7ff] hover:bg-rose-500/30 rounded-lg text-xs text-rose-300"
                     >
                       Eliminar
                     </button>
@@ -321,22 +321,22 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
 
                 <button
                   onClick={() => openDeliveriesFor(ep.id)}
-                  className="mt-3 text-xs text-sky-400 hover:text-sky-300"
+                  className="mt-3 text-xs text-[#005DB4] hover:text-[#0047a0]"
                 >
                   {openDeliveries === ep.id ? 'Ocultar entregas' : 'Ver entregas recientes'}
                 </button>
 
                 {openDeliveries === ep.id && (
-                  <div className="mt-4 border-t border-slate-800 pt-4">
+                  <div className="mt-4 border-t border-[#e5e7eb] pt-4">
                     {loadingDeliveries ? (
-                      <div className="text-xs text-slate-500">Cargando…</div>
+                      <div className="text-xs text-[#9ca3af]">Cargando…</div>
                     ) : deliveries.length === 0 ? (
-                      <div className="text-xs text-slate-500">Sin entregas todavía.</div>
+                      <div className="text-xs text-[#9ca3af]">Sin entregas todavía.</div>
                     ) : (
                       <div className="overflow-x-auto">
                         <table className="w-full text-xs">
                           <thead>
-                            <tr className="text-left text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-800">
+                            <tr className="text-left text-[10px] uppercase tracking-wider text-[#9ca3af] border-b border-[#e5e7eb]">
                               <th className="px-2 py-2">Evento</th>
                               <th className="px-2 py-2">Estado</th>
                               <th className="px-2 py-2">Intentos</th>
@@ -347,28 +347,28 @@ export default function WebhooksSection({ branches }: { branches: Project[] }) {
                           </thead>
                           <tbody>
                             {deliveries.map(d => (
-                              <tr key={d.id} className="border-b border-slate-800 last:border-0">
+                              <tr key={d.id} className="border-b border-[#e5e7eb] last:border-0">
                                 <td className="px-2 py-2 font-mono">{d.event_type}</td>
                                 <td className="px-2 py-2">
                                   <span className={`px-1.5 py-0.5 rounded text-[10px] border ${
-                                    d.status === 'delivered' ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' :
-                                    d.status === 'pending'   ? 'bg-amber-500/10 text-amber-300 border-amber-500/30' :
+                                    d.status === 'delivered' ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30' :
+                                    d.status === 'pending'   ? 'bg-amber-500/10 text-amber-700 border-amber-500/30' :
                                     d.status === 'failed'    ? 'bg-rose-500/10 text-rose-300 border-rose-500/30' :
-                                                               'bg-slate-700/40 text-slate-300 border-slate-700'
+                                                               'bg-[#e0f0ff]/40 text-[#6b7280] border-[#e5e7eb]'
                                   }`}>
                                     {d.status}
                                   </span>
                                 </td>
                                 <td className="px-2 py-2 tabular-nums">{d.attempts}</td>
                                 <td className="px-2 py-2 tabular-nums">{d.response_status ?? '—'}</td>
-                                <td className="px-2 py-2 text-slate-500 whitespace-nowrap">
+                                <td className="px-2 py-2 text-[#9ca3af] whitespace-nowrap">
                                   {new Date(d.created_at).toLocaleString([], { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
                                 </td>
                                 <td className="px-2 py-2 text-right">
                                   {d.status !== 'delivered' && (
                                     <button
                                       onClick={() => retryDelivery(d.id)}
-                                      className="text-sky-400 hover:text-sky-300"
+                                      className="text-[#005DB4] hover:text-[#0047a0]"
                                     >
                                       Reintentar
                                     </button>
