@@ -58,7 +58,7 @@ export default function PreciosPage() {
                   ))}
                 </ul>
                 <Link
-                  href="/signup"
+                  href="/login"
                   className="mt-5 py-2 rounded-lg text-sm font-medium text-center bg-[#005DB4] hover:bg-[#0047a0] text-white"
                 >
                   Empezar gratis
@@ -125,7 +125,7 @@ export default function PreciosPage() {
             Creá tu cuenta y cobrá tu primer USDC el mismo día.
           </p>
           <Link
-            href="/signup"
+            href="/login"
             className="inline-block px-6 py-3 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-semibold"
           >
             Empezar gratis

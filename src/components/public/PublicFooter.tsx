@@ -23,7 +23,7 @@ export default function PublicFooter() {
             <li><Link href="/#como-funciona" className="text-[#6b7280] hover:text-[#005DB4]">Cómo funciona</Link></li>
             <li><Link href="/precios" className="text-[#6b7280] hover:text-[#005DB4]">Precios</Link></li>
             <li><Link href="/faq" className="text-[#6b7280] hover:text-[#005DB4]">Preguntas frecuentes</Link></li>
-            <li><Link href="/signup" className="text-[#6b7280] hover:text-[#005DB4]">Crear cuenta</Link></li>
+            <li><Link href="/login" className="text-[#6b7280] hover:text-[#005DB4]">Iniciar sesión</Link></li>
           </ul>
         </div>
       </div>

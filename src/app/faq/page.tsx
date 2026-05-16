@@ -66,10 +66,10 @@ export default function FAQPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/signup"
+              href="/login"
               className="px-6 py-3 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-semibold"
             >
-              Crear cuenta
+              Iniciar con Google
             </Link>
             <Link
               href="/precios"

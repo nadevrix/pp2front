@@ -43,7 +43,7 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/signup"
+              href="/login"
               className="px-6 py-3 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-semibold"
             >
               Empezar gratis
@@ -291,7 +291,7 @@ export default function LandingPage() {
 
         <ol className="grid md:grid-cols-5 gap-4 mb-10">
           {[
-            { n: '01', t: 'Registro', d: 'Email o Google. Sin aprobación previa.' },
+            { n: '01', t: 'Registro', d: 'Iniciás con tu cuenta de Google. Sin aprobación previa.' },
             { n: '02', t: 'Configurás tu wallet', d: 'Si no tenés, te guiamos para crearla en Lobstr o Meru en 3 minutos.' },
             { n: '03', t: 'Personalizás tu perfil', d: 'Nombre del negocio, sucursales y monto por defecto.' },
             { n: '04', t: 'Prueba en testnet', d: 'Un pago de prueba sin dinero real para ver el flujo completo.' },
@@ -309,7 +309,7 @@ export default function LandingPage() {
           <div className="bg-white border border-emerald-500/30 rounded-xl p-5">
             <div className="text-sm font-semibold text-emerald-300 mb-3">Lo que necesitás</div>
             <ul className="space-y-1.5 text-sm text-[#6b7280]">
-              <li className="flex gap-2"><span className="text-emerald-400">✓</span> Email para registrarte</li>
+              <li className="flex gap-2"><span className="text-emerald-400">✓</span> Una cuenta de Google</li>
               <li className="flex gap-2"><span className="text-emerald-400">✓</span> Una wallet Stellar (gratuita, 3 minutos)</li>
               <li className="flex gap-2"><span className="text-emerald-400">✓</span> Teléfono o computadora con internet</li>
             </ul>
@@ -338,10 +338,10 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/signup"
+              href="/login"
               className="px-6 py-3 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-semibold"
             >
-              Crear cuenta
+              Iniciar con Google
             </Link>
             <Link
               href="/precios"
