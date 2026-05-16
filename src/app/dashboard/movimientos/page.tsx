@@ -79,6 +79,8 @@ export default function MovimientosPage() {
 
   const [status, setStatus] = useState('');
   const [branchId, setBranchId] = useState('');
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
   const [page, setPage] = useState(0);
   const [exportOpen, setExportOpen] = useState(false);
 
@@ -89,6 +91,10 @@ export default function MovimientosPage() {
     });
     if (status) params.set('status', status);
     if (branchId) params.set('branch_id', branchId);
+    // El backend espera ISO 8601. Los inputs date dan YYYY-MM-DD — los
+    // expandimos a 00:00:00 / 23:59:59 locales para cubrir el día completo.
+    if (from) params.set('from', new Date(from + 'T00:00:00').toISOString());
+    if (to)   params.set('to',   new Date(to   + 'T23:59:59').toISOString());
 
     try {
       const r = await backendFetch<{
@@ -102,7 +108,7 @@ export default function MovimientosPage() {
     } catch (e: any) {
       setError(e.message);
     }
-  }, [status, branchId, page]);
+  }, [status, branchId, from, to, page]);
 
   useEffect(() => {
     load();
@@ -111,7 +117,15 @@ export default function MovimientosPage() {
   }, [load]);
 
   // Si cambian filtros, volver a página 0
-  useEffect(() => { setPage(0); }, [status, branchId]);
+  useEffect(() => { setPage(0); }, [status, branchId, from, to]);
+
+  const clearFilters = () => {
+    setStatus('');
+    setBranchId('');
+    setFrom('');
+    setTo('');
+  };
+  const hasFilters = Boolean(status || branchId || from || to);
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(total / PAGE_SIZE)), [total]);
 
@@ -151,11 +165,11 @@ export default function MovimientosPage() {
         </div>
       )}
 
-      <div className="flex flex-wrap gap-3 mb-4">
+      <div className="flex flex-wrap gap-3 mb-4 items-center">
         <select
           value={status}
           onChange={e => setStatus(e.target.value)}
-          className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-white focus:outline-none focus:border-[#005DB4]"
+          className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
         >
           {STATUS_OPTIONS.map(o => (
             <option key={o.value} value={o.value}>{o.label}</option>
@@ -165,7 +179,7 @@ export default function MovimientosPage() {
           <select
             value={branchId}
             onChange={e => setBranchId(e.target.value)}
-            className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-white focus:outline-none focus:border-[#005DB4]"
+            className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
           >
             <option value="">Todas las sucursales</option>
             {branches.map(b => (
@@ -173,6 +187,38 @@ export default function MovimientosPage() {
             ))}
           </select>
         )}
+
+        {/* Filtro por rango de fechas — el endpoint /merchant/transactions
+            ya acepta from/to ISO, solo le damos UI. */}
+        <div className="flex items-center gap-2">
+          <input
+            type="date"
+            value={from}
+            onChange={e => setFrom(e.target.value)}
+            max={to || undefined}
+            aria-label="Desde"
+            className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+          />
+          <span className="text-xs text-[#9ca3af]">→</span>
+          <input
+            type="date"
+            value={to}
+            onChange={e => setTo(e.target.value)}
+            min={from || undefined}
+            aria-label="Hasta"
+            className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+          />
+        </div>
+
+        {hasFilters && (
+          <button
+            onClick={clearFilters}
+            className="px-3 py-2 rounded-lg text-xs text-[#005DB4] hover:bg-[#f0f7ff]"
+          >
+            Limpiar filtros
+          </button>
+        )}
+
         <span className="text-xs text-[#9ca3af] self-center ml-auto">Auto-refresh cada 15 s</span>
       </div>
 

@@ -77,6 +77,8 @@ export interface Project {
   reason: string;
   payout_wallet: string;
   api_key: string;
+  /** Monto USDC prellenado en el QR de cobro. null = sin preset (PDF pág. 11 paso 03). */
+  default_amount?: number | string | null;
   created_at: string;
 }
 

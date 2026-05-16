@@ -78,6 +78,54 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── 2b. INFRAESTRUCTURA EN PRODUCCIÓN ────────────────────────────── */}
+      {/* Refleja la página 2 del PDF: stats reales + integraciones en curso */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <div className="text-center mb-10">
+          <div className="inline-block text-xs font-medium tracking-wider uppercase text-[#005DB4] bg-[#f0f7ff] border border-[#005DB4]/30 rounded-full px-3 py-1 mb-4">
+            Infraestructura en producción
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
+            No es un experimento. Es la misma infraestructura que ya mueve dinero real.
+          </h2>
+          <p className="text-[#6b7280] max-w-2xl mx-auto text-sm sm:text-base">
+            Pollar Pay corre sobre la red Pollar — mainnet, con tráfico productivo y un SDK
+            público en npm que descargan equipos todas las semanas.
+          </p>
+        </div>
+
+        {/* Stats — citas exactas del PDF pág. 2 */}
+        <div className="grid grid-cols-3 gap-4 mb-12 max-w-3xl mx-auto">
+          {[
+            { value: '~400', label: 'wallets conectadas' },
+            { value: '~600', label: 'transacciones procesadas' },
+            { value: '~170', label: 'descargas semanales del SDK en npm' },
+          ].map(s => (
+            <div key={s.label} className="text-center">
+              <div className="text-3xl sm:text-4xl font-bold text-[#005DB4] tabular-nums">{s.value}</div>
+              <div className="text-xs sm:text-sm text-[#6b7280] mt-1">{s.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Integraciones en curso — pág. 2 del PDF */}
+        <div className="text-center">
+          <p className="text-xs uppercase tracking-wider text-[#9ca3af] mb-4">
+            Integraciones en curso
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            {['Trustless Work', 'KindFi', 'Mercato'].map(t => (
+              <span key={t} className="text-lg sm:text-xl font-semibold text-[#6b7280]">
+                {t}
+              </span>
+            ))}
+            <span className="text-xs text-[#9ca3af] italic">
+              + 5 más en evaluación
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* ── 3. PROBLEMA / SOLUCIÓN ───────────────────────────────────────── */}
       <section className="max-w-5xl mx-auto px-6 py-20">
         <div className="grid md:grid-cols-2 gap-10">

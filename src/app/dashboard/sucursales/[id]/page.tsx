@@ -47,6 +47,59 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
   const [walletSaving, setWalletSaving] = useState(false);
   const [walletError, setWalletError] = useState<string | null>(null);
 
+  // Edición inline del perfil: nombre, rubro y monto por defecto en el QR
+  // (PDF pág. 11 paso 03).
+  const [editingProfile, setEditingProfile] = useState(false);
+  const [profileDraft, setProfileDraft] = useState<{ name: string; reason: string; default_amount: string }>({
+    name: '', reason: '', default_amount: '',
+  });
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+
+  const startEditProfile = () => {
+    if (!branch) return;
+    setProfileDraft({
+      name: branch.name,
+      reason: branch.reason,
+      default_amount: branch.default_amount != null ? String(branch.default_amount) : '',
+    });
+    setProfileError(null);
+    setEditingProfile(true);
+  };
+
+  const saveProfile = async () => {
+    if (!branch) return;
+    const name = profileDraft.name.trim();
+    const reason = profileDraft.reason.trim();
+    if (!name || !reason) {
+      setProfileError('Nombre y rubro no pueden quedar vacíos');
+      return;
+    }
+    let defaultAmount: number | null = null;
+    const raw = profileDraft.default_amount.trim();
+    if (raw) {
+      const n = parseFloat(raw);
+      if (isNaN(n) || n < 0.01 || n > 1_000_000) {
+        setProfileError('Monto por defecto inválido (0.01 – 1,000,000 USDC)');
+        return;
+      }
+      defaultAmount = n;
+    }
+    setProfileSaving(true);
+    setProfileError(null);
+    try {
+      const res = await backendFetch<{ project: Project }>(`/api/projects/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ name, reason, default_amount: defaultAmount }),
+      });
+      setBranch(res.project);
+      setEditingProfile(false);
+    } catch (e: any) {
+      setProfileError(e.message || 'Error guardando');
+    }
+    setProfileSaving(false);
+  };
+
   const loadAll = async () => {
     try {
       const [pRes, txRes] = await Promise.all([
@@ -134,13 +187,115 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
           <h1 className="text-3xl font-bold tracking-tight mb-1">{branch.name}</h1>
           <p className="text-[#6b7280]">{branch.reason}</p>
         </div>
-        <Link
-          href="/dashboard/cobrar"
-          className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium text-sm"
-        >
-          Cobrar en esta sucursal
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href={`/dashboard/cobrar?branch=${branch.id}`}
+            className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium text-sm"
+          >
+            Cobrar en esta sucursal
+          </Link>
+          {/* PDF pág. 11 paso 04: "Prueba en modo testnet — Un pago de prueba
+              sin dinero real para ver el flujo completo antes de activar." */}
+          {network === 'TESTNET' && (
+            <Link
+              href={`/dashboard/cobrar?branch=${branch.id}&amount=1&reason=Cobro+de+prueba+(testnet)`}
+              className="px-4 py-2 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] font-medium text-sm border border-[#005DB4]/30"
+            >
+              Hacer cobro de prueba
+            </Link>
+          )}
+        </div>
       </header>
+
+      {/* Perfil editable de la sucursal — PDF pág. 11 paso 03:
+          "Nombre del negocio, sucursales si aplica, y monto por defecto en el QR". */}
+      <div className="bg-white border border-[#e5e7eb] rounded-2xl p-6 mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold">Perfil del comercio</h2>
+          {!editingProfile && (
+            <button onClick={startEditProfile} className="text-xs text-[#6b7280] hover:text-[#005DB4]">
+              Editar
+            </button>
+          )}
+        </div>
+
+        {!editingProfile ? (
+          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+            <div>
+              <dt className="text-xs text-[#9ca3af]">Nombre</dt>
+              <dd className="text-[#1a1a1a] mt-0.5 truncate">{branch.name}</dd>
+            </div>
+            <div>
+              <dt className="text-xs text-[#9ca3af]">Rubro / descripción</dt>
+              <dd className="text-[#1a1a1a] mt-0.5 truncate">{branch.reason}</dd>
+            </div>
+            <div>
+              <dt className="text-xs text-[#9ca3af]">Monto por defecto del QR</dt>
+              <dd className="text-[#1a1a1a] mt-0.5 font-mono">
+                {branch.default_amount != null
+                  ? `$${parseFloat(String(branch.default_amount)).toFixed(2)} USDC`
+                  : <span className="text-[#9ca3af]">— sin preset</span>}
+              </dd>
+            </div>
+          </dl>
+        ) : (
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs text-[#9ca3af] mb-1">Nombre</label>
+              <input
+                type="text"
+                value={profileDraft.name}
+                onChange={e => setProfileDraft(d => ({ ...d, name: e.target.value }))}
+                className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] focus:outline-none focus:border-[#005DB4] text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-[#9ca3af] mb-1">Rubro / descripción</label>
+              <input
+                type="text"
+                value={profileDraft.reason}
+                onChange={e => setProfileDraft(d => ({ ...d, reason: e.target.value }))}
+                className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] focus:outline-none focus:border-[#005DB4] text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-[#9ca3af] mb-1">
+                Monto por defecto del QR <span className="text-[#9ca3af]">(opcional, USDC)</span>
+              </label>
+              <input
+                type="number"
+                inputMode="decimal"
+                step="0.01"
+                min="0.01"
+                value={profileDraft.default_amount}
+                onChange={e => setProfileDraft(d => ({ ...d, default_amount: e.target.value }))}
+                placeholder="Ej: 25.00 (dejá vacío para no prellenar)"
+                className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-[#1a1a1a] focus:outline-none focus:border-[#005DB4] text-sm"
+              />
+              <p className="mt-1 text-xs text-[#9ca3af]">
+                Si lo configurás, /cobrar va a venir con el monto ya tipeado al elegir esta sucursal.
+              </p>
+            </div>
+            {profileError && <p className="text-xs text-rose-700">{profileError}</p>}
+            <div className="flex gap-2">
+              <button
+                onClick={saveProfile}
+                disabled={profileSaving}
+                className="px-3 py-1.5 bg-[#005DB4] hover:bg-[#0047a0] text-white rounded-lg text-xs font-medium disabled:opacity-50"
+              >
+                {profileSaving ? 'Guardando…' : 'Guardar cambios'}
+              </button>
+              <button
+                onClick={() => setEditingProfile(false)}
+                disabled={profileSaving}
+                className="px-3 py-1.5 bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] rounded-lg text-xs font-medium"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="bg-white border border-[#e5e7eb] rounded-2xl p-6 mb-8">
         <h2 className="font-semibold mb-4">Wallet de destino</h2>

@@ -8,8 +8,9 @@
 // status live (pending / partial / completed / overpaid / expired). Reusa
 // /api/sdk/pay y /api/sdk/status con la api_key de la sucursal.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { QRCodeSVG } from 'qrcode.react';
 import { backendFetch, sdkFetch, type Project, type PayIntent, type PayStatus } from '@/lib/backend-api';
 import {
@@ -40,14 +41,24 @@ function fmtCountdown(secs: number): string {
   return `${m}:${r}`;
 }
 
-export default function CobrarPage() {
+function CobrarInner() {
+  // Query params soportados (PDF pág. 11 paso 04 — "pago de prueba"):
+  //   ?branch=<projectId>     → preselecciona la sucursal
+  //   ?amount=<USDC>          → prellena el monto
+  //   ?reason=<texto>         → prellena el motivo
+  // Ej: /dashboard/cobrar?branch=abc&amount=1&reason=Prueba+testnet
+  const searchParams = useSearchParams();
+  const initialBranch = searchParams.get('branch') || '';
+  const initialAmount = searchParams.get('amount') || '';
+  const initialReason = searchParams.get('reason') || '';
+
   const [projects, setProjects] = useState<Project[] | null>(null);
-  const [projectId, setProjectId] = useState<string>('');
+  const [projectId, setProjectId] = useState<string>(initialBranch);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   // Form
-  const [amount, setAmount] = useState('');
-  const [reason, setReason] = useState('');
+  const [amount, setAmount] = useState(initialAmount);
+  const [reason, setReason] = useState(initialReason);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -62,15 +73,35 @@ export default function CobrarPage() {
     backendFetch<{ projects: Project[] }>('/api/projects/list')
       .then(d => {
         setProjects(d.projects);
-        if (d.projects.length === 1) setProjectId(d.projects[0].id);
+        // Si vino por query param `branch` válido, lo respetamos. Si no, y hay
+        // una sola sucursal, la elegimos automáticamente.
+        if (initialBranch && d.projects.some(p => p.id === initialBranch)) {
+          setProjectId(initialBranch);
+        } else if (d.projects.length === 1) {
+          setProjectId(d.projects[0].id);
+        }
       })
       .catch(e => setLoadError(e.message));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const selected = useMemo(
     () => projects?.find(p => p.id === projectId) ?? null,
     [projects, projectId],
   );
+
+  // Prefill del monto cuando el merchant tiene default_amount configurado en
+  // la sucursal (PDF pág. 11 paso 03). Solo se sobreescribe si el campo está
+  // vacío — si el merchant ya tipeó algo, lo respetamos.
+  useEffect(() => {
+    if (!selected) return;
+    const def = selected.default_amount;
+    if (def === null || def === undefined || def === '') return;
+    if (amount.trim() !== '') return;
+    const n = typeof def === 'number' ? def : parseFloat(String(def));
+    if (!isNaN(n) && n > 0) setAmount(n.toString());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   const network: StellarNetwork = selected ? networkFromApiKey(selected.api_key) : 'TESTNET';
 
@@ -478,5 +509,14 @@ export default function CobrarPage() {
         </button>
       </div>
     </div>
+  );
+}
+
+// Wrapper con <Suspense> — useSearchParams() requiere boundary en Next 15.
+export default function CobrarPage() {
+  return (
+    <Suspense fallback={null}>
+      <CobrarInner />
+    </Suspense>
   );
 }
