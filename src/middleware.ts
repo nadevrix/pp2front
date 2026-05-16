@@ -9,7 +9,11 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 const EXACT_PUBLIC = new Set(['/', '/precios', '/faq', '/login', '/signup']);
-const PREFIX_PUBLIC = ['/auth'];
+// `/auth` cubre redirects de magic-link de Supabase (legacy).
+// `/api/auth` es para nuestro endpoint /api/auth/signup — debe ser público
+// porque lo llamás justo ANTES de tener sesión (sino el middleware redirige
+// el POST a /login y termina respondiendo 405).
+const PREFIX_PUBLIC = ['/auth', '/api/auth'];
 
 function isPublic(pathname: string): boolean {
   if (EXACT_PUBLIC.has(pathname)) return true;
