@@ -61,20 +61,38 @@ export default function UserAuth({
 
     const email = usernameToSyntheticEmail(username);
 
-    const { error: err } =
-      mode === 'signup'
-        ? await supabase.auth.signUp({ email, password })
-        : await supabase.auth.signInWithPassword({ email, password });
+    // En signup llamamos a /api/auth/signup (server-side, usa admin.createUser
+    // con email_confirm:true → no se manda ningún mail, no hay rate limit).
+    // Después, ya creado el user, hacemos signInWithPassword en el browser
+    // para que las cookies de sesión se guarden por @supabase/ssr.
+    if (mode === 'signup') {
+      try {
+        const res = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          setError(data.error || `Error al crear cuenta (HTTP ${res.status})`);
+          setLoading(false);
+          return;
+        }
+      } catch (e: unknown) {
+        setError(e instanceof Error ? e.message : 'Error de red al crear cuenta');
+        setLoading(false);
+        return;
+      }
+    }
+
+    // Tanto en signup (recién creado) como en login: tomamos la sesión con
+    // signInWithPassword para que @supabase/ssr setee las cookies httpOnly.
+    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
 
     if (err) {
-      // Traducimos al usuario los errores típicos de Supabase
       const msg = err.message.toLowerCase();
       if (msg.includes('invalid login credentials')) {
         setError('Usuario o contraseña incorrectos.');
-      } else if (msg.includes('already registered') || msg.includes('user already')) {
-        setError('Ese usuario ya existe. Probá iniciar sesión.');
-      } else if (msg.includes('email not confirmed')) {
-        setError('La cuenta existe pero requiere confirmación. Pedile al admin que desactive "Confirm email" en Supabase.');
       } else {
         setError(err.message);
       }
