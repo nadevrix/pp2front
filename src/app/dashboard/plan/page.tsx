@@ -8,11 +8,23 @@
 import { useEffect, useState } from 'react';
 import { backendFetch } from '@/lib/backend-api';
 import { TIERS_UI, TIER_ORDER, type Tier, type TierState } from '@/lib/tiers';
+import PlanUpgradeDialog from '@/components/PlanUpgradeDialog';
+
+interface UpgradeIntent {
+  id: string;
+  target_tier: Tier;
+  amount: string;
+  transaction_id: string;
+  wallet_address: string;
+  expires_at: string;
+  network: string;
+}
 
 export default function PlanPage() {
   const [state, setState] = useState<TierState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [changing, setChanging] = useState<Tier | null>(null);
+  const [upgradeIntent, setUpgradeIntent] = useState<UpgradeIntent | null>(null);
 
   const load = () =>
     backendFetch<{ data: TierState }>('/api/merchant/tier')
@@ -21,21 +33,37 @@ export default function PlanPage() {
 
   useEffect(() => { load(); }, []);
 
+  // Cambio de plan: el backend decide si requiere pago o no.
+  //   - free / starter / growth → activación inmediata (sin cobro)
+  //   - scale → devuelve un intent con QR; abrimos el modal de pago
   const changeTier = async (next: Tier) => {
     if (!state || state.tier === next) return;
     setChanging(next);
     setError(null);
     try {
-      await backendFetch('/api/merchant/tier', {
+      const res = await backendFetch<{
+        activated: boolean;
+        tier?: Tier;
+        intent?: UpgradeIntent;
+      }>('/api/merchant/billing/upgrade', {
         method: 'POST',
         body: JSON.stringify({ tier: next }),
       });
-      await load();
+      if (res.activated) {
+        await load();
+      } else if (res.intent) {
+        setUpgradeIntent(res.intent);
+      }
     } catch (e: any) {
       setError(e.message || 'Error cambiando de plan');
     } finally {
       setChanging(null);
     }
+  };
+
+  const onActivated = async () => {
+    setUpgradeIntent(null);
+    await load();
   };
 
   if (error && !state) {
@@ -149,7 +177,13 @@ export default function PlanPage() {
                     : 'bg-[#005DB4] hover:bg-[#0047a0] text-white disabled:opacity-50'
                 }`}
               >
-                {isCurrent ? 'Plan actual' : changing === tier ? 'Cambiando…' : tier === 'scale' ? 'Cambiar (cuota se factura aparte)' : 'Cambiar a este plan'}
+                {isCurrent
+                  ? 'Plan actual'
+                  : changing === tier
+                    ? 'Generando…'
+                    : tier === 'scale'
+                      ? 'Pagar $25 USDC y activar'
+                      : 'Cambiar a este plan'}
               </button>
             </div>
           );
@@ -165,6 +199,13 @@ export default function PlanPage() {
       <p className="text-xs text-[#9ca3af] mt-8">
         El fee aplicado a cada cobro es el mayor valor entre el porcentaje del tier y el mínimo fijo. El gas de la red Stellar está incluido — no hay cargo adicional.
       </p>
+
+      <PlanUpgradeDialog
+        open={upgradeIntent !== null}
+        intent={upgradeIntent}
+        onClose={() => setUpgradeIntent(null)}
+        onActivated={onActivated}
+      />
     </div>
   );
 }
