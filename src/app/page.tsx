@@ -165,7 +165,7 @@ export default function LandingPage() {
       {/* ── 4. CÓMO FUNCIONA ────────────────────────────────────────────── */}
       <section id="como-funciona" className="border-y border-[#e5e7eb] bg-[#f0f7ff]">
         <div className="max-w-5xl mx-auto px-6 py-20">
-          <h2 className="text-3xl font-bold tracking-tight mb-3 text-center">Cómo funciona un cobro</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 text-center">Cómo funciona un cobro</h2>
           <p className="text-[#6b7280] text-center mb-12 max-w-2xl mx-auto">
             El flujo completo — desde que el cliente decide pagar hasta que el dinero llega a tu
             wallet — ocurre en menos de 10 segundos.
@@ -208,7 +208,7 @@ export default function LandingPage() {
 
       {/* ── 5. PROPUESTA DE VALOR ───────────────────────────────────────── */}
       <section className="max-w-5xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold tracking-tight mb-3 text-center">Por qué Pollar Pay</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 text-center">Por qué Pollar Pay</h2>
         <p className="text-[#6b7280] text-center mb-12 max-w-2xl mx-auto">
           No es otra pasarela que te pide confiar en una plataforma nueva. Es acceso directo a
           infraestructura blockchain probada, con compatibilidad concreta para el mercado boliviano.
@@ -241,7 +241,7 @@ export default function LandingPage() {
       {/* ── 6. COMPARATIVA ──────────────────────────────────────────────── */}
       <section className="border-y border-[#e5e7eb] bg-[#f0f7ff]">
         <div className="max-w-5xl mx-auto px-6 py-20">
-          <h2 className="text-3xl font-bold tracking-tight mb-3 text-center">Frente a otras opciones</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 text-center">Frente a otras opciones</h2>
           <p className="text-[#6b7280] text-center mb-10 max-w-2xl mx-auto">
             No reemplaza tu transferencia bancaria ni tu QR — los complementa para clientes que
             paguen en USDC o desde el exterior.
@@ -283,7 +283,7 @@ export default function LandingPage() {
 
       {/* ── 7. ACTIVACIÓN ───────────────────────────────────────────────── */}
       <section className="max-w-5xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold tracking-tight mb-3 text-center">Empezás en menos de 10 minutos</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 text-center">Empezás en menos de 10 minutos</h2>
         <p className="text-[#6b7280] text-center mb-12 max-w-2xl mx-auto">
           Sin aprobación previa, sin cuenta bancaria, sin hardware. Solo necesitás email y una
           wallet Stellar (te enseñamos a crearla si no tenés).

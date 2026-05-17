@@ -5,7 +5,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const LINKS = [
+export const DASHBOARD_LINKS = [
   { href: '/dashboard', label: 'Inicio', match: (p: string) => p === '/dashboard' },
   { href: '/dashboard/cobrar', label: 'Cobrar', match: (p: string) => p.startsWith('/dashboard/cobrar') },
   { href: '/dashboard/movimientos', label: 'Movimientos', match: (p: string) => p.startsWith('/dashboard/movimientos') },
@@ -19,7 +19,7 @@ export default function NavLinks() {
 
   return (
     <div className="hidden md:flex items-center gap-1 flex-1">
-      {LINKS.map(l => {
+      {DASHBOARD_LINKS.map(l => {
         const active = l.match(pathname);
         return (
           <Link
@@ -27,8 +27,8 @@ export default function NavLinks() {
             href={l.href}
             className={`text-sm px-3 py-1.5 rounded-lg transition-colors ${
               active
-                ? 'bg-[#f0f7ff] text-white'
-                : 'text-[#6b7280] hover:text-[#005DB4] hover:bg-white'
+                ? 'bg-[#f0f7ff] text-[#005DB4] font-medium'
+                : 'text-[#6b7280] hover:text-[#005DB4] hover:bg-[#f0f7ff]'
             }`}
           >
             {l.label}

@@ -106,7 +106,7 @@ export default function AcceptInvitePage({ params }: { params: Promise<{ token: 
   return (
     <Centered>
       <div className="text-xs uppercase tracking-wider text-[#9ca3af] mb-3">Te invitaron a</div>
-      <h1 className="text-3xl font-bold mb-1">{invite.project_name}</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold mb-1 break-words">{invite.project_name}</h1>
       <p className="text-sm text-[#6b7280] mb-6">{invite.project_reason}</p>
 
       <div className="bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg p-4 mb-6 text-sm space-y-1">

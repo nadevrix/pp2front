@@ -162,7 +162,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
 
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto px-6 py-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700">{error}</div>
         <Link href="/dashboard/sucursales" className="text-sm text-[#6b7280] hover:text-[#005DB4] mt-4 inline-block">
           ← Volver
@@ -172,13 +172,13 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
   }
 
   if (!branch) {
-    return <div className="max-w-4xl mx-auto px-6 py-10 text-[#9ca3af]">Cargando…</div>;
+    return <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 text-[#9ca3af]">Cargando…</div>;
   }
 
   const network = networkFromApiKey(branch.api_key);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
       <div className="mb-6">
         <Link href="/dashboard/sucursales" className="text-sm text-[#6b7280] hover:text-[#005DB4]">
           ← Volver a sucursales
@@ -187,7 +187,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
 
       <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-1">{branch.name}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 break-words">{branch.name}</h1>
           <p className="text-[#6b7280]">{branch.reason}</p>
         </div>
         <div className="flex flex-wrap gap-2">

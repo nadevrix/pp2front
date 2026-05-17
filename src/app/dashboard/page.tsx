@@ -86,21 +86,21 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700">{error}</div>
       </div>
     );
   }
 
   if (!data) {
-    return <div className="max-w-6xl mx-auto px-6 py-10 text-[#9ca3af]">Cargando…</div>;
+    return <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10 text-[#9ca3af]">Cargando…</div>;
   }
 
   // Estado inicial: el comercio aún no creó sucursal
   if (data.branches === 0) {
     return (
-      <div className="max-w-3xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Bienvenido a Pollar Pay</h1>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Bienvenido a Pollar Pay</h1>
         <p className="text-[#6b7280] mb-8">
           Para empezar a cobrar en USDC necesitás registrar una sucursal con la wallet Stellar donde querés recibir los fondos. El proceso toma menos de 3 minutos.
         </p>
@@ -115,15 +115,15 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
-      <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+      <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Resumen</h1>
-          <p className="text-[#6b7280] mt-1">Tus cobros en USDC, en tiempo real.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Resumen</h1>
+          <p className="text-[#6b7280] mt-1 text-sm sm:text-base">Tus cobros en USDC, en tiempo real.</p>
         </div>
         <Link
           href="/dashboard/cobrar"
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-semibold"
+          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-semibold"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -133,18 +133,18 @@ export default function DashboardPage() {
       </header>
 
       {tier && (
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 bg-white border border-[#e5e7eb] rounded-2xl px-5 py-4">
-          <div className="flex items-center gap-4">
+        <div className="mb-6 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3 bg-white border border-[#e5e7eb] rounded-2xl px-4 sm:px-5 py-4">
+          <div className="grid grid-cols-3 sm:flex sm:items-center sm:gap-4 gap-3 w-full sm:w-auto">
             <div>
-              <div className="text-xs text-[#9ca3af]">Plan vigente</div>
-              <div className="font-semibold">{tier.tier_label}</div>
+              <div className="text-xs text-[#9ca3af]">Plan</div>
+              <div className="font-semibold text-sm sm:text-base">{tier.tier_label}</div>
             </div>
             <div className="hidden sm:block h-8 w-px bg-[#f0f7ff]" />
             <div>
               <div className="text-xs text-[#9ca3af]">Fee por cobro</div>
-              <div className="font-semibold tabular-nums">
+              <div className="font-semibold tabular-nums text-sm sm:text-base">
                 {(tier.percent * 100).toFixed(1).replace(/\.0$/, '')} %
-                {tier.minimum > 0 && <span className="text-xs text-[#9ca3af]"> · mín ${tier.minimum.toFixed(2)}</span>}
+                {tier.minimum > 0 && <span className="text-xs text-[#9ca3af] block sm:inline"> mín ${tier.minimum.toFixed(2)}</span>}
               </div>
             </div>
             {tier.tier === 'free' && (
@@ -152,7 +152,7 @@ export default function DashboardPage() {
                 <div className="hidden sm:block h-8 w-px bg-[#f0f7ff]" />
                 <div>
                   <div className="text-xs text-[#9ca3af]">Free restantes</div>
-                  <div className="font-semibold tabular-nums">
+                  <div className="font-semibold tabular-nums text-sm sm:text-base">
                     {tier.usage.free_tx_remaining} <span className="text-xs text-[#9ca3af]">de 50</span>
                   </div>
                 </div>
@@ -162,9 +162,9 @@ export default function DashboardPage() {
           {tier.suggested_tier ? (
             <Link
               href="/dashboard/plan"
-              className="text-xs px-3 py-1.5 rounded-lg bg-[#f0f7ff] border border-[#005DB4] text-[#005DB4] hover:bg-[#e0f0ff]"
+              className="block sm:inline text-center text-xs px-3 py-1.5 rounded-lg bg-[#f0f7ff] border border-[#005DB4] text-[#005DB4] hover:bg-[#e0f0ff]"
             >
-              Te conviene cambiar a {tier.suggested_label} →
+              Cambiar a {tier.suggested_label} →
             </Link>
           ) : (
             <Link href="/dashboard/plan" className="text-xs text-[#6b7280] hover:text-[#005DB4]">
@@ -199,56 +199,103 @@ export default function DashboardPage() {
             Todavía no hay movimientos. Generá tu primer cobro desde el botón &laquo;Cobrar&raquo;.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-xs text-[#9ca3af] border-b border-[#e5e7eb]">
-                  <th className="px-6 py-3 font-medium">Estado</th>
-                  <th className="px-6 py-3 font-medium">Motivo</th>
-                  <th className="px-6 py-3 font-medium">Sucursal</th>
-                  <th className="px-6 py-3 font-medium text-right">Monto</th>
-                  <th className="px-6 py-3 font-medium">Comprobante</th>
-                  <th className="px-6 py-3 font-medium">Hora</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.recent.map(tx => {
-                  const hash = tx.forward_tx_hash || tx.crypto_tx_hash || null;
-                  return (
-                    <tr key={tx.id} className="border-b border-[#e5e7eb] last:border-0">
-                      <td className="px-6 py-3">
-                        <span className={`inline-block text-xs px-2 py-0.5 rounded-md border ${STATUS_COLOR[tx.status] || STATUS_COLOR.pending}`}>
+          <>
+            {/* Mobile: cards */}
+            <div className="md:hidden divide-y divide-[#e5e7eb]">
+              {data.recent.map(tx => {
+                const hash = tx.forward_tx_hash || tx.crypto_tx_hash || null;
+                return (
+                  <div key={tx.id} className="px-4 py-3 flex items-center gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`shrink-0 text-[10px] px-1.5 py-0.5 rounded border ${STATUS_COLOR[tx.status] || STATUS_COLOR.pending}`}>
                           {STATUS_LABEL[tx.status] ?? tx.status}
                         </span>
-                      </td>
-                      <td className="px-6 py-3 text-[#6b7280] max-w-[240px] truncate">{tx.reason}</td>
-                      <td className="px-6 py-3 text-[#6b7280] text-xs">{tx.branch_name}</td>
-                      <td className="px-6 py-3 text-right font-mono text-[#1a1a1a]">
-                        {parseFloat(tx.amount_paid || tx.amount_expected).toFixed(2)} <span className="text-[#9ca3af]">{tx.asset_code}</span>
-                      </td>
-                      <td className="px-6 py-3 text-xs">
-                        {hash ? (
-                          <a
-                            href={stellarExpertTxUrl(hash, BACKEND_NETWORK)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#005DB4] hover:text-[#0047a0] font-mono"
-                          >
-                            {hash.slice(0, 6)}…↗
-                          </a>
-                        ) : (
-                          <span className="text-[#9ca3af]">—</span>
+                        <span className="text-xs text-[#9ca3af]">
+                          {new Date(tx.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+                      <div className="text-sm text-[#1a1a1a] truncate">{tx.reason || '—'}</div>
+                      <div className="text-xs text-[#9ca3af] truncate">
+                        {tx.branch_name}
+                        {hash && (
+                          <>
+                            {' · '}
+                            <a
+                              href={stellarExpertTxUrl(hash, BACKEND_NETWORK)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#005DB4] font-mono"
+                            >
+                              {hash.slice(0, 6)}…↗
+                            </a>
+                          </>
                         )}
-                      </td>
-                      <td className="px-6 py-3 text-xs text-[#9ca3af]">
-                        {new Date(tx.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="font-mono text-sm font-semibold text-[#1a1a1a]">
+                        {parseFloat(tx.amount_paid || tx.amount_expected).toFixed(2)}
+                      </div>
+                      <div className="text-[10px] text-[#9ca3af] uppercase tracking-wider">{tx.asset_code}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop: tabla */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-xs text-[#9ca3af] border-b border-[#e5e7eb]">
+                    <th className="px-6 py-3 font-medium">Estado</th>
+                    <th className="px-6 py-3 font-medium">Motivo</th>
+                    <th className="px-6 py-3 font-medium">Sucursal</th>
+                    <th className="px-6 py-3 font-medium text-right">Monto</th>
+                    <th className="px-6 py-3 font-medium">Comprobante</th>
+                    <th className="px-6 py-3 font-medium">Hora</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.recent.map(tx => {
+                    const hash = tx.forward_tx_hash || tx.crypto_tx_hash || null;
+                    return (
+                      <tr key={tx.id} className="border-b border-[#e5e7eb] last:border-0">
+                        <td className="px-6 py-3">
+                          <span className={`inline-block text-xs px-2 py-0.5 rounded-md border ${STATUS_COLOR[tx.status] || STATUS_COLOR.pending}`}>
+                            {STATUS_LABEL[tx.status] ?? tx.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-3 text-[#6b7280] max-w-[240px] truncate">{tx.reason}</td>
+                        <td className="px-6 py-3 text-[#6b7280] text-xs">{tx.branch_name}</td>
+                        <td className="px-6 py-3 text-right font-mono text-[#1a1a1a]">
+                          {parseFloat(tx.amount_paid || tx.amount_expected).toFixed(2)} <span className="text-[#9ca3af]">{tx.asset_code}</span>
+                        </td>
+                        <td className="px-6 py-3 text-xs">
+                          {hash ? (
+                            <a
+                              href={stellarExpertTxUrl(hash, BACKEND_NETWORK)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#005DB4] hover:text-[#0047a0] font-mono"
+                            >
+                              {hash.slice(0, 6)}…↗
+                            </a>
+                          ) : (
+                            <span className="text-[#9ca3af]">—</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-3 text-xs text-[#9ca3af]">
+                          {new Date(tx.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </div>

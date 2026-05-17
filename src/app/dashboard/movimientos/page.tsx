@@ -130,22 +130,22 @@ export default function MovimientosPage() {
   const totalPages = useMemo(() => Math.max(1, Math.ceil(total / PAGE_SIZE)), [total]);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
-      <header className="flex items-end justify-between mb-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+      <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Movimientos</h1>
-          <p className="text-[#6b7280] mt-1">Todos los cobros de tu comercio.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Movimientos</h1>
+          <p className="text-[#6b7280] mt-1 text-sm sm:text-base">Todos los cobros de tu comercio.</p>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setExportOpen(true)}
-            className="px-3.5 py-2 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
+            className="flex-1 sm:flex-none px-3.5 py-2 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
           >
             Exportar
           </button>
           <Link
             href="/dashboard/cobrar"
-            className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium text-sm"
+            className="flex-1 sm:flex-none text-center px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium text-sm"
           >
             + Nuevo cobro
           </Link>
@@ -165,11 +165,11 @@ export default function MovimientosPage() {
         </div>
       )}
 
-      <div className="flex flex-wrap gap-3 mb-4 items-center">
+      <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 items-center">
         <select
           value={status}
           onChange={e => setStatus(e.target.value)}
-          className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+          className="flex-1 sm:flex-none min-w-[140px] px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
         >
           {STATUS_OPTIONS.map(o => (
             <option key={o.value} value={o.value}>{o.label}</option>
@@ -179,7 +179,7 @@ export default function MovimientosPage() {
           <select
             value={branchId}
             onChange={e => setBranchId(e.target.value)}
-            className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+            className="flex-1 sm:flex-none min-w-[140px] px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
           >
             <option value="">Todas las sucursales</option>
             {branches.map(b => (
@@ -190,14 +190,14 @@ export default function MovimientosPage() {
 
         {/* Filtro por rango de fechas — el endpoint /merchant/transactions
             ya acepta from/to ISO, solo le damos UI. */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <input
             type="date"
             value={from}
             onChange={e => setFrom(e.target.value)}
             max={to || undefined}
             aria-label="Desde"
-            className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+            className="flex-1 sm:flex-none px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
           />
           <span className="text-xs text-[#9ca3af]">→</span>
           <input
@@ -206,7 +206,7 @@ export default function MovimientosPage() {
             onChange={e => setTo(e.target.value)}
             min={from || undefined}
             aria-label="Hasta"
-            className="px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+            className="flex-1 sm:flex-none px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
           />
         </div>
 
@@ -219,7 +219,7 @@ export default function MovimientosPage() {
           </button>
         )}
 
-        <span className="text-xs text-[#9ca3af] self-center ml-auto">Auto-refresh cada 15 s</span>
+        <span className="hidden sm:inline text-xs text-[#9ca3af] self-center ml-auto">Auto-refresh cada 15 s</span>
       </div>
 
       <div className="bg-white border border-[#e5e7eb] rounded-2xl overflow-hidden">
@@ -230,77 +230,130 @@ export default function MovimientosPage() {
             Sin movimientos para los filtros seleccionados.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-xs text-[#9ca3af] border-b border-[#e5e7eb]">
-                  <th className="px-6 py-3 font-medium">Estado</th>
-                  <th className="px-6 py-3 font-medium">Motivo</th>
-                  <th className="px-6 py-3 font-medium">Sucursal</th>
-                  <th className="px-6 py-3 font-medium text-right">Recibido</th>
-                  <th className="px-6 py-3 font-medium text-right">Fee</th>
-                  <th className="px-6 py-3 font-medium text-right">Neto</th>
-                  <th className="px-6 py-3 font-medium">Comprobante</th>
-                  <th className="px-6 py-3 font-medium">Fecha</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map(t => {
-                  const hash = t.forward_tx_hash || t.crypto_tx_hash || null;
-                  const fee = parseFloat(t.fee_amount || '0');
-                  const paid = parseFloat(t.amount_paid || '0');
-                  const net = parseFloat(t.payout_amount || (paid - fee).toString());
-                  const settled = t.status === 'completed' || t.status === 'overpaid';
-                  return (
-                    <tr key={t.id} className="border-b border-[#e5e7eb] last:border-0">
-                      <td className="px-6 py-3">
-                        <span className={`inline-block text-xs px-2 py-0.5 rounded-md border ${STATUS_COLOR[t.status] || STATUS_COLOR.pending}`}>
-                          {STATUS_LABEL[t.status] ?? t.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-3 text-[#6b7280] max-w-[200px] truncate">{t.reason}</td>
-                      <td className="px-6 py-3 text-[#6b7280] text-xs">{t.branch_name}</td>
-                      <td className="px-6 py-3 text-right font-mono text-[#1a1a1a]">{paid.toFixed(2)}</td>
-                      <td className="px-6 py-3 text-right font-mono text-[#6b7280]">
-                        {!settled ? (
-                          <span className="text-[#9ca3af]">—</span>
-                        ) : t.is_free_tx ? (
-                          <span className="text-emerald-700 text-xs">GRATIS</span>
-                        ) : (
-                          <>{fee.toFixed(2)}</>
-                        )}
-                      </td>
-                      <td className="px-6 py-3 text-right font-mono text-[#1a1a1a]">
-                        {settled ? net.toFixed(2) : <span className="text-[#9ca3af]">—</span>}
-                      </td>
-                      <td className="px-6 py-3 text-xs">
-                        {hash ? (
-                          <a
-                            href={stellarExpertTxUrl(hash, NETWORK)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#005DB4] hover:text-[#0047a0] font-mono"
-                          >
-                            {hash.slice(0, 8)}…↗
-                          </a>
-                        ) : (
-                          <span className="text-[#9ca3af]">—</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-3 text-xs text-[#9ca3af] whitespace-nowrap">
-                        {new Date(t.created_at).toLocaleString([], {
-                          day: '2-digit',
-                          month: 'short',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <>
+            {/* Mobile: card view */}
+            <div className="md:hidden divide-y divide-[#e5e7eb]">
+              {rows.map(t => {
+                const hash = t.forward_tx_hash || t.crypto_tx_hash || null;
+                const fee = parseFloat(t.fee_amount || '0');
+                const paid = parseFloat(t.amount_paid || '0');
+                const net = parseFloat(t.payout_amount || (paid - fee).toString());
+                const settled = t.status === 'completed' || t.status === 'overpaid';
+                return (
+                  <div key={t.id} className="p-4">
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm font-medium text-[#1a1a1a] truncate">{t.reason || '—'}</div>
+                        <div className="text-xs text-[#9ca3af] mt-0.5">
+                          {t.branch_name} · {new Date(t.created_at).toLocaleString([], {
+                            day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
+                          })}
+                        </div>
+                      </div>
+                      <span className={`shrink-0 text-xs px-2 py-0.5 rounded-md border ${STATUS_COLOR[t.status] || STATUS_COLOR.pending}`}>
+                        {STATUS_LABEL[t.status] ?? t.status}
+                      </span>
+                    </div>
+                    <div className="flex items-end justify-between gap-3">
+                      <div className="text-xs text-[#6b7280]">
+                        Recibido <span className="font-mono text-[#1a1a1a]">{paid.toFixed(2)}</span> ·{' '}
+                        Fee {!settled ? '—' : t.is_free_tx ? <span className="text-emerald-700">GRATIS</span> : <span className="font-mono">{fee.toFixed(2)}</span>}
+                      </div>
+                      <div className="text-right">
+                        <div className="text-base font-mono font-semibold text-[#1a1a1a]">
+                          {settled ? net.toFixed(2) : paid.toFixed(2)}
+                        </div>
+                        <div className="text-[10px] text-[#9ca3af] uppercase tracking-wider">{settled ? 'Neto' : t.asset_code}</div>
+                      </div>
+                    </div>
+                    {hash && (
+                      <a
+                        href={stellarExpertTxUrl(hash, NETWORK)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-2 text-xs text-[#005DB4] font-mono"
+                      >
+                        {hash.slice(0, 12)}… ↗
+                      </a>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop: tabla */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-xs text-[#9ca3af] border-b border-[#e5e7eb]">
+                    <th className="px-6 py-3 font-medium">Estado</th>
+                    <th className="px-6 py-3 font-medium">Motivo</th>
+                    <th className="px-6 py-3 font-medium">Sucursal</th>
+                    <th className="px-6 py-3 font-medium text-right">Recibido</th>
+                    <th className="px-6 py-3 font-medium text-right">Fee</th>
+                    <th className="px-6 py-3 font-medium text-right">Neto</th>
+                    <th className="px-6 py-3 font-medium">Comprobante</th>
+                    <th className="px-6 py-3 font-medium">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map(t => {
+                    const hash = t.forward_tx_hash || t.crypto_tx_hash || null;
+                    const fee = parseFloat(t.fee_amount || '0');
+                    const paid = parseFloat(t.amount_paid || '0');
+                    const net = parseFloat(t.payout_amount || (paid - fee).toString());
+                    const settled = t.status === 'completed' || t.status === 'overpaid';
+                    return (
+                      <tr key={t.id} className="border-b border-[#e5e7eb] last:border-0">
+                        <td className="px-6 py-3">
+                          <span className={`inline-block text-xs px-2 py-0.5 rounded-md border ${STATUS_COLOR[t.status] || STATUS_COLOR.pending}`}>
+                            {STATUS_LABEL[t.status] ?? t.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-3 text-[#6b7280] max-w-[200px] truncate">{t.reason}</td>
+                        <td className="px-6 py-3 text-[#6b7280] text-xs">{t.branch_name}</td>
+                        <td className="px-6 py-3 text-right font-mono text-[#1a1a1a]">{paid.toFixed(2)}</td>
+                        <td className="px-6 py-3 text-right font-mono text-[#6b7280]">
+                          {!settled ? (
+                            <span className="text-[#9ca3af]">—</span>
+                          ) : t.is_free_tx ? (
+                            <span className="text-emerald-700 text-xs">GRATIS</span>
+                          ) : (
+                            <>{fee.toFixed(2)}</>
+                          )}
+                        </td>
+                        <td className="px-6 py-3 text-right font-mono text-[#1a1a1a]">
+                          {settled ? net.toFixed(2) : <span className="text-[#9ca3af]">—</span>}
+                        </td>
+                        <td className="px-6 py-3 text-xs">
+                          {hash ? (
+                            <a
+                              href={stellarExpertTxUrl(hash, NETWORK)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#005DB4] hover:text-[#0047a0] font-mono"
+                            >
+                              {hash.slice(0, 8)}…↗
+                            </a>
+                          ) : (
+                            <span className="text-[#9ca3af]">—</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-3 text-xs text-[#9ca3af] whitespace-nowrap">
+                          {new Date(t.created_at).toLocaleString([], {
+                            day: '2-digit',
+                            month: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 

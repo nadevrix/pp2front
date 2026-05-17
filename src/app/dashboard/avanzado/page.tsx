@@ -28,16 +28,16 @@ export default function AvanzadoPage() {
 
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto px-6 py-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10 space-y-10">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-10">
       <header>
-        <h1 className="text-3xl font-bold tracking-tight">Avanzado</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Avanzado</h1>
         <p className="text-[#6b7280] mt-1">
           Integrá Pollar Pay con tu sitio, POS o cualquier sistema usando el SDK <code className="text-[#1a1a1a] text-sm bg-[#f0f7ff] px-1.5 py-0.5 rounded">@pollar/pay</code> o la API REST.
         </p>

@@ -203,7 +203,7 @@ function CobrarInner() {
 
   if (loadError) {
     return (
-      <div className="max-w-4xl mx-auto px-6 py-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700">
           {loadError}
         </div>
@@ -212,13 +212,13 @@ function CobrarInner() {
   }
 
   if (projects === null) {
-    return <div className="max-w-4xl mx-auto px-6 py-10 text-[#9ca3af]">Cargando…</div>;
+    return <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 text-[#9ca3af]">Cargando…</div>;
   }
 
   if (projects.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Cobrar</h1>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Cobrar</h1>
         <p className="text-[#6b7280] mb-6">
           Para empezar a cobrar necesitás registrar una sucursal con la wallet Stellar donde querés recibir los fondos.
         </p>
@@ -235,8 +235,8 @@ function CobrarInner() {
   // ── ESTADO: formulario ────────────────────────────────────────────────────
   if (stage === 'form') {
     return (
-      <div className="max-w-2xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight mb-1">Cobrar</h1>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1">Cobrar</h1>
         <p className="text-[#6b7280] mb-8">
           Generá un QR de cobro. Tu cliente paga en segundos desde Binance, Meru, Lobstr o cualquier wallet Stellar.
         </p>
@@ -311,8 +311,8 @@ function CobrarInner() {
   // ── ESTADO: esperando pago (QR vivo) ─────────────────────────────────────
   if (stage === 'pending') {
     return (
-      <div className="max-w-3xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight mb-1">Esperando pago</h1>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1">Esperando pago</h1>
         <p className="text-[#6b7280] mb-8">
           {selected?.name} — {network === 'TESTNET' ? 'Testnet' : 'Mainnet'}
         </p>
@@ -426,7 +426,7 @@ function CobrarInner() {
     const net = parseFloat(status!.payout_amount || (paid - fee).toString());
     const showSplit = fee > 0 || status!.is_free_tx;
     return (
-      <div className="max-w-2xl mx-auto px-6 py-10">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="bg-white border border-emerald-500/30 rounded-2xl p-8 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-4">
             <svg className="w-8 h-8 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
@@ -491,7 +491,7 @@ function CobrarInner() {
 
   // ── ESTADO: falló (expirado / underpaid / anomaly) ────────────────────────
   return (
-    <div className="max-w-2xl mx-auto px-6 py-10">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
       <div className="bg-white border border-rose-500/30 rounded-2xl p-8 text-center">
         <h1 className="text-2xl font-bold tracking-tight mb-2">
           {status ? STATUS_LABEL[status.status] : 'Cobro vencido'}

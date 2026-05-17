@@ -68,23 +68,23 @@ export default function PlanPage() {
 
   if (error && !state) {
     return (
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700">{error}</div>
       </div>
     );
   }
 
   if (!state) {
-    return <div className="max-w-6xl mx-auto px-6 py-10 text-[#9ca3af]">Cargando…</div>;
+    return <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10 text-[#9ca3af]">Cargando…</div>;
   }
 
   const current = state.tier;
   const suggested = state.suggested_tier;
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Tu plan</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Tu plan</h1>
         <p className="text-[#6b7280] mt-1">
           Sin cuota mensual en los tres primeros tiers — solo pagás cuando cobrás. Los tiers se asignan por volumen real.
         </p>

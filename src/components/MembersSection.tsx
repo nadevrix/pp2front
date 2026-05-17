@@ -165,7 +165,7 @@ export default function MembersSection({ projectId, viewerRole, acceptBaseUrl }:
               Quien lo abra y inicie sesión queda como cajero de esta sucursal.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+            <div className="space-y-3 mb-3">
               <div>
                 <label className="block text-xs text-[#9ca3af] mb-1">Email (opcional)</label>
                 <input
@@ -176,34 +176,36 @@ export default function MembersSection({ projectId, viewerRole, acceptBaseUrl }:
                   className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-sm focus:outline-none focus:border-[#005DB4]"
                 />
               </div>
-              <div>
-                <label className="block text-xs text-[#9ca3af] mb-1">Usos</label>
-                <input
-                  type="number"
-                  min={1}
-                  max={100}
-                  value={maxUses}
-                  onChange={e => setMaxUses(parseInt(e.target.value || '1', 10))}
-                  className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-sm focus:outline-none focus:border-[#005DB4]"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-[#9ca3af] mb-1">Vence en (días)</label>
-                <input
-                  type="number"
-                  min={1}
-                  max={90}
-                  value={expiresInDays}
-                  onChange={e => setExpiresInDays(parseInt(e.target.value || '7', 10))}
-                  className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-sm focus:outline-none focus:border-[#005DB4]"
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs text-[#9ca3af] mb-1">Usos</label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={100}
+                    value={maxUses}
+                    onChange={e => setMaxUses(parseInt(e.target.value || '1', 10))}
+                    className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-sm focus:outline-none focus:border-[#005DB4]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-[#9ca3af] mb-1">Vence en (días)</label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={90}
+                    value={expiresInDays}
+                    onChange={e => setExpiresInDays(parseInt(e.target.value || '7', 10))}
+                    className="w-full px-3 py-2 bg-[#f0f7ff] border border-[#e5e7eb] rounded-lg text-sm focus:outline-none focus:border-[#005DB4]"
+                  />
+                </div>
               </div>
             </div>
 
             <button
               onClick={createInvite}
               disabled={creating}
-              className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-medium disabled:opacity-50"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-medium disabled:opacity-50"
             >
               {creating ? 'Generando…' : 'Generar link de invitación'}
             </button>

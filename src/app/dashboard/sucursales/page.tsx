@@ -31,17 +31,17 @@ export default function SucursalesPage() {
 
   if (error) {
     return (
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
       <header className="flex items-end justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Sucursales</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Sucursales</h1>
           <p className="text-[#6b7280] mt-1">
             Cada sucursal tiene su propia wallet de destino y reportes separados.
           </p>

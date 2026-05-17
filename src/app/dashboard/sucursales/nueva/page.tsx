@@ -65,14 +65,14 @@ export default function NuevaSucursalPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-10">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
       <div className="mb-6">
         <Link href="/dashboard/sucursales" className="text-sm text-[#6b7280] hover:text-[#005DB4]">
           ← Volver a sucursales
         </Link>
       </div>
 
-      <h1 className="text-3xl font-bold tracking-tight mb-2">Nueva sucursal</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Nueva sucursal</h1>
       <p className="text-[#6b7280] mb-8">
         Pollar Pay envía los pagos cobrados directo a tu wallet — Pollar no custodia tus fondos.
       </p>
