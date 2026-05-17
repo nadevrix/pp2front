@@ -8,6 +8,8 @@ import { useEffect, useState, use } from 'react';
 import Link from 'next/link';
 import { backendFetch, type Project, type Transaction } from '@/lib/backend-api';
 import { stellarExpertAccountUrl, stellarExpertTxUrl, networkFromApiKey } from '@/lib/stellar';
+import WalletOnboardingModal from '@/components/WalletOnboardingModal';
+import MembersSection from '@/components/MembersSection';
 
 function isValidStellarKey(key: string): boolean {
   return /^G[A-Z2-7]{55}$/.test(key.trim());
@@ -46,6 +48,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
   const [walletDraft, setWalletDraft] = useState('');
   const [walletSaving, setWalletSaving] = useState(false);
   const [walletError, setWalletError] = useState<string | null>(null);
+  const [onboardOpen, setOnboardOpen] = useState(false);
 
   // Edición inline del perfil: nombre, rubro y monto por defecto en el QR
   // (PDF pág. 11 paso 03).
@@ -212,7 +215,7 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
       <div className="bg-white border border-[#e5e7eb] rounded-2xl p-6 mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold">Perfil del comercio</h2>
-          {!editingProfile && (
+          {!editingProfile && branch.role !== 'cashier' && (
             <button onClick={startEditProfile} className="text-xs text-[#6b7280] hover:text-[#005DB4]">
               Editar
             </button>
@@ -317,16 +320,28 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
               >
                 Ver en Stellar Expert ↗
               </a>
-              <button
-                onClick={startEditWallet}
-                className="text-[#6b7280] hover:text-[#005DB4]"
-              >
-                Editar
-              </button>
+              {branch.role !== 'cashier' && (
+                <button
+                  onClick={startEditWallet}
+                  className="text-[#6b7280] hover:text-[#005DB4]"
+                >
+                  Editar
+                </button>
+              )}
             </div>
           </div>
         ) : (
           <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-[#9ca3af]">Nueva dirección Stellar</label>
+              <button
+                type="button"
+                onClick={() => setOnboardOpen(true)}
+                className="text-xs text-[#005DB4] hover:text-[#0047a0] underline"
+              >
+                ¿Cómo creo una wallet?
+              </button>
+            </div>
             <input
               type="text"
               value={walletDraft}
@@ -419,6 +434,14 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
           </div>
         )}
       </div>
+
+      <MembersSection
+        projectId={branch.id}
+        viewerRole={branch.role === 'cashier' ? 'cashier' : 'owner'}
+        acceptBaseUrl={typeof window !== 'undefined' ? window.location.origin : ''}
+      />
+
+      <WalletOnboardingModal open={onboardOpen} onClose={() => setOnboardOpen(false)} />
     </div>
   );
 }

@@ -80,6 +80,27 @@ export interface Project {
   /** Monto USDC prellenado en el QR de cobro. null = sin preset (PDF pág. 11 paso 03). */
   default_amount?: number | string | null;
   created_at: string;
+  /** Rol del user actual sobre esta sucursal — 'owner' o 'cashier'. */
+  role?: 'owner' | 'cashier';
+}
+
+export interface BranchMember {
+  user_id: string;
+  email: string;
+  role: 'owner' | 'cashier';
+  added_by: string | null;
+  created_at: string | null;
+}
+
+export interface BranchInvite {
+  id: string;
+  token: string;
+  role: 'owner' | 'cashier';
+  invited_email: string | null;
+  max_uses: number;
+  use_count: number;
+  expires_at: string;
+  created_at: string;
 }
 
 export interface Transaction {

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { backendFetch, type Project } from '@/lib/backend-api';
 import type { TierState } from '@/lib/tiers';
+import WalletOnboardingModal from '@/components/WalletOnboardingModal';
 
 function isValidStellarKey(key: string): boolean {
   return /^G[A-Z2-7]{55}$/.test(key.trim());
@@ -26,6 +27,7 @@ export default function NuevaSucursalPage() {
   // modos lo rechaza con 403 + code='TIER_BRANCH_LIMIT' — esto solo es para
   // que el merchant no se confunda).
   const [limitReached, setLimitReached] = useState(false);
+  const [onboardOpen, setOnboardOpen] = useState(false);
   useEffect(() => {
     Promise.all([
       backendFetch<{ data: TierState }>('/api/merchant/tier').catch(() => null),
@@ -116,9 +118,18 @@ export default function NuevaSucursalPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[#6b7280] mb-1.5">
-              Wallet Stellar de destino
-            </label>
+            <div className="flex items-baseline justify-between mb-1.5">
+              <label className="block text-sm font-medium text-[#6b7280]">
+                Wallet Stellar de destino
+              </label>
+              <button
+                type="button"
+                onClick={() => setOnboardOpen(true)}
+                className="text-xs text-[#005DB4] hover:text-[#0047a0] underline"
+              >
+                ¿No tenés una? Crearla en 3 minutos
+              </button>
+            </div>
             <input
               type="text"
               value={payoutWallet}
@@ -142,11 +153,7 @@ export default function NuevaSucursalPage() {
               <p className="mt-1.5 text-xs text-emerald-700">Public key válida ✓</p>
             )}
             <p className="mt-2 text-xs text-[#9ca3af]">
-              ¿No tenés una? Podés crearla gratis en{' '}
-              <a href="https://lobstr.co" target="_blank" rel="noopener noreferrer" className="text-[#005DB4] hover:text-[#0047a0]">Lobstr</a>{' '}
-              o{' '}
-              <a href="https://meru.io" target="_blank" rel="noopener noreferrer" className="text-[#005DB4] hover:text-[#0047a0]">Meru</a>{' '}
-              en 3 minutos desde tu teléfono.
+              Si todavía no tenés wallet, abrí el tutorial de Lobstr o Meru — 3 minutos desde tu teléfono.
             </p>
           </div>
 
@@ -165,6 +172,8 @@ export default function NuevaSucursalPage() {
           </button>
         </form>
       </div>
+
+      <WalletOnboardingModal open={onboardOpen} onClose={() => setOnboardOpen(false)} />
     </div>
   );
 }

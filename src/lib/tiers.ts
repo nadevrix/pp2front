@@ -79,7 +79,7 @@ export const TIERS_UI: Record<Tier, TierUi> = {
         monthlyLabel: '$25 / mes + fee reducido',
         features: [
             'Todo lo del tier Growth',
-            'Exportación programada automática',
+            'Exportación programada automática (próximamente)',
             'API de integración completa',
             'Soporte WhatsApp / Telegram <1 h',
         ],

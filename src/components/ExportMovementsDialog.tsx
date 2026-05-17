@@ -51,6 +51,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
   const [to, setTo] = useState(isoDate(today));
   const [status, setStatus] = useState('');
   const [branchId, setBranchId] = useState(initialBranchId || '');
+  const [format, setFormat] = useState<'csv' | 'xlsx' | 'pdf'>('csv');
   const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -89,6 +90,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
       const params = new URLSearchParams({
         from: new Date(from + 'T00:00:00').toISOString(),
         to: new Date(to + 'T23:59:59').toISOString(),
+        format,
       });
       if (status) params.set('status', status);
       if (branchId) params.set('branch_id', branchId);
@@ -114,7 +116,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
       const blob = await res.blob();
       const filename =
         res.headers.get('content-disposition')?.match(/filename="([^"]+)"/)?.[1] ??
-        `pollar-pay-${isoDate(today)}.csv`;
+        `pollar-pay-${isoDate(today)}.${format}`;
 
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -126,7 +128,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
       URL.revokeObjectURL(url);
       onClose();
     } catch (e: any) {
-      setError(e.message || 'Error generando el CSV');
+      setError(e.message || 'Error generando el archivo');
     } finally {
       setDownloading(false);
     }
@@ -211,6 +213,31 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
             </div>
           )}
 
+          <div>
+            <label className="block text-xs text-[#9ca3af] mb-1.5">Formato</label>
+            <div className="grid grid-cols-3 gap-2">
+              {(['csv', 'xlsx', 'pdf'] as const).map(f => (
+                <button
+                  key={f}
+                  type="button"
+                  onClick={() => setFormat(f)}
+                  className={`px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
+                    format === f
+                      ? 'bg-[#005DB4] border-[#005DB4] text-white'
+                      : 'bg-[#f0f7ff] border-[#e5e7eb] text-[#1a1a1a] hover:border-[#005DB4]'
+                  }`}
+                >
+                  {f.toUpperCase()}
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-[#9ca3af] mt-2">
+              {format === 'csv' && 'Compatible con Excel y Google Sheets. Ideal para procesar con scripts.'}
+              {format === 'xlsx' && 'Excel nativo con totales y formato de moneda.'}
+              {format === 'pdf' && 'Reporte imprimible con resumen al inicio. Máximo 500 filas.'}
+            </p>
+          </div>
+
           {error && (
             <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700 text-xs">
               {error}
@@ -218,7 +245,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
           )}
 
           <p className="text-xs text-[#9ca3af]">
-            Formato CSV (compatible con Excel y Google Sheets). Los movimientos se exportan en orden cronológico inverso.
+            Movimientos ordenados del más reciente al más antiguo.
           </p>
         </div>
 
@@ -235,7 +262,7 @@ export default function ExportMovementsDialog({ open, onClose, branches, initial
             disabled={downloading}
             className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-medium disabled:opacity-50"
           >
-            {downloading ? 'Generando…' : 'Descargar CSV'}
+            {downloading ? 'Generando…' : `Descargar ${format.toUpperCase()}`}
           </button>
         </div>
       </div>

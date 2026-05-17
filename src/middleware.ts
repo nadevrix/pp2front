@@ -11,7 +11,9 @@ import { NextResponse, type NextRequest } from 'next/server';
 const EXACT_PUBLIC = new Set(['/', '/precios', '/faq', '/login', '/signup']);
 // `/auth` cubre /auth/callback (OAuth Google) y /auth/signout — ambos
 // pueden llamarse sin sesión válida en distintos momentos del flujo.
-const PREFIX_PUBLIC = ['/auth'];
+// `/invitacion/<token>` debe poder verse sin sesión: si el user no está
+// logueado, la propia página lo manda a /login con ?next=.
+const PREFIX_PUBLIC = ['/auth', '/invitacion'];
 
 function isPublic(pathname: string): boolean {
   if (EXACT_PUBLIC.has(pathname)) return true;
