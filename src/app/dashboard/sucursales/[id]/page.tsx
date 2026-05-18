@@ -49,6 +49,20 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
   const [walletSaving, setWalletSaving] = useState(false);
   const [walletError, setWalletError] = useState<string | null>(null);
   const [onboardOpen, setOnboardOpen] = useState(false);
+  const [verifying, setVerifying] = useState<string | null>(null);
+
+  const verifyTx = async (txId: string) => {
+    setVerifying(txId);
+    try {
+      await backendFetch(`/api/merchant/tx/${txId}/verify`, { method: 'POST' });
+      const r = await backendFetch<{ transactions: Transaction[] }>(`/api/projects/${id}/transactions?limit=30`);
+      setTxs(r.transactions);
+    } catch (e: any) {
+      console.error('verify failed', e);
+    } finally {
+      setVerifying(null);
+    }
+  };
 
   // Edición inline del perfil: nombre, rubro y monto por defecto en el QR
   // (PDF pág. 11 paso 03).
@@ -419,6 +433,14 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
                           >
                             {hash.slice(0, 8)}…↗
                           </a>
+                        ) : tx.status === 'pending' ? (
+                          <button
+                            onClick={() => verifyTx(tx.id)}
+                            disabled={verifying === tx.id}
+                            className="text-xs px-2.5 py-1 rounded-md bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium disabled:opacity-50"
+                          >
+                            {verifying === tx.id ? '…' : 'Verificar'}
+                          </button>
                         ) : (
                           <span className="text-[#9ca3af]">—</span>
                         )}

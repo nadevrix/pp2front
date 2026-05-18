@@ -13,7 +13,7 @@ const EXACT_PUBLIC = new Set(['/', '/precios', '/faq', '/login', '/signup']);
 // pueden llamarse sin sesión válida en distintos momentos del flujo.
 // `/invitacion/<token>` debe poder verse sin sesión: si el user no está
 // logueado, la propia página lo manda a /login con ?next=.
-const PREFIX_PUBLIC = ['/auth', '/invitacion'];
+const PREFIX_PUBLIC = ['/auth', '/invitacion', '/checkout'];
 
 function isPublic(pathname: string): boolean {
   if (EXACT_PUBLIC.has(pathname)) return true;

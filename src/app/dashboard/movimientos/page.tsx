@@ -83,6 +83,7 @@ export default function MovimientosPage() {
   const [to, setTo] = useState('');
   const [page, setPage] = useState(0);
   const [exportOpen, setExportOpen] = useState(false);
+  const [verifying, setVerifying] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const params = new URLSearchParams({
@@ -115,6 +116,18 @@ export default function MovimientosPage() {
     const t = setInterval(load, 15000);
     return () => clearInterval(t);
   }, [load]);
+
+  const verifyOne = async (txId: string) => {
+    setVerifying(txId);
+    try {
+      await backendFetch(`/api/merchant/tx/${txId}/verify`, { method: 'POST' });
+      await load();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setVerifying(null);
+    }
+  };
 
   // Si cambian filtros, volver a página 0
   useEffect(() => { setPage(0); }, [status, branchId, from, to]);
@@ -266,16 +279,27 @@ export default function MovimientosPage() {
                         <div className="text-[10px] text-[#9ca3af] uppercase tracking-wider">{settled ? 'Neto' : t.asset_code}</div>
                       </div>
                     </div>
-                    {hash && (
-                      <a
-                        href={stellarExpertTxUrl(hash, NETWORK)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-2 text-xs text-[#005DB4] font-mono"
-                      >
-                        {hash.slice(0, 12)}… ↗
-                      </a>
-                    )}
+                    <div className="flex items-center gap-3 mt-2">
+                      {hash && (
+                        <a
+                          href={stellarExpertTxUrl(hash, NETWORK)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-[#005DB4] font-mono"
+                        >
+                          {hash.slice(0, 12)}… ↗
+                        </a>
+                      )}
+                      {t.status === 'pending' && (
+                        <button
+                          onClick={() => verifyOne(t.id)}
+                          disabled={verifying === t.id}
+                          className="ml-auto text-xs px-3 py-1 rounded-md bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium disabled:opacity-50"
+                        >
+                          {verifying === t.id ? 'Verificando…' : 'Verificar pago'}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 );
               })}
@@ -335,6 +359,14 @@ export default function MovimientosPage() {
                             >
                               {hash.slice(0, 8)}…↗
                             </a>
+                          ) : t.status === 'pending' ? (
+                            <button
+                              onClick={() => verifyOne(t.id)}
+                              disabled={verifying === t.id}
+                              className="text-xs px-2.5 py-1 rounded-md bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium disabled:opacity-50"
+                            >
+                              {verifying === t.id ? '…' : 'Verificar'}
+                            </button>
                           ) : (
                             <span className="text-[#9ca3af]">—</span>
                           )}

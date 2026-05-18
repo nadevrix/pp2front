@@ -380,6 +380,19 @@ function CobrarInner() {
 
         <div className="mt-6 flex flex-wrap gap-3 print:hidden">
           <button
+            onClick={async () => {
+              if (!selected || !intent) return;
+              const r = await sdkFetch<{ data: PayStatus }>(
+                selected.api_key,
+                `/api/sdk/status?transaction_id=${intent.transaction_id}`,
+              );
+              setStatus(r.data);
+            }}
+            className="px-4 py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-semibold"
+          >
+            ✓ Verificar pago
+          </button>
+          <button
             onClick={resetAll}
             className="px-4 py-2.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
           >
