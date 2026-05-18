@@ -435,8 +435,10 @@ function CobrarInner() {
   if (stage === 'completed' || stage === 'overpaid') {
     const isOver = stage === 'overpaid';
     const paid = parseFloat(status!.amount_paid);
+    const expected = parseFloat(status!.amount_expected);
+    const excess = Math.max(0, paid - expected);
     const fee = parseFloat(status!.fee_amount || '0');
-    const net = parseFloat(status!.payout_amount || (paid - fee).toString());
+    const net = parseFloat(status!.payout_amount || (Math.min(paid, expected) - fee).toString());
     const showSplit = fee > 0 || status!.is_free_tx;
     return (
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
@@ -447,11 +449,21 @@ function CobrarInner() {
             </svg>
           </div>
           <h1 className="text-2xl font-bold tracking-tight mb-2">
-            {isOver ? 'Pagado con excedente' : 'Pago recibido'}
+            {isOver ? 'Pagado (con excedente del cliente)' : 'Pago recibido'}
           </h1>
-          <p className="text-[#6b7280] mb-6">
-            {paid.toFixed(2)} USDC liquidados sobre Stellar.
+          <p className="text-[#6b7280] mb-2">
+            Recibiste ${net.toFixed(2)} USDC — exactamente lo que esperabas.
           </p>
+          {isOver && (
+            <p className="text-xs text-amber-700 mb-6 max-w-md mx-auto">
+              El cliente pagó ${excess.toFixed(2)} de más por error. Ese excedente quedó retenido en la wallet de Pollar Pay. Si el cliente lo reclama, debe llamar a soporte.
+            </p>
+          )}
+          {!isOver && (
+            <p className="text-xs text-[#9ca3af] mb-6">
+              Liquidado sobre Stellar.
+            </p>
+          )}
 
           {showSplit && (
             <div className="grid grid-cols-2 gap-3 bg-[#f0f7ff] border border-[#e5e7eb] rounded-xl p-4 mb-6 max-w-md mx-auto text-left">

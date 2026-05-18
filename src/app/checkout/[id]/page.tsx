@@ -140,6 +140,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
   const dead = ['expired', 'underpaid', 'refunded', 'anomaly', 'late_anomaly'].includes(data.status);
 
   if (settled) {
+    const paid = parseFloat(data.amount_paid);
+    const expected = parseFloat(data.amount_expected);
+    const excess = Math.max(0, paid - expected);
+    const isOver = data.status === 'overpaid' && excess > 0;
     return (
       <Centered>
         <Brand />
@@ -149,9 +153,21 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
           </svg>
         </div>
         <h1 className="text-2xl font-bold mb-1">¡Pago recibido!</h1>
-        <p className="text-sm text-[#6b7280] mb-5">
-          {parseFloat(data.amount_paid).toFixed(2)} USDC pagados a {data.merchant_name}.
+        <p className="text-sm text-[#6b7280] mb-3">
+          {paid.toFixed(2)} USDC pagados a {data.merchant_name}.
         </p>
+        {isOver && (
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mb-5 text-left">
+            <p className="text-sm font-semibold text-amber-700 mb-1">
+              Pagaste {excess.toFixed(2)} USDC de más por error
+            </p>
+            <p className="text-xs text-amber-700">
+              El comercio recibió exactamente lo que esperaba. El excedente
+              quedó retenido en Pollar Pay. Si querés recuperarlo, escribinos
+              a <a href="https://wa.me/59163383781" target="_blank" rel="noopener noreferrer" className="underline">+591 63383781</a>.
+            </p>
+          </div>
+        )}
         {data.forward_tx_hash && (
           <a
             href={stellarExpertTxUrl(data.forward_tx_hash, NETWORK)}
