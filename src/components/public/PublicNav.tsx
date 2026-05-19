@@ -1,10 +1,14 @@
 // Nav público para landing, /precios y /faq.
 // Si hay sesión activa, muestra "Ir al dashboard" en vez de login/signup.
+//
+// Mobile: sin hamburguesa. El menú hamburguesa es chrome de dashboard
+// (post-login) — meterlo en la landing confunde porque parece app interna.
+// Los links públicos (Cómo funciona, Precios, FAQ) viven solo en el footer
+// para mobile; en desktop aparecen también en la nav central.
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/server';
-import MobileMenu from '@/components/MobileMenu';
 
 const PUBLIC_LINKS = [
   { href: '/#como-funciona', label: 'Cómo funciona' },
@@ -24,6 +28,7 @@ export default async function PublicNav() {
           <span className="font-semibold text-base sm:text-lg tracking-tight">Pollar Pay</span>
         </Link>
 
+        {/* Links públicos — solo en desktop. En mobile están en el footer. */}
         <div className="hidden md:flex items-center gap-6 text-sm text-[#6b7280] flex-1 justify-center">
           {PUBLIC_LINKS.map(l => (
             <Link key={l.href} href={l.href} className="hover:text-[#005DB4]">
@@ -32,6 +37,7 @@ export default async function PublicNav() {
           ))}
         </div>
 
+        {/* CTAs — visibles siempre, condensados en mobile */}
         <div className="flex items-center gap-2 shrink-0">
           {user ? (
             <Link
@@ -45,12 +51,13 @@ export default async function PublicNav() {
             <>
               <Link
                 href="/login"
-                className="hidden sm:inline-block text-sm px-3 py-1.5 rounded-lg text-[#6b7280] hover:text-[#005DB4]"
+                className="text-sm px-2.5 py-1.5 sm:px-3 rounded-lg text-[#6b7280] hover:text-[#005DB4]"
               >
-                Iniciar sesión
+                <span className="sm:hidden">Entrar</span>
+                <span className="hidden sm:inline">Iniciar sesión</span>
               </Link>
               <Link
-                href="/signup"
+                href="/login"
                 className="text-sm px-3 py-1.5 sm:px-3.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium"
               >
                 <span className="sm:hidden">Empezar</span>
@@ -58,35 +65,6 @@ export default async function PublicNav() {
               </Link>
             </>
           )}
-
-          <MobileMenu
-            items={PUBLIC_LINKS}
-            footer={
-              user ? (
-                <Link
-                  href="/dashboard"
-                  className="block w-full text-center text-sm px-3 py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium"
-                >
-                  Ir al dashboard
-                </Link>
-              ) : (
-                <div className="space-y-2">
-                  <Link
-                    href="/login"
-                    className="block w-full text-center text-sm px-3 py-2.5 rounded-lg bg-[#f0f7ff] text-[#005DB4] font-medium"
-                  >
-                    Iniciar sesión
-                  </Link>
-                  <Link
-                    href="/signup"
-                    className="block w-full text-center text-sm px-3 py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium"
-                  >
-                    Empezar gratis
-                  </Link>
-                </div>
-              )
-            }
-          />
         </div>
       </div>
     </nav>
