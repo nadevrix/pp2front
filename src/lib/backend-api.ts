@@ -129,6 +129,7 @@ export interface Transaction {
 export interface PayIntent {
   transaction_id: string;
   wallet_address: string;
+  reason: string;
   amount: string;
   asset: string;
   expires_at: string;
