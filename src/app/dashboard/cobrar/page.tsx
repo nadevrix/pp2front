@@ -317,24 +317,24 @@ function CobrarInner() {
           {selected?.name} — {network === 'TESTNET' ? 'Testnet' : 'Mainnet'}
         </p>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-2xl p-6 flex items-center justify-center">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 flex items-center justify-center">
             {sep7Uri && (
               <QRCodeSVG
                 value={sep7Uri}
                 size={256}
                 level="M"
                 marginSize={2}
-                className="w-full h-auto max-w-[280px]"
+                className="w-full h-auto max-w-[200px] sm:max-w-[280px]"
               />
             )}
           </div>
 
-          <div className="bg-white border border-[#e5e7eb] rounded-2xl p-6 space-y-5">
+          <div className="bg-white border border-[#e5e7eb] rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
             <div>
               <div className="text-xs text-[#9ca3af] mb-1">Monto a cobrar</div>
-              <div className="text-3xl font-bold tabular-nums">
-                {parseFloat(intent!.amount).toFixed(2)} <span className="text-[#9ca3af] text-lg font-normal">USDC</span>
+              <div className="text-2xl sm:text-3xl font-bold tabular-nums">
+                {parseFloat(intent!.amount).toFixed(2)} <span className="text-[#9ca3af] text-base sm:text-lg font-normal">USDC</span>
               </div>
               {status && parseFloat(status.amount_paid || '0') > 0 && (
                 <div className="text-sm text-amber-700 mt-2">
@@ -343,27 +343,29 @@ function CobrarInner() {
               )}
             </div>
 
-            <div>
-              <div className="text-xs text-[#9ca3af] mb-1">Estado</div>
-              <div className="inline-flex items-center gap-2 text-sm">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400" />
-                </span>
-                {status ? STATUS_LABEL[status.status] : 'Esperando pago'}
+            <div className="grid grid-cols-2 gap-3 sm:block sm:space-y-5">
+              <div>
+                <div className="text-xs text-[#9ca3af] mb-1">Estado</div>
+                <div className="inline-flex items-center gap-2 text-sm">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400" />
+                  </span>
+                  {status ? STATUS_LABEL[status.status] : 'Esperando pago'}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <div className="text-xs text-[#9ca3af] mb-1">Tiempo restante</div>
-              <div className="text-2xl font-semibold tabular-nums">
-                {status ? fmtCountdown(status.time_remaining_seconds) : '15:00'}
+              <div>
+                <div className="text-xs text-[#9ca3af] mb-1">Tiempo restante</div>
+                <div className="text-xl sm:text-2xl font-semibold tabular-nums">
+                  {status ? fmtCountdown(status.time_remaining_seconds) : '15:00'}
+                </div>
               </div>
             </div>
 
             <div>
               <div className="text-xs text-[#9ca3af] mb-1">Wallet destino</div>
-              <div className="font-mono text-xs text-[#6b7280] break-all bg-[#f0f7ff] px-3 py-2 rounded-lg border border-[#e5e7eb]">
+              <div className="font-mono text-[11px] sm:text-xs text-[#6b7280] break-all bg-[#f0f7ff] px-3 py-2 rounded-lg border border-[#e5e7eb]">
                 {intent!.wallet_address}
               </div>
               <a
@@ -378,7 +380,7 @@ function CobrarInner() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-3 print:hidden">
+        <div className="mt-6 grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3 print:hidden">
           <button
             onClick={async () => {
               if (!selected || !intent) return;
@@ -388,27 +390,9 @@ function CobrarInner() {
               );
               setStatus(r.data);
             }}
-            className="px-4 py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-semibold"
+            className="col-span-2 sm:col-span-1 px-4 py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-semibold"
           >
             ✓ Verificar pago
-          </button>
-          <button
-            onClick={resetAll}
-            className="px-4 py-2.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={() => sep7Uri && navigator.clipboard.writeText(sep7Uri)}
-            className="px-4 py-2.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
-          >
-            Copiar link de pago
-          </button>
-          <button
-            onClick={() => window.print()}
-            className="px-4 py-2.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
-          >
-            Imprimir QR
           </button>
           {sep7Uri && (
             <a
@@ -417,11 +401,29 @@ function CobrarInner() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium"
+              className="col-span-2 sm:col-span-1 text-center px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium"
             >
               Compartir por WhatsApp
             </a>
           )}
+          <button
+            onClick={() => sep7Uri && navigator.clipboard.writeText(sep7Uri)}
+            className="px-4 py-2.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
+          >
+            Copiar link
+          </button>
+          <button
+            onClick={() => window.print()}
+            className="px-4 py-2.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
+          >
+            Imprimir
+          </button>
+          <button
+            onClick={resetAll}
+            className="col-span-2 sm:col-span-1 px-4 py-2.5 rounded-lg bg-[#f0f7ff] hover:bg-[#e0f0ff] text-[#005DB4] text-sm font-medium"
+          >
+            Cancelar
+          </button>
         </div>
 
         <p className="text-xs text-[#9ca3af] mt-6 print:hidden">

@@ -39,18 +39,18 @@ export default function SucursalesPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-      <header className="flex items-end justify-between mb-8">
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Sucursales</h1>
-          <p className="text-[#6b7280] mt-1">
+          <p className="text-[#6b7280] mt-1 text-sm sm:text-base">
             Cada sucursal tiene su propia wallet de destino y reportes separados.
           </p>
         </div>
         {freeBranchLimitReached ? (
-          <div className="text-right">
+          <div className="sm:text-right">
             <span
               aria-disabled
-              className="inline-block px-4 py-2 rounded-lg bg-[#f0f7ff] text-[#9ca3af] cursor-not-allowed text-sm font-medium"
+              className="block sm:inline-block text-center px-4 py-2 rounded-lg bg-[#f0f7ff] text-[#9ca3af] cursor-not-allowed text-sm font-medium"
               title="Tu plan Free permite 1 sucursal"
             >
               + Nueva sucursal
@@ -65,7 +65,7 @@ export default function SucursalesPage() {
         ) : (
           <Link
             href="/dashboard/sucursales/nueva"
-            className="px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium text-sm"
+            className="block sm:inline-block text-center px-4 py-2 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white font-medium text-sm"
           >
             + Nueva sucursal
           </Link>

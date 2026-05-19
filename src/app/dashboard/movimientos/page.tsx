@@ -178,61 +178,69 @@ export default function MovimientosPage() {
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 items-center">
-        <select
-          value={status}
-          onChange={e => setStatus(e.target.value)}
-          className="flex-1 sm:flex-none min-w-[140px] px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
-        >
-          {STATUS_OPTIONS.map(o => (
-            <option key={o.value} value={o.value}>{o.label}</option>
-          ))}
-        </select>
-        {branches.length > 1 && (
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <div className="flex flex-wrap gap-2 sm:gap-3 items-center">
           <select
-            value={branchId}
-            onChange={e => setBranchId(e.target.value)}
+            value={status}
+            onChange={e => setStatus(e.target.value)}
             className="flex-1 sm:flex-none min-w-[140px] px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
           >
-            <option value="">Todas las sucursales</option>
-            {branches.map(b => (
-              <option key={b.id} value={b.id}>{b.name}</option>
+            {STATUS_OPTIONS.map(o => (
+              <option key={o.value} value={o.value}>{o.label}</option>
             ))}
           </select>
-        )}
+          {branches.length > 1 && (
+            <select
+              value={branchId}
+              onChange={e => setBranchId(e.target.value)}
+              className="flex-1 sm:flex-none min-w-[140px] px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+            >
+              <option value="">Todas las sucursales</option>
+              {branches.map(b => (
+                <option key={b.id} value={b.id}>{b.name}</option>
+              ))}
+            </select>
+          )}
 
-        {/* Filtro por rango de fechas — el endpoint /merchant/transactions
-            ya acepta from/to ISO, solo le damos UI. */}
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <input
-            type="date"
-            value={from}
-            onChange={e => setFrom(e.target.value)}
-            max={to || undefined}
-            aria-label="Desde"
-            className="flex-1 sm:flex-none px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
-          />
-          <span className="text-xs text-[#9ca3af]">→</span>
-          <input
-            type="date"
-            value={to}
-            onChange={e => setTo(e.target.value)}
-            min={from || undefined}
-            aria-label="Hasta"
-            className="flex-1 sm:flex-none px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
-          />
+          {/* Filtro por rango de fechas — el endpoint /merchant/transactions
+              ya acepta from/to ISO, solo le damos UI. */}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <input
+              type="date"
+              value={from}
+              onChange={e => setFrom(e.target.value)}
+              max={to || undefined}
+              aria-label="Desde"
+              className="flex-1 sm:flex-none px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+            />
+            <span className="text-xs text-[#9ca3af]">→</span>
+            <input
+              type="date"
+              value={to}
+              onChange={e => setTo(e.target.value)}
+              min={from || undefined}
+              aria-label="Hasta"
+              className="flex-1 sm:flex-none px-3 py-2 bg-white border border-[#e5e7eb] rounded-lg text-sm text-[#1a1a1a] focus:outline-none focus:border-[#005DB4]"
+            />
+          </div>
+
+          {hasFilters && (
+            <button
+              onClick={clearFilters}
+              className="px-3 py-2 rounded-lg text-xs text-[#005DB4] hover:bg-[#f0f7ff]"
+            >
+              Limpiar filtros
+            </button>
+          )}
         </div>
 
-        {hasFilters && (
-          <button
-            onClick={clearFilters}
-            className="px-3 py-2 rounded-lg text-xs text-[#005DB4] hover:bg-[#f0f7ff]"
-          >
-            Limpiar filtros
-          </button>
-        )}
-
-        <span className="hidden sm:inline text-xs text-[#9ca3af] self-center ml-auto">Auto-refresh cada 15 s</span>
+        <span className="hidden sm:inline-flex items-center gap-1.5 shrink-0 text-xs text-[#9ca3af]">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+          </span>
+          Auto-refresh 15 s
+        </span>
       </div>
 
       <div className="bg-white border border-[#e5e7eb] rounded-2xl overflow-hidden">

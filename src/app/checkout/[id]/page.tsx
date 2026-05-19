@@ -212,17 +212,8 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
             </span>
           </header>
 
-          <div className="px-6 py-6 grid sm:grid-cols-2 gap-6">
-            <div className="flex flex-col items-center justify-center bg-[#f0f7ff] rounded-xl p-4">
-              {sep7Uri && (
-                <QRCodeSVG value={sep7Uri} size={220} level="M" marginSize={2} className="w-full h-auto max-w-[240px]" />
-              )}
-              <p className="text-xs text-[#6b7280] mt-3 text-center">
-                Escaneá con <strong>Binance, Meru, Lobstr</strong> o cualquier wallet Stellar.
-              </p>
-            </div>
-
-            <div className="space-y-4">
+          <div className="px-4 sm:px-6 py-5 sm:py-6 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <div className="order-2 sm:order-1 space-y-4">
               <div>
                 <div className="text-xs text-[#9ca3af] uppercase tracking-wider mb-1">Monto</div>
                 <div className="text-3xl font-bold tabular-nums">
@@ -235,25 +226,36 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                   </div>
                 )}
               </div>
-              <div>
-                <div className="text-xs text-[#9ca3af] uppercase tracking-wider mb-1">A nombre de</div>
-                <div className="font-medium">{data.merchant_name}</div>
-                <div className="text-xs text-[#6b7280]">{data.reason}</div>
-              </div>
-              <div>
-                <div className="text-xs text-[#9ca3af] uppercase tracking-wider mb-1">Tiempo restante</div>
-                <div className="text-xl font-semibold tabular-nums">
-                  {fmtCountdown(data.time_remaining_seconds)}
+              <div className="grid grid-cols-2 sm:block gap-3 sm:space-y-4">
+                <div>
+                  <div className="text-xs text-[#9ca3af] uppercase tracking-wider mb-1">A nombre de</div>
+                  <div className="font-medium text-sm sm:text-base truncate">{data.merchant_name}</div>
+                  <div className="text-xs text-[#6b7280] truncate">{data.reason}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-[#9ca3af] uppercase tracking-wider mb-1">Tiempo</div>
+                  <div className="text-xl font-semibold tabular-nums">
+                    {fmtCountdown(data.time_remaining_seconds)}
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div className="order-1 sm:order-2 flex flex-col items-center justify-center bg-[#f0f7ff] rounded-xl p-3 sm:p-4">
+              {sep7Uri && (
+                <QRCodeSVG value={sep7Uri} size={220} level="M" marginSize={2} className="w-full h-auto max-w-[200px] sm:max-w-[240px]" />
+              )}
+              <p className="text-xs text-[#6b7280] mt-3 text-center">
+                Escaneá con <strong>Binance, Meru, Lobstr</strong> o cualquier wallet Stellar.
+              </p>
+            </div>
           </div>
 
-          <div className="px-6 py-4 border-t border-[#e5e7eb] flex flex-wrap gap-2 print:hidden">
+          <div className="px-4 sm:px-6 py-4 border-t border-[#e5e7eb] grid grid-cols-2 sm:flex sm:flex-wrap gap-2 print:hidden">
             <button
               onClick={verify}
               disabled={verifying}
-              className="flex-1 sm:flex-none px-4 py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-semibold disabled:opacity-50"
+              className="col-span-2 sm:flex-1 sm:max-w-[200px] px-4 py-2.5 rounded-lg bg-[#005DB4] hover:bg-[#0047a0] text-white text-sm font-semibold disabled:opacity-50"
             >
               {verifying ? 'Verificando…' : '✓ Verificar pago'}
             </button>
@@ -262,7 +264,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                 href={`https://wa.me/?text=${encodeURIComponent(`Pagá ${parseFloat(data.amount_expected).toFixed(2)} USDC con Pollar Pay:\n${sep7Uri}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium"
+                className="col-span-2 sm:col-auto text-center px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium"
               >
                 WhatsApp
               </a>

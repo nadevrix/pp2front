@@ -133,48 +133,44 @@ export default function DashboardPage() {
       </header>
 
       {tier && (
-        <div className="mb-6 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3 bg-white border border-[#e5e7eb] rounded-2xl px-4 sm:px-5 py-4">
-          <div className="grid grid-cols-3 sm:flex sm:items-center sm:gap-4 gap-3 w-full sm:w-auto">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-white border border-[#e5e7eb] rounded-2xl px-4 sm:px-5 py-4">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 w-full sm:w-auto">
             <div>
               <div className="text-xs text-[#9ca3af]">Plan</div>
               <div className="font-semibold text-sm sm:text-base">{tier.tier_label}</div>
             </div>
-            <div className="hidden sm:block h-8 w-px bg-[#f0f7ff]" />
             <div>
               <div className="text-xs text-[#9ca3af]">Fee por cobro</div>
               <div className="font-semibold tabular-nums text-sm sm:text-base">
                 {(tier.percent * 100).toFixed(1).replace(/\.0$/, '')} %
-                {tier.minimum > 0 && <span className="text-xs text-[#9ca3af] block sm:inline"> mín ${tier.minimum.toFixed(2)}</span>}
+                {tier.minimum > 0 && <span className="text-xs text-[#9ca3af]"> · mín ${tier.minimum.toFixed(2)}</span>}
               </div>
             </div>
             {tier.tier === 'free' && (
-              <>
-                <div className="hidden sm:block h-8 w-px bg-[#f0f7ff]" />
-                <div>
-                  <div className="text-xs text-[#9ca3af]">Free restantes</div>
-                  <div className="font-semibold tabular-nums text-sm sm:text-base">
-                    {tier.usage.free_tx_remaining} <span className="text-xs text-[#9ca3af]">de 50</span>
-                  </div>
+              <div>
+                <div className="text-xs text-[#9ca3af]">Free restantes</div>
+                <div className="font-semibold tabular-nums text-sm sm:text-base">
+                  {tier.usage.free_tx_remaining} <span className="text-xs text-[#9ca3af]">de 50</span>
                 </div>
-              </>
+              </div>
             )}
           </div>
           {tier.suggested_tier ? (
             <Link
               href="/dashboard/plan"
-              className="block sm:inline text-center text-xs px-3 py-1.5 rounded-lg bg-[#f0f7ff] border border-[#005DB4] text-[#005DB4] hover:bg-[#e0f0ff]"
+              className="block sm:inline-block text-center text-xs px-3 py-1.5 rounded-lg bg-[#f0f7ff] border border-[#005DB4] text-[#005DB4] hover:bg-[#e0f0ff] shrink-0"
             >
               Cambiar a {tier.suggested_label} →
             </Link>
           ) : (
-            <Link href="/dashboard/plan" className="text-xs text-[#6b7280] hover:text-[#005DB4]">
+            <Link href="/dashboard/plan" className="text-xs text-[#6b7280] hover:text-[#005DB4] shrink-0">
               Ver plan →
             </Link>
           )}
         </div>
       )}
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Kpi label="Total cobrado" value={`$${data.totals.received_usdc}`} sub="USDC bruto recibido" />
         <Kpi label="Recibido neto" value={`$${data.totals.payout_usdc}`} sub={`fees pagados $${data.totals.fees_usdc}`} />
         <Kpi label="Últimas 24 h" value={data.totals.last_24h.toLocaleString()} sub="transacciones" />

@@ -127,7 +127,7 @@ export default function PlanPage() {
       </section>
 
       {/* Grid de tiers */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {TIER_ORDER.map(tier => {
           const ui = TIERS_UI[tier];
           const isCurrent = tier === current;

@@ -77,22 +77,24 @@ export default function AvanzadoPage() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <code className="flex-1 font-mono text-xs bg-[#1a1a1a] px-3 py-2 rounded-lg text-emerald-700 border border-[#e5e7eb] break-all">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                  <code className="flex-1 font-mono text-xs bg-[#1a1a1a] px-3 py-2 rounded-lg text-emerald-700 border border-[#e5e7eb] break-all min-w-0">
                     {revealed[b.id] ? b.api_key : b.api_key.replace(/^(pub_\w+_).{8}.+(.{4})$/, '$1••••••••$2')}
                   </code>
-                  <button
-                    onClick={() => toggle(b.id)}
-                    className="px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium"
-                  >
-                    {revealed[b.id] ? 'Ocultar' : 'Mostrar'}
-                  </button>
-                  <button
-                    onClick={() => copy(b.api_key)}
-                    className="px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium"
-                  >
-                    Copiar
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => toggle(b.id)}
+                      className="flex-1 sm:flex-none px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium"
+                    >
+                      {revealed[b.id] ? 'Ocultar' : 'Mostrar'}
+                    </button>
+                    <button
+                      onClick={() => copy(b.api_key)}
+                      className="flex-1 sm:flex-none px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium"
+                    >
+                      Copiar
+                    </button>
+                  </div>
                 </div>
 
                 <div className="text-xs text-[#9ca3af] mt-2">
@@ -112,12 +114,12 @@ export default function AvanzadoPage() {
         </p>
 
         <div className="text-xs text-[#9ca3af] mb-1.5">Instalación</div>
-        <pre className="bg-[#1a1a1a] border border-[#e5e7eb] rounded-lg p-3 text-xs font-mono text-[#6b7280] mb-5 overflow-x-auto">
+        <pre className="bg-[#1a1a1a] border border-[#e5e7eb] rounded-lg p-3 text-xs font-mono text-[#6b7280] mb-5 overflow-x-auto whitespace-pre">
 {`npm install @pollar/pay`}
         </pre>
 
         <div className="text-xs text-[#9ca3af] mb-1.5">Uso básico</div>
-        <pre className="bg-[#1a1a1a] border border-[#e5e7eb] rounded-lg p-3 text-xs font-mono text-[#6b7280] overflow-x-auto">
+        <pre className="bg-[#1a1a1a] border border-[#e5e7eb] rounded-lg p-3 text-xs font-mono text-[#6b7280] overflow-x-auto whitespace-pre">
 {`import { PollarPayClient } from '@pollar/pay';
 
 const pay = new PollarPayClient({
