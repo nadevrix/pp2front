@@ -307,23 +307,21 @@ function ScaleCard({
   paidUntil: Date | null;
 }) {
   return (
-    <div className="relative rounded-2xl overflow-hidden">
-      {/* Gradiente de fondo: azul Pollar profundo con highlight cyan */}
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            'linear-gradient(135deg, #003a73 0%, #005DB4 45%, #0ea5e9 100%)',
-        }}
-      />
+    <div
+      className="relative rounded-2xl overflow-hidden shadow-lg shadow-[#005DB4]/20"
+      style={{
+        background:
+          'linear-gradient(135deg, #003a73 0%, #005DB4 45%, #0ea5e9 100%)',
+      }}
+    >
       {/* Halo de glow cyan en la esquina */}
       <div
-        className="absolute -top-20 -right-20 w-72 h-72 -z-10 rounded-full opacity-40 blur-3xl"
+        className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-40 blur-3xl pointer-events-none"
         style={{ background: 'radial-gradient(circle, #67e8f9 0%, transparent 70%)' }}
       />
       {/* Patrón de "diamante" sutil */}
       <div
-        className="absolute inset-0 -z-10 opacity-[0.08]"
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
         style={{
           backgroundImage:
             'repeating-linear-gradient(45deg, rgba(255,255,255,0.4) 0 1px, transparent 1px 14px), repeating-linear-gradient(-45deg, rgba(255,255,255,0.4) 0 1px, transparent 1px 14px)',
