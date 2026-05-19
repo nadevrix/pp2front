@@ -86,6 +86,10 @@ export default function PlanPage() {
 
   const current = state.tier;
   const isScale = current === 'scale';
+  const scaleExpiry = state.scale_paid_until ? new Date(state.scale_paid_until) : null;
+  const scaleDaysLeft = scaleExpiry
+    ? Math.floor((scaleExpiry.getTime() - Date.now()) / (24 * 60 * 60 * 1000))
+    : null;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
@@ -95,6 +99,39 @@ export default function PlanPage() {
           Free, Starter y Growth se asignan automáticamente según tu volumen mensual. Scale es opt-in: $25/mes para fee mínimo y soporte prioritario.
         </p>
       </header>
+
+      {/* Banner expiry Scale — visible cuando faltan ≤ 7 días o ya venció */}
+      {isScale && scaleDaysLeft !== null && scaleDaysLeft <= 7 && (
+        <div className={`mb-6 rounded-2xl p-4 sm:p-5 border flex flex-col sm:flex-row sm:items-center gap-3 ${
+          scaleDaysLeft <= 0
+            ? 'bg-rose-500/10 border-rose-500/30 text-rose-700'
+            : 'bg-amber-500/10 border-amber-500/30 text-amber-800'
+        }`}>
+          <div className="flex-1">
+            <div className="font-semibold text-sm">
+              {scaleDaysLeft <= 0
+                ? 'Tu Scale venció'
+                : `Tu Scale vence en ${scaleDaysLeft} día${scaleDaysLeft === 1 ? '' : 's'}`}
+            </div>
+            <p className="text-xs mt-0.5 opacity-90">
+              {scaleDaysLeft <= 0
+                ? 'En cualquier momento vas a bajar al tier que justifique tu volumen. Renová ahora para seguir con fee 0.5 %.'
+                : `Pagá $25 más para sumar 30 días. Si renovás antes de vencer, los días no usados se mantienen.`}
+            </p>
+          </div>
+          <button
+            onClick={startScaleUpgrade}
+            disabled={changing === 'scale'}
+            className={`shrink-0 px-4 py-2 rounded-lg text-sm font-semibold ${
+              scaleDaysLeft <= 0
+                ? 'bg-rose-700 hover:bg-rose-800 text-white'
+                : 'bg-amber-700 hover:bg-amber-800 text-white'
+            } disabled:opacity-50`}
+          >
+            {changing === 'scale' ? 'Generando QR…' : 'Renovar $25 USDC'}
+          </button>
+        </div>
+      )}
 
       {/* ── Resumen del tier actual ─────────────────────────────────────── */}
       <section className="bg-white border border-[#e5e7eb] rounded-2xl p-5 sm:p-6 mb-6 sm:mb-8">
@@ -121,7 +158,12 @@ export default function PlanPage() {
               sub={`${state.usage.free_tx_used} de 50 usadas`}
             />
           ) : isScale ? (
-            <Mini label="Cuota Scale" value="$25" sub="cada 30 días" highlight />
+            <Mini
+              label="Cuota Scale"
+              value="$25"
+              sub={scaleExpiry ? `vence ${scaleExpiry.toLocaleDateString()}` : 'cada 30 días'}
+              highlight
+            />
           ) : (
             <Mini label="Cuota mensual" value="Sin cuota" sub="auto-graduado por volumen" />
           )}
@@ -206,6 +248,7 @@ export default function PlanPage() {
           ui={TIERS_UI.scale}
           changing={changing === 'scale'}
           onActivate={startScaleUpgrade}
+          paidUntil={scaleExpiry}
         />
       </section>
 
@@ -255,11 +298,13 @@ function ScaleCard({
   ui,
   changing,
   onActivate,
+  paidUntil,
 }: {
   current: boolean;
   ui: typeof TIERS_UI.scale;
   changing: boolean;
   onActivate: () => void;
+  paidUntil: Date | null;
 }) {
   return (
     <div className="relative rounded-2xl overflow-hidden">
@@ -333,9 +378,27 @@ function ScaleCard({
           </div>
 
           {current ? (
-            <div className="bg-white/10 border border-white/30 backdrop-blur rounded-lg px-4 py-2 text-center text-xs">
-              Renovación automática al pagar de nuevo
-            </div>
+            <>
+              <div className="bg-white/10 border border-white/30 backdrop-blur rounded-lg px-3 py-2 text-center text-[11px]">
+                {paidUntil ? (
+                  <>
+                    Vigente hasta<br />
+                    <span className="font-semibold text-sm">
+                      {paidUntil.toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' })}
+                    </span>
+                  </>
+                ) : (
+                  'Plan activo'
+                )}
+              </div>
+              <button
+                onClick={onActivate}
+                disabled={changing}
+                className="w-full px-4 py-2.5 rounded-lg bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 text-white font-semibold text-xs transition-colors disabled:opacity-60"
+              >
+                {changing ? 'Generando QR…' : 'Renovar 30 días más'}
+              </button>
+            </>
           ) : (
             <button
               onClick={onActivate}
