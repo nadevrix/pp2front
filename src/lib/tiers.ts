@@ -93,6 +93,10 @@ export interface TierState {
     tier: Tier;
     tier_label: string;
     tier_assigned_at: string;
+    /** ISO 8601 — solo presente cuando tier='scale' (suscripción $25/mes). */
+    scale_paid_until: string | null;
+    /** Si false, el merchant debe pasar por /onboarding/plan antes del dashboard. */
+    onboarding_completed: boolean;
     percent: number;
     minimum: number;
     monthly_fee: number;
