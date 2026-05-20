@@ -5,6 +5,7 @@
 // en /dashboard/avanzado (es un detalle técnico, no operativo).
 
 import { useEffect, useState, use } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { backendFetch, type Project, type Transaction } from '@/lib/backend-api';
 import { stellarExpertAccountUrl, stellarExpertTxUrl, networkFromApiKey } from '@/lib/stellar';
@@ -39,6 +40,8 @@ const STATUS_COLOR: Record<string, string> = {
 
 export default function SucursalDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
+  const searchParams = useSearchParams();
+  const justCreated = searchParams.get('created') === '1';
 
   const [branch, setBranch] = useState<Project | null>(null);
   const [txs, setTxs] = useState<Transaction[]>([]);
@@ -50,6 +53,14 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
   const [walletError, setWalletError] = useState<string | null>(null);
   const [onboardOpen, setOnboardOpen] = useState(false);
   const [verifying, setVerifying] = useState<string | null>(null);
+  const [apiKeyRevealed, setApiKeyRevealed] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(label);
+    setTimeout(() => setCopied(null), 2000);
+  };
 
   const verifyTx = async (txId: string) => {
     setVerifying(txId);
@@ -199,6 +210,37 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
         </Link>
       </div>
 
+      {/* Banner de creación exitosa — muestra ID prominente */}
+      {justCreated && (
+        <div className="mb-8 p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
+          <div className="flex items-start gap-3">
+            <svg className="w-6 h-6 text-emerald-700 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="min-w-0">
+              <h3 className="font-semibold text-emerald-700 text-lg">¡Sucursal creada!</h3>
+              <p className="text-sm text-emerald-700/80 mt-1 mb-3">
+                Ya podés empezar a cobrar. Guardá tu Project ID para usar con el SDK:
+              </p>
+              <div className="flex items-center gap-2 flex-wrap">
+                <code className="font-mono text-sm bg-white/80 text-emerald-800 px-3 py-1.5 rounded-lg border border-emerald-500/30 break-all">
+                  {branch.id}
+                </code>
+                <button
+                  onClick={() => copyToClipboard(branch.id, 'project-id-banner')}
+                  className="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-medium transition-colors"
+                >
+                  {copied === 'project-id-banner' ? '✓ Copiado' : 'Copiar ID'}
+                </button>
+              </div>
+              <p className="text-xs text-emerald-700/60 mt-2">
+                También lo encontrás abajo en la sección «Credenciales para el SDK».
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 break-words">{branch.name}</h1>
@@ -312,6 +354,87 @@ export default function SucursalDetailPage({ params }: { params: Promise<{ id: s
             </div>
           </div>
         )}
+      </div>
+
+      {/* Credenciales para el SDK — siempre visible */}
+      <div className="bg-white border border-[#e5e7eb] rounded-2xl p-6 mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold">Credenciales para el SDK</h2>
+          <Link href="/dashboard/avanzado" className="text-xs text-[#6b7280] hover:text-[#005DB4]">
+            Ver guía de integración →
+          </Link>
+        </div>
+        <p className="text-sm text-[#6b7280] mb-5">
+          Usá estos datos para integrar Pollar Pay en tu sistema, POS o sitio web.
+        </p>
+
+        <dl className="space-y-4">
+          <div>
+            <dt className="text-xs text-[#9ca3af] mb-1.5">Project ID</dt>
+            <div className="flex items-center gap-2 flex-wrap">
+              <code className="flex-1 min-w-0 font-mono text-xs bg-[#f0f7ff] px-3 py-2.5 rounded-lg border border-[#e5e7eb] text-[#1a1a1a] break-all">
+                {branch.id}
+              </code>
+              <button
+                onClick={() => copyToClipboard(branch.id, 'project-id')}
+                className="shrink-0 px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium transition-colors"
+              >
+                {copied === 'project-id' ? '✓ Copiado' : 'Copiar'}
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <dt className="text-xs text-[#9ca3af] mb-1.5">API Key</dt>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <code className="flex-1 min-w-0 font-mono text-xs bg-[#1a1a1a] px-3 py-2.5 rounded-lg border border-[#e5e7eb] text-emerald-700 break-all">
+                {apiKeyRevealed ? branch.api_key : branch.api_key.replace(/^(pub_\w+_).{8}.+(.{4})$/, '$1••••••••$2')}
+              </code>
+              <div className="flex gap-2 shrink-0">
+                <button
+                  onClick={() => setApiKeyRevealed(r => !r)}
+                  className="flex-1 sm:flex-none px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium transition-colors"
+                >
+                  {apiKeyRevealed ? 'Ocultar' : 'Mostrar'}
+                </button>
+                <button
+                  onClick={() => copyToClipboard(branch.api_key, 'api-key')}
+                  className="flex-1 sm:flex-none px-3 py-2 bg-[#f0f7ff] hover:bg-[#e0f0ff] rounded-lg text-xs font-medium transition-colors"
+                >
+                  {copied === 'api-key' ? '✓ Copiado' : 'Copiar'}
+                </button>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 mt-2 text-xs">
+              <span className={`px-2 py-0.5 rounded-md border ${
+                branch.api_key.startsWith('pub_mainnet_')
+                  ? 'text-emerald-700 bg-emerald-500/10 border-emerald-500/20'
+                  : 'text-amber-700 bg-amber-500/10 border-amber-500/20'
+              }`}>
+                {branch.api_key.startsWith('pub_mainnet_') ? 'Mainnet' : 'Testnet'}
+              </span>
+              <span className="text-[#9ca3af]">Tratala como una contraseña — no la compartas públicamente.</span>
+            </div>
+          </div>
+        </dl>
+
+        {/* Quick-start snippet */}
+        <details className="mt-5">
+          <summary className="text-xs text-[#005DB4] hover:text-[#0047a0] cursor-pointer font-medium">
+            Ver ejemplo rápido de integración
+          </summary>
+          <pre className="mt-3 bg-[#1a1a1a] border border-[#e5e7eb] rounded-lg p-3 text-xs font-mono text-[#6b7280] overflow-x-auto whitespace-pre">
+{`import { PollarPayClient } from '@pollar/pay';
+
+const pay = new PollarPayClient({
+  apiKey: '${apiKeyRevealed ? branch.api_key : 'pub_testnet_...'}',
+});
+
+const intent = await pay.createIntent(25.00, 'Venta');
+console.log(intent.data.wallet_address); // → QR
+console.log(intent.data.transaction_id); // → guardar`}
+          </pre>
+        </details>
       </div>
 
       <div className="bg-white border border-[#e5e7eb] rounded-2xl p-6 mb-8">
